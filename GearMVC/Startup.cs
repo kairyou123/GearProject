@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Mapping;
+using AutoMapper;
 using Domain.IRepository;
 using Insfrastucture.Context;
 using Insfrastucture.Repository;
@@ -31,6 +33,7 @@ namespace GearMVC
             ConfigureScoped(services);
             services.AddDbContext<GearContext>(optionns =>
                             optionns.UseSqlServer(Configuration.GetConnectionString("DevConnection"), b => b.MigrationsAssembly("GearMVC")));
+            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

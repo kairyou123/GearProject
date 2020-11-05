@@ -1,8 +1,52 @@
-﻿@{
+﻿@model IEnumerable<Domain.Entity.LinhKien>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div>
+        <table class="table">
+            
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(asas => item.MaLK)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(asas => item.HangSanXuat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(asas => item.MoTa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(asas => item.NgayCapNhat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(asas => item.TenLK)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(asas => item.NCC.TenNCC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(asas => item.Loai.Ten)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <h4>Movie</h4>
+        <hr />
+        
+        
+    </div>
 </div>

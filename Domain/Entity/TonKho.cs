@@ -12,6 +12,7 @@ namespace Domain.Entity
         [Required]
         [Column(TypeName = "int")]
         public int SoLuongTon { get; set; }
+        public int LinhKienId{get;set;}
         public LinhKien LinhKien { get; set; }
     }
 }

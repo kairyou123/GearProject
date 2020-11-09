@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,7 +24,7 @@ namespace Domain.Entity
         [Column(TypeName = "decimal(18,0)")]
         public decimal TiGia { get; set; }
 
-        public KhachHang KhachHang { get; set; }
-        public NhanVien NhanVien { get; set; }
+        public ApplicationUser User {get;set;}
+        public ICollection<ChiTietHD> ChiTietHDs { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Domain.Entity
         [Required]
         [Column(TypeName = "bit")]
         public bool ApDung { get; set; }
-
+        public int LinhKienId {get;set;}
         public LinhKien LinhKien;
 
     }

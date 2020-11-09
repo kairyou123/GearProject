@@ -9,11 +9,14 @@
 
     <div>
         <table class="table">
-            
+
             <tbody>
-                @foreach (var item in Model)
-                {
+               
+            
+            @foreach (var item in Model)
+            {
                 <tr>
+                    
                     <td>
                         @Html.DisplayFor(asas => item.MaLK)
                     </td>
@@ -41,7 +44,7 @@
                         <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>
-                }
+            }
             </tbody>
         </table>
         <h4>Movie</h4>

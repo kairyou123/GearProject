@@ -11,8 +11,6 @@ namespace Application.Mapping
     {
         public AutoMapperProfile()
         {
-            CreateMap<NhanVienDTO, NhanVien>()
-                            .ReverseMap();
             CreateMap<LinhKienDTO, LinhKien>()
                             .ReverseMap();
         }

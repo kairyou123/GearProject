@@ -12,7 +12,6 @@ namespace Insfrastucture.Context
 {
     public class GearContext : IdentityDbContext<ApplicationUser> 
     {
-        public DbSet<KhachHang> KhachHangs { get; set; }
         public DbSet<HoaDon> HoaDons { get; set; }
         public DbSet<ChiTietHD> ChiTietHDs { get; set; }
         public DbSet<CTGiao> CTGiaos { get; set; }
@@ -22,7 +21,6 @@ namespace Insfrastucture.Context
         public DbSet<LinhKien> LinhKiens { get; set; }
         public DbSet<LoaiLinhKien> LoaiLinhKiens { get; set; }
         public DbSet<NhaCungCap> NhaCungCaps { get; set; }
-        public DbSet<NhanVien> NhanViens { get; set; }
         public DbSet<TonKho> TonKhos { get; set; }
         public GearContext(DbContextOptions<GearContext> options) : base(options)
         { }

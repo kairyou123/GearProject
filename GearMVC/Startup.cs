@@ -90,11 +90,9 @@ namespace GearMVC
         {
             services.AddScoped<IGioHangRepository, GioHangRepository>();
             services.AddScoped<IHoaDonRepository, HoaDonRepository>();
-            services.AddScoped<IKhachHangRepository, KhachHangRepository>();
             services.AddScoped<ILinhKienRepository, LinhKienRepository>();
             services.AddScoped<ILoaiLinhKienRepository, LoaiLinhKienRepository>();
             services.AddScoped<INhaCungCapRepository, NhaCungCapRepository>();
-            services.AddScoped<INhanVienRepository, NhanVienRepository>();
             services.AddScoped<ITonKhoRepository, TonKhoRepository>();
         }
     }

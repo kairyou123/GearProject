@@ -1,15 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Mapping;
 using AutoMapper;
+using Domain.Entity;
 using Domain.IRepository;
 using Insfrastucture.Context;
 using Insfrastucture.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +36,27 @@ namespace GearMVC
             services.AddDbContext<GearContext>(optionns =>
                             optionns.UseSqlServer(Configuration.GetConnectionString("DevConnection"), b => b.MigrationsAssembly("GearMVC")));
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                           .AddEntityFrameworkStores<GearContext>()
+                           .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options => {
+                // Thiết lập về Password
+                options.Password.RequireDigit = false; // Không bắt phải có số
+                options.Password.RequireLowercase = false; // Không bắt phải có chữ thường
+                options.Password.RequireNonAlphanumeric = false; // Không bắt ký tự đặc biệt
+                options.Password.RequireUppercase = false; // Không bắt buộc chữ in
+                options.Password.RequiredLength = 5; // Số ký tự tối thiểu của password
+
+                // Cấu hình về User.
+                options.User.RequireUniqueEmail = true;  // Email là duy nhất
+
+                // Cấu hình đăng nhập.
+                options.SignIn.RequireConfirmedEmail = false;            // Cấu hình xác thực địa chỉ email (email phải tồn tại)
+                options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,72 @@
+@{
+    ViewData["Title"] = "Quản lý chủng loại";
+}
+
+@section Content{
+    <div>
+        <div class="admin-content-title"><b>QUẢN LÝ CHỦNG LOẠI SẢN PHẨM</b></div>
+        <div class="admin-content">
+          <div class="admin-filter">
+            <div class="row">
+              <div class="col-2"><span>TÌM KIẾM</span></div>
+              <div class="col-10">
+                <form id="search-form" name="searchForm"><input type="text" class="admin-input" name="search"
+                    value=""><button class="admin-button-submit" type="submit" form="searchForm" value="Submit"><i
+                      class="fas fa-search"></i></button></form>
+              </div><a href="/admin/catalog/add">
+                <div class="admin-plus"><span><i class="fas fa-plus-circle"></i></span></div>
+              </a>
+            </div>
+          </div>
+          <div class="admin-content-title-1"><span class="admin-border-title-1">THÔNG TIN CHỦNG LOẠI</span></div>
+          <div class="margin-top-20">
+            <table class="table table-striped table-condensed" width="100%">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Tên</th>
+                  <th scope="col">Mô tả</th>
+                  <th scope="col">Chức năng</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>1</th>
+                  <td>Chuột</td>
+                  <td>Các sản phẩm liên quan đến chuột: chuột chơi game, chuột văn phòng</td>
+                  <td><a href="/admin/catalog/1/edit"><button class="admin-button edit"><i class="fas fa-edit"
+                          data-catalog="1"></i></button></a><button class="admin-button delete" data-catalog="1"><i
+                        class="fas fa-trash-alt" data-catalog="1"></i></button></td>
+                </tr>
+                <tr>
+                  <th>2</th>
+                  <td>Bàn Phím</td>
+                  <td>Các sản phẩm bàn phím như bàn phím cơ, bàn phím văn phòng,...</td>
+                  <td><a href="/admin/catalog/2/edit"><button class="admin-button edit"><i class="fas fa-edit"
+                          data-catalog="2"></i></button></a><button class="admin-button delete" data-catalog="2"><i
+                        class="fas fa-trash-alt" data-catalog="2"></i></button></td>
+                </tr>
+                <tr>
+                  <th>3</th>
+                  <td>Tai nghe</td>
+                  <td>Nhiều thể loại tai nghe từ tai nghe gaming đến tai nghe chuyên về nghe nhạc</td>
+                  <td><a href="/admin/catalog/3/edit"><button class="admin-button edit"><i class="fas fa-edit"
+                          data-catalog="3"></i></button></a><button class="admin-button delete" data-catalog="3"><i
+                        class="fas fa-trash-alt" data-catalog="3"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="admin-pagination">
+            <ul class="pagination pagination-centered">
+              <li class="page-item"><span class="page-link" href="#" aria-label="Previous"><span aria-hidden="true"
+                    data-page="1">«</span><span class="sr-only">Previous</span></span></li>
+              <li class="page-item active"><span class="page-link" data-page="1">1</span></li>
+              <li class="page-item"><span class="page-link" href="#" aria-label="Next"><span aria-hidden="true"
+                    data-page="1">»</span><span class="sr-only">Next</span></span></li>
+            </ul>
+          </div>
+        </div>
+    </div>
+}
+    

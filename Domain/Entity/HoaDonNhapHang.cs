@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,6 +21,9 @@ namespace Domain.Entity
         [Column(TypeName = "DateTime2")]
         public DateTime NgayGiao { get; set; }
 
+        public int NCCId{get;set;}
         public NhaCungCap NCC { get; set; }
+
+        public ICollection<CTGiao> CTGiaos { get; set; }
     }
 }

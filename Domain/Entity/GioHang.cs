@@ -15,7 +15,7 @@ namespace Domain.Entity
         [Required]
         [Column(TypeName = "DateTime2")]
         public DateTime NgayMua { get; set; }
-
+        public int LinhKienId {get;set;}
         public LinhKien LinhKien { get; set; }
     }
 }

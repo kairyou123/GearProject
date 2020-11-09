@@ -6,10 +6,11 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Domain.Entity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Insfrastucture.Context
 {
-    public class GearContext : DbContext
+    public class GearContext : IdentityDbContext<ApplicationUser> 
     {
         public DbSet<KhachHang> KhachHangs { get; set; }
         public DbSet<HoaDon> HoaDons { get; set; }

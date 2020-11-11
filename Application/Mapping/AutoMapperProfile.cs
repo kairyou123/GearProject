@@ -17,6 +17,9 @@ namespace Application.Mapping
             CreateMap<LoaiLinhKienDTO, LoaiLinhKien>()
                             .ForMember(x => x.Id, opt => opt.Condition(id => id !=null ))
                             .ReverseMap();
+            CreateMap<NhaCungCapDTO, NhaCungCap>()
+                            .ForMember(x => x.Id, opt => opt.Condition(id => id != null))
+                            .ReverseMap();
         }
     }
 }

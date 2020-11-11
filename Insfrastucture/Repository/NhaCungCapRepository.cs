@@ -18,16 +18,17 @@ namespace Insfrastucture.Repository
         }
         public async Task<IEnumerable<NhaCungCap>> getAll()
         {
-            var result = await _context.NhaCungCaps.ToListAsync();
+            var result = await _context.NhaCungCaps.Where(i => i.isDelete == 0).ToListAsync();
             return result;
         }
         public async Task<NhaCungCap> getById(int id)
         {
-            var result = await _context.NhaCungCaps.Where(i => i.Id == id).FirstOrDefaultAsync();
+            var result = await _context.NhaCungCaps.Where(i => i.Id == id && i.isDelete == 0).FirstOrDefaultAsync();
             return result;
         }
         public async Task Add(NhaCungCap item)
         {
+            item.isDelete = 0;
             _context.NhaCungCaps.Add(item);
             await _context.SaveChangesAsync();
         }
@@ -38,8 +39,15 @@ namespace Insfrastucture.Repository
         }
         public async Task Delete(NhaCungCap item)
         {
+            item.isDelete = 1;
             _context.NhaCungCaps.Remove(item);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<NhaCungCap>> Filter(string searchString="")
+        {
+            var result = await _context.NhaCungCaps.Where(i => i.TenNCC.Contains(searchString) && i.isDelete == 0).ToListAsync();
+            return result;
         }
     }
 }

@@ -1,7 +1,7 @@
-@model IndexViewModel<Application.DTO.LoaiLinhKienDTO>
+@model IndexViewModel<Application.DTO.NhaCungCapDTO>
 
 @{
-    ViewData["Title"] = "Quản lý chủng loại";
+    ViewData["Title"] = "Quản lý nhà sản xuất";
     var count = 0;
     var searchString = (Model.searchString == null) ? "" : Model.searchString;
 }
@@ -10,18 +10,18 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $(".chungloai").addClass("admin-active");
+            $(".nhacungcap").addClass("admin-active");
         });
 
         $(document).ready(function () {
             $('.delete').click(function() {
                 if (confirm("Bạn chắc chắn muốn xóa?")) {
-                    var idCatalog = $(this).data("catalog");
+                    var id = $(this).data("ncc");
                     $.ajax({
-                        url: '/admin/category/' + idCatalog + '/delete',
+                        url: '/admin/manufactuer/' + id + '/delete',
                         type: 'DELETE'
                     }).done((result, textStatus, xhr) => {
-                            window.location.href = "/admin/category";
+                            window.location.href = "/admin/manufactuer";
                     }).fail(() => {
                         alert("Xóa dữ liệu thất bại");
                     });
@@ -34,13 +34,13 @@
 
 @section Content {
     <div>
-        <div class="admin-content-title"><b>QUẢN LÝ CHỦNG LOẠI SẢN PHẨM</b></div>
+        <div class="admin-content-title"><b>QUẢN LÝ NHÀ SẢN XUẤT</b></div>
         <div class="admin-content">
             <div class="admin-filter">
                 <div class="row">
                     <div class="col-2"><span>TÌM KIẾM</span></div>
                     <div class="col-10">
-                        <form id="searchForm" name="searchForm" method="get" action="@Url.Action("Index", "Category")">
+                        <form id="searchForm" name="searchForm" method="get" action="@Url.Action("Index", "Manufactuer")">
                             <input type="text" class="admin-input" name="searchString"
                                    value="@searchString">
                             <button class="admin-button-submit" type="submit"
@@ -48,18 +48,18 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
-                    </div><a href="@Url.Action("Add","Category")">
+                    </div><a href="@Url.Action("Add","Manufactuer")">
                         <div class="admin-plus"><span><i class="fas fa-plus-circle"></i></span></div>
                     </a>
                 </div>
             </div>
-            <div class="admin-content-title-1"><span class="admin-border-title-1">THÔNG TIN CHỦNG LOẠI</span></div>
+            <div class="admin-content-title-1"><span class="admin-border-title-1">THÔNG TIN NHÀ SẢN XUẤT</span></div>
             <div class="margin-top-20">
                 <table class="table table-striped table-condensed" width="100%">
                     <thead>
                         <tr class="d-flex">
                             <th class="col-1">#</th>
-                            <th class="col-2">Mã loại</th>
+                            <th class="col-2">Mã</th>
                             <th class="col-5">Tên</th>
                             <th class="col-4">Chức năng</th>
                         </tr>
@@ -68,21 +68,21 @@
                         @foreach (var item in Model.Entities)
                         {
                             count++;
-                            <tr class="d-flex"> 
-                                <th class="col-1">@count</th>
-                                <td class="col-2">@item.MaLoai</td>
-                                <td class="col-5">@item.Ten</td>
-                                <td class="col-4">
-                                    <a href="@Url.Action("Edit", "Category", new { id = item.Id})">
-                                        <button class="admin-button edit">
-                                            <i class="fas fa-edit"
-                                               data-catalog="1"></i>
-                                        </button>
-                                    </a><button class="admin-button delete" data-catalog="@item.Id">
-                                        <i class="fas fa-trash-alt" data-catalog="@item.Id"></i>
+                        <tr class="d-flex">
+                            <th class="col-1">@count</th>
+                            <td class="col-2">@item.MaNCC</td>
+                            <td class="col-5">@item.TenNCC</td>
+                            <td class="col-4">
+                                <a href="@Url.Action("Edit", "Manufactuer", new { id = item.Id})">
+                                    <button class="admin-button edit">
+                                        <i class="fas fa-edit"
+                                           data-catalog="1"></i>
                                     </button>
-                                </td>
-                            </tr>
+                                </a><button class="admin-button delete" data-ncc="@item.Id">
+                                    <i class="fas fa-trash-alt" data-ncc="@item.Id"></i>
+                                </button>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -90,7 +90,7 @@
             @{
                 await Html.RenderPartialAsync(
                   "Pagination",
-                   new ViewDataDictionary(this.Vi‌​ewData) {{ "nameAction", "Category" }});
+                   new ViewDataDictionary(this.Vi‌​ewData) {{ "nameAction", "Manufactuer" }});
             }
         </div>
     </div>

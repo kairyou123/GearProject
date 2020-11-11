@@ -15,12 +15,7 @@ namespace Domain.Entity
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string TenNCC { get; set; }
-        [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string DiaChi { get; set; }
-        [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string SDT { get; set; }
+        public string MoTa{ get; set; }
         public int isDelete { get; set; }
     }
 }

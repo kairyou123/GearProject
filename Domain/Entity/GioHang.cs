@@ -6,16 +6,14 @@ namespace Domain.Entity
 {
     public class GioHang
     {
-        [Key]
-        public int Id { get; set; }
-
+        [Column(TypeName = "nvarchar(450)")]
+        public string UserId { get; set; }
+        public ApplicationUser User{ get; set; }
+        public int LinhKienId { get; set; }
+        public LinhKien LinhKien { get; set; }
         [Required]
         [Column(TypeName = "int")]
         public int  SoLuong { get; set; }
-        [Required]
-        [Column(TypeName = "DateTime2")]
-        public DateTime NgayMua { get; set; }
-        public int LinhKienId {get;set;}
-        public LinhKien LinhKien { get; set; }
+
     }
 }

@@ -60,10 +60,11 @@ namespace GearMVC
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, GearContext context)
         {
             if (env.IsDevelopment())
             {
+                context.Database.EnsureCreated();
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -88,7 +89,6 @@ namespace GearMVC
         }
         private  void ConfigureScoped(IServiceCollection services)
         {
-            services.AddScoped<IGioHangRepository, GioHangRepository>();
             services.AddScoped<IHoaDonRepository, HoaDonRepository>();
             services.AddScoped<ILinhKienRepository, LinhKienRepository>();
             services.AddScoped<ILoaiLinhKienRepository, LoaiLinhKienRepository>();

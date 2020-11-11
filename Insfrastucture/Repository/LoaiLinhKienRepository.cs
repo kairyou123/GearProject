@@ -18,16 +18,17 @@ namespace Insfrastucture.Repository
         }
         public async Task<IEnumerable<LoaiLinhKien>> getAll()
         {
-            var result = await _context.LoaiLinhKiens.ToListAsync();
+            var result = await _context.LoaiLinhKiens.Where(i => i.isDelete == 0).ToListAsync();
             return result;
         }
         public async Task<LoaiLinhKien> getById(int id)
         {
-            var result = await _context.LoaiLinhKiens.Where(i => i.Id == id).FirstOrDefaultAsync();
+            var result = await _context.LoaiLinhKiens.Where(i => i.Id == id && i.isDelete == 0).FirstOrDefaultAsync();
             return result;
         }
         public async Task Add(LoaiLinhKien item)
         {
+            item.isDelete = 0;
             _context.LoaiLinhKiens.Add(item);
             await _context.SaveChangesAsync();
         }
@@ -38,8 +39,15 @@ namespace Insfrastucture.Repository
         }
         public async Task Delete(LoaiLinhKien item)
         {
-            _context.LoaiLinhKiens.Remove(item);
+            item.isDelete = 1;
+            _context.LoaiLinhKiens.Update(item);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<LoaiLinhKien>> Filter(string searchName)
+        {
+            var result = await _context.LoaiLinhKiens.Where(i => i.Ten.Contains(searchName) && i.isDelete == 0).ToListAsync();
+            return result;
         }
     }
 }

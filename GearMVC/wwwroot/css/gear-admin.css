@@ -3,6 +3,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/*init*/
+ul li{
+    list-style-type: none;
+}
+/*init*/
+
 .ck-editor__editable {
   min-height: 500px;
 }
@@ -300,4 +307,34 @@ input:focus {outline:none!important;}
 }
 .invisible{
   display: none;
+}
+
+/*Error*/
+.admin-error{
+    text-align: center;
+    padding-left: 30px;
+    padding-bottom: 10px;
+}
+
+ .admin-error > ul li {
+        list-style-type: none;
+}
+.admin-not-found {
+    margin: auto;
+    position: relative;
+}
+.admin-img-not-found {
+    display: block;
+    margin: 0 auto;
+    margin-top: 200px;
+}
+.admin-not-found-message {
+    color: red;
+    font-size: 30px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.validation-summary-errors ul li:nth-child(n+3) {
+    display: none;
 }

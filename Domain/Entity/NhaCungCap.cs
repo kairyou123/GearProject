@@ -21,5 +21,6 @@ namespace Domain.Entity
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string SDT { get; set; }
+        public int isDelete { get; set; }
     }
 }

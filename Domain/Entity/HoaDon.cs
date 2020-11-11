@@ -23,7 +23,8 @@ namespace Domain.Entity
 
         [Column(TypeName = "decimal(18,0)")]
         public decimal TiGia { get; set; }
-
+        [Column(TypeName = "nvarchar(450)")]
+        public string UserId { get; set; }
         public ApplicationUser User {get;set;}
         public ICollection<ChiTietHD> ChiTietHDs { get; set; }
     }

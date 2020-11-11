@@ -16,5 +16,7 @@ namespace Domain.Entity
         [Column(TypeName = "DateTime2")]
         public DateTime NgaySinh { get; set; }
         public ICollection<HoaDon> HoaDons{ get; set; }
+        public ICollection<GioHang> GioHang { get; set; }
+        public int isDelete { get; set; }
     }
 }

@@ -15,10 +15,11 @@ namespace Domain.Entity
         [Column(TypeName = "decimal(12,0)")]
         public decimal DonGiaBan { get; set; }
         [Required]
+        public int GiamGia { get; set; }
+        [Required]
         [Column(TypeName = "bit")]
         public bool ApDung { get; set; }
         public int LinhKienId {get;set;}
         public LinhKien LinhKien;
-
     }
 }

@@ -25,5 +25,6 @@ namespace Domain.Entity
         public NhaCungCap NCC { get; set; }
 
         public ICollection<CTGiao> CTGiaos { get; set; }
+        public int isDelete { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using GearMVC.Models;
+﻿using Application.DTO;
+using Domain.Entity;
+using GearMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,19 @@ namespace GearMVC.Services
                 CurrentPage = page,
                 PageCount = pageCount,
                 searchString = searchString
+            };
+        }
+
+        public static ProductIndexViewModel PaginationLinhKien(List<LinhKienDTO> list, int page, int itemPerPage, int pageCount, string searchString, int searchCategory, int searchManu)
+        {
+            return new ProductIndexViewModel
+            {
+                Entities = new List<LinhKienDTO>(list),
+                CurrentPage = page,
+                PageCount = pageCount,
+                searchString = searchString,
+                searchCategory = searchCategory,
+                searchManu = searchManu
             };
         }
 

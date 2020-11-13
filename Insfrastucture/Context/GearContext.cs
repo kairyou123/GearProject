@@ -21,7 +21,6 @@ namespace Insfrastucture.Context
         public DbSet<LinhKien> LinhKiens { get; set; }
         public DbSet<LoaiLinhKien> LoaiLinhKiens { get; set; }
         public DbSet<NhaCungCap> NhaCungCaps { get; set; }
-        public DbSet<TonKho> TonKhos { get; set; }
         public GearContext(DbContextOptions<GearContext> options) : base(options)
         { }
         protected override void OnModelCreating(ModelBuilder builder)

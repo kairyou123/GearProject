@@ -93,7 +93,6 @@ namespace GearMVC
             services.AddScoped<ILinhKienRepository, LinhKienRepository>();
             services.AddScoped<ILoaiLinhKienRepository, LoaiLinhKienRepository>();
             services.AddScoped<INhaCungCapRepository, NhaCungCapRepository>();
-            services.AddScoped<ITonKhoRepository, TonKhoRepository>();
         }
     }
 }

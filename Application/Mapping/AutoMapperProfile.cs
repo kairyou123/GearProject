@@ -13,6 +13,9 @@ namespace Application.Mapping
         public AutoMapperProfile()
         {
             CreateMap<LinhKienDTO, LinhKien>()
+                            .ForMember(x => x.Loai, y => y.MapFrom(z => z.Loai))
+                            .ForMember(x => x.NCC, y => y.MapFrom(z => z.NCC))
+                            .ForMember(x => x.DonGias, y => y.MapFrom(z => z.DonGias))
                             .ReverseMap();
             CreateMap<LoaiLinhKienDTO, LoaiLinhKien>()
                             .ForMember(x => x.Id, opt => opt.Condition(id => id !=null ))
@@ -20,6 +23,7 @@ namespace Application.Mapping
             CreateMap<NhaCungCapDTO, NhaCungCap>()
                             .ForMember(x => x.Id, opt => opt.Condition(id => id != null))
                             .ReverseMap();
+
         }
     }
 }

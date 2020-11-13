@@ -23,7 +23,7 @@ namespace Domain.Entity
         public string HangSanXuat { get; set; }
 
         [Required]
-        [Column(TypeName = "nvarchar(1000)")]
+        [Column(TypeName = "ntext")]
         public string MoTa { get; set; }
 
         [Required]
@@ -40,10 +40,12 @@ namespace Domain.Entity
         public LoaiLinhKien Loai { get; set; }
         public int NCCId{get;set;}
         public NhaCungCap NCC { get; set; }
+        public ICollection<DonGia> DonGias{ get; set; }
 
         public ICollection<ChiTietHD> ChiTietHDs  { get; set; }
         public ICollection<CTGiao> CTGiaos { get; set; }
         public ICollection<GioHang> GioHang { get; set; }
+        public int SLTonKho { get; set; }
         public int isDelete { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Application.DTO;
 using AutoMapper.Configuration.Conventions;
 using Application.Mapping;
-using GearMVC.Models;
+using Application.ViewModels;
 using GearMVC.Services;
 using System.Security.Cryptography.X509Certificates;
 

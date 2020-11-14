@@ -18,12 +18,12 @@ namespace Insfrastucture.Repository
         }
         public async Task<IEnumerable<LinhKien>> getAll()
         {
-            var result = await _context.LinhKiens.Where(i => i.isDelete == 0).Include(i => i.Loai).Include(i => i.NCC).ToListAsync();
+            var result = await _context.LinhKiens.Where(i => i.isDelete == 0).Include(i => i.Loai).Include(i => i.NCC).Include(i => i.DonGias).ToListAsync();
             return result;
         }
         public async Task<LinhKien> getById(int id)
         {
-            var result = await _context.LinhKiens.Where(i => i.Id == id && i.isDelete == 0).FirstOrDefaultAsync();
+            var result = await _context.LinhKiens.Where(i => i.Id == id && i.isDelete == 0).Include(i => i.Loai).Include(i => i.NCC).Include(i => i.DonGias).FirstOrDefaultAsync();
             return result;
         }
         public async Task Add(LinhKien item)
@@ -59,7 +59,7 @@ namespace Insfrastucture.Repository
             {
                 query = query.Where(i => i.NCC.Id == searchManu);
             }
-
+            query = query.Include(i => i.Loai).Include(i => i.NCC).Include(i => i.DonGias);
             var result = await query.ToListAsync();
             return result;
         }

@@ -19,10 +19,6 @@ namespace Domain.Entity
         public string TenLK { get; set; }
 
         [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string HangSanXuat { get; set; }
-
-        [Required]
         [Column(TypeName = "ntext")]
         public string MoTa { get; set; }
 

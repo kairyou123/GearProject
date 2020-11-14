@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Application.DTO;
 using AutoMapper.Configuration.Conventions;
 using Application.Mapping;
-using GearMVC.Models;
 using GearMVC.Services;
+using Application.ViewModels;
 using System.Security.Cryptography.X509Certificates;
 
 namespace GearMVC.Controllers

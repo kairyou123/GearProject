@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using GearMVC.Models;
+using Application.ViewModels;
 using Domain.IRepository;
 using AutoMapper;
 using Application.DTO;

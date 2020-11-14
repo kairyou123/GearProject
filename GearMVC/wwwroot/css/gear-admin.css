@@ -308,7 +308,10 @@ input:focus {outline:none!important;}
 .invisible{
   display: none;
 }
-
+.text-center
+{
+    text-align: center;
+}
 /*Error*/
 .admin-error{
     text-align: center;
@@ -338,3 +341,65 @@ input:focus {outline:none!important;}
 .validation-summary-errors ul li:nth-child(n+3) {
     display: none;
 }
+
+/*LinhKien Input File*/
+/*input-image*/
+.admin-input-file {
+    background-color: #f0f0f0;
+    width: 80px;
+    padding: 5px;
+    border: 2px #6f7173 dotted;
+    text-align: center;
+    font-size: 30px;
+    color: #6f7173;
+    line-height: 65px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.admin-label-button-style {
+    cursor: pointer;
+}
+
+.admin-label-show-image {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #f0f0f0;
+    margin-right: 10px;
+    cursor: context-menu;
+}
+
+.admin-khunghinh {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.admin-label-for-file {
+    position: relative;
+}
+
+    .admin-label-for-file:hover > .admin-label-show-image + .admin-input-image-remove {
+        display: block;
+    }
+
+.admin-input-image-remove {
+    position: absolute;
+    right: 15px;
+    top: 5px;
+    width: 16px;
+    font-size: 10px;
+    border: 1px solid black;
+    border-radius: 15px;
+    background: none;
+    color: inherit;
+    display: none;
+    background-color: white;
+    color: black;
+    text-align: center;
+    cursor: pointer;
+}
+
+    .admin-input-image-remove:focus {
+        outline: none;
+        box-shadow: none;
+    }

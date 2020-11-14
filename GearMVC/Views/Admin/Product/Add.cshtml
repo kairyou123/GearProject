@@ -1,0 +1,187 @@
+﻿@model ProductAddViewModel
+
+@{
+    ViewData["Title"] = "Thêm sản phẩm";
+    var categorys = ViewBag.Category;
+    var manufactuers = ViewBag.Manu;
+}
+
+@section Scripts {
+    <script src="~/js/admin-add-image.js"></script>
+    <script src="~/js//ckeditor1/ckeditor.js"></script>
+    <script src="~/js//ckeditor1/adapters/jquery.js"></script>
+    <script src="~/js/customImage.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".sanpham").addClass("admin-active");
+            $("#ngayapdung").val(new Date());
+        });
+        CKEDITOR.replace('MoTa', {
+            cloudServices_uploadUrl: 'admin/image',
+            customConfig: '/js/customImage.js'
+        });
+
+    </script>
+}
+
+@section Content{
+    <div>
+        <div class="admin-content-title"><b>THÊM SẢN PHẨM</b></div>
+        <div class="admin-content">
+            <div class="admin-form">
+                <form id="productEdit" enctype="multipart/form-data" name="productEdit" method="post">
+                    <div class="admin-error row">
+                        <div class="col-sm-3"></div>
+                        <div>
+                            @Html.ValidationMessageFor(m => m.Hinh, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Hình ảnh</label>
+                        <div class="col-sm-8 admin-khunghinh" id="khunghinh">
+                            <div class="file" id="file-div-1">
+                                <input type="file" id="file1" name="files" style="display: none;" data-label="label-file-1" data-div="file-div-1" onchange="readImage(this)" />
+                                <div class="admin-label-for-file">
+                                    <label id="label-file-1" for="file1" class="admin-input-file admin-label-button-style"><i class="fa fa-plus"></i></label>
+                                    <label class="admin-input-image-remove" id="button-remove-file-div-1" data-div="file-div-1" onclick="removeInput(this)">X</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="admin-error row">
+                        <div class="col-sm-3"></div>
+                        <div>
+                            @Html.ValidationMessageFor(m => m.MaLK, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Ma" class="col-sm-3 col-form-label">Mã</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="Ma" placeholder="Nhập mã sản phẩm"
+                                   name="MaLK" value="@Model.MaLK">
+                        </div>
+                    </div>
+                    <div class="admin-error row">
+                        <div class="col-sm-3"></div>
+                        <div>
+                            @Html.ValidationMessageFor(m => m.TenLK, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Ten" class="col-sm-3 col-form-label">Tên</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="Ten" placeholder="Nhập tên sản phẩm"
+                                   name="TenLK" value="@Model.TenLK">
+                        </div>
+                    </div>
+                    <div class="admin-error row">
+                        <div class="col-sm-3"></div>
+                        <div>
+                            @Html.ValidationMessageFor(m => m.Gia, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="DonGias1" class="col-sm-3 col-form-label">Giá gốc</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="DonGias1"
+                                   placeholder="Nhập phần trăm giảm giá" name="Gia" value="@Model.Gia">
+                        </div>
+                    </div>
+                    <div class="admin-error row">
+                        <div class="col-sm-3"></div>
+                        <div>
+                            @Html.ValidationMessageFor(m => m.GiamGia, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="DonGias" class="col-sm-3 col-form-label">Giảm giá (%)</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="DonGias"
+                                   placeholder="Nhập phần trăm giảm giá" name="GiamGia" value="@Model.GiamGia">
+                        </div>
+                    </div>
+                    <div class="admin-error row">
+                        <div class="col-sm-3"></div>
+                        <div>
+                            @Html.ValidationMessageFor(m => m.TGBH, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="TGBH" class="col-sm-3 col-form-label">TGBH (Tháng)</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="TGBH"
+                                   placeholder="Nhập thời gian bảo hành (tháng)" name="TGBH" value="@Model.TGBH">
+                        </div>
+                    </div>
+                    <div class="admin-error row">
+                        <div class="col-sm-3"></div>
+                        <div>
+                            @Html.ValidationMessageFor(m => m.SLTonKho, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="stock" class="col-sm-3 col-form-label">Tồn kho</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="stock"
+                                   placeholder="Nhập giá trị tồn kho" name="SLTonKho" value="@Model.SLTonKho">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="mota" class="col-sm-3 col-form-label">Mô tả</label>
+                        <div class="col-sm-8">
+                            <textarea id="mota" class="form-control" name="MoTa" cols="40">@Model.MoTa</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="catalog" class="col-sm-3 col-form-label">Chủng loại</label>
+                        <div class="col-sm-8" id="catalog">
+                            <select class="form-control" name="Loai">
+                                @foreach (var catalog in categorys)
+                                {
+                                    if (catalog.Id == Model.Loai)
+                                    {
+                                        <option value="@catalog.Id" selected>@catalog.Ten</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@catalog.Id">@catalog.Ten</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="manufactuer" class="col-sm-3 col-form-label">Hãng sản xuất</label>
+                        <div class="col-sm-8" id="manufactuer">
+                            <select class="form-control" name="NCC">
+                                @foreach (var manufactuer in manufactuers)
+                                {
+                                    if (manufactuer.Id == Model.NCC)
+                                    {
+                                        <option value="@manufactuer.Id" selected>@manufactuer.TenNCC</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@manufactuer.Id">@manufactuer.TenNCC</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="admin-form-edit-button">
+                            <button class="btn btn-warning admin-form-edit-button" type="submit"
+                                    form="productEdit" value="Submit">
+                                Thêm
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}

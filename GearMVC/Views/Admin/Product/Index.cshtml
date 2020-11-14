@@ -70,17 +70,17 @@
                         {
                             <tr>
                                 <th>
-                                    <img src="~/images/admin.png"
+                                    <img src="~/images/products/@product.Hinh"
                                          width="60px" height="60px">
                                 </th>
                                 <td>@product.TenLK</td>
-                                <td>@product.DonGias.LastOrDefault().DonGia ₫</td>
+                                <td>@product.DonGias.LastOrDefault().DonGiaBan ₫</td>
                                 <td>@product.DonGias.LastOrDefault().GiamGia %</td>
                                 <td>@product.SLTonKho</td>
                                 <td>@product.Loai.Ten</td>
                                 <td>@product.NCC.TenNCC</td>
                                 <td>
-                                    <a href="/admin/product/logitech-g90-optical/edit">
+                                    <a href="/admin/product/@product.Id/edit">
                                         <button class="admin-button edit">
                                             <i class="fas fa-edit" data-product="3"></i>
                                         </button>

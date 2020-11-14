@@ -12,11 +12,15 @@ namespace Application.Mapping
     {
         public AutoMapperProfile()
         {
-            CreateMap<LinhKienDTO, LinhKien>()
+            CreateMap<LinhKien, LinhKienDTO>()
                             .ForMember(x => x.Loai, y => y.MapFrom(z => z.Loai))
                             .ForMember(x => x.NCC, y => y.MapFrom(z => z.NCC))
                             .ForMember(x => x.DonGias, y => y.MapFrom(z => z.DonGias))
-                            .ReverseMap();
+                            .ReverseMap(); 
+            CreateMap<LinhKien, DonGiaDTO>() 
+                            .ReverseMap(); 
+            CreateMap<DonGia, DonGiaDTO>()
+                             .ReverseMap();
             CreateMap<LoaiLinhKienDTO, LoaiLinhKien>()
                             .ForMember(x => x.Id, opt => opt.Condition(id => id !=null ))
                             .ReverseMap();

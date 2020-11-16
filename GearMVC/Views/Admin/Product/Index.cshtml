@@ -12,6 +12,13 @@
 
         $(document).ready(function () {
             $(".sanpham").addClass("admin-active");
+
+            $(".delete").click(function (e) {
+                e.preventDefault();
+                if (confirm("Bạn chắc chắn muốn xóa?")) {
+                    $(this).parents('form').submit();
+                }
+            });
         });
 
     </script>
@@ -84,10 +91,14 @@
                                         <button class="admin-button edit">
                                             <i class="fas fa-edit" data-product="3"></i>
                                         </button>
-                                    </a><button class="admin-button delete"
-                                                data-product="3">
-                                        <i class="fas fa-trash-alt" data-product="3"></i>
-                                    </button>
+                                    </a>
+                                    <form method="post" id="deleteProduct" action="@Url.Action("Delete", "Product", new { id = product.Id })">
+                                        @Html.AntiForgeryToken()
+                                        <button class="admin-button delete"
+                                                data-product="3" type="submit" form="deleteProduct">
+                                            <i class="fas fa-trash-alt" data-product="3"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         }

@@ -59,7 +59,7 @@ namespace Insfrastucture.Repository
             {
                 query = query.Where(i => i.NCC.Id == searchManu);
             }
-            query = query.Include(i => i.Loai).Include(i => i.NCC).Include(i => i.DonGias);
+            query = query.Where(i => i.isDelete == 0).Include(i => i.Loai).Include(i => i.NCC).Include(i => i.DonGias);
             var result = await query.ToListAsync();
             return result;
         }

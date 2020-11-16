@@ -44,7 +44,7 @@
                             @foreach (var image in images)
                             {
                                 <div class="file" id="file-div-@count">
-                                    <input type="text" id="file-@count" name="oldFiles" style="display: none;" data-label="label-file-@count" data-div="file-div-@count" onchange="readImage(this)" value="@image"/>
+                                    <input type="text" id="file-@count" name="oldFiles" style="display: none;" data-label="label-file-@count" data-div="file-div-@count" onchange="readImage(this)" value="@image" />
                                     <div class="admin-label-for-file">
                                         <label id="label-file-@count" class="admin-label-show-image admin-label-button-style"><img src="/images/products/@image" width='100%' height='100%' /></label>
                                         <label class="admin-input-image-remove" id="button-remove-file-div-@count" data-div="file-div-@count" onclick="removeInput(this)">X</label>
@@ -158,6 +158,7 @@
                             </select>
                         </div>
                     </div>
+                    @Html.AntiForgeryToken()
                     <input type="hidden" value="@count" id="count-image" />
                     <input type="hidden" value="@Model.Hinh" id="count-image" name="Hinh" />
                     <div class="form-group row">

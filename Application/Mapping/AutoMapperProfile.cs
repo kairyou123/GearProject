@@ -27,6 +27,10 @@ namespace Application.Mapping
             CreateMap<NhaCungCapDTO, NhaCungCap>()
                             .ForMember(x => x.Id, opt => opt.Condition(id => id != null))
                             .ReverseMap();
+            CreateMap<UserDTO, ApplicationUser>()
+                            .ForMember(x => x.Id, opt => opt.Condition(id => id != null))
+                            .ForMember(x => x.PasswordHash, opt => opt.Ignore())
+                            .ReverseMap();
 
         }
     }

@@ -55,6 +55,7 @@ namespace GearMVC.Controllers
         }
 
         [HttpPost("Add")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPost(NhaCungCapDTO dto)
         {
             var message = "";
@@ -87,6 +88,7 @@ namespace GearMVC.Controllers
         }
 
         [HttpPost("{id?}/Edit")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(int id, NhaCungCapDTO dto)
         {
             ViewBag.Title = "Sửa Chủng Loại";

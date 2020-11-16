@@ -20,7 +20,7 @@ namespace GearMVC.Controllers.Admin
     {
         private readonly IMapper _mapper;
         private readonly ILinhKienRepository _linhKienRepository;
-        private readonly ILoaiLinhKienRepository  _llkRepository;
+        private readonly ILoaiLinhKienRepository _llkRepository;
         private readonly INhaCungCapRepository _nccRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly int itemPerPage = 10;
@@ -40,16 +40,16 @@ namespace GearMVC.Controllers.Admin
             searchManu: id Nhà Cung Cấp của các sản phẩm muốn lấy ra
             page: trang hiện tại
          */
-        public async Task<IActionResult> Index(string searchString="", int searchCategory=0, int searchManu=0, int page=1)
+        public async Task<IActionResult> Index(string searchString = "", int searchCategory = 0, int searchManu = 0, int page = 1)
         {
             //Get All LinhKien with search
-            var linhkiens = await _linhKienRepository.Filter(searchString,searchCategory,searchManu);
+            var linhkiens = await _linhKienRepository.Filter(searchString, searchCategory, searchManu);
             double count = linhkiens.Count();
             int pageCount = (int)Math.Ceiling(count / itemPerPage);
             var LKPagination = linhkiens.Skip((page - 1) * itemPerPage).Take(itemPerPage);
 
             var dtos = _mapper.Map<List<LinhKienDTO>>(LKPagination);
-            foreach(var dto in dtos)
+            foreach (var dto in dtos)
             {
                 var hinh = dto.Hinh.Split(',')[0];
                 dto.Hinh = hinh;
@@ -67,11 +67,11 @@ namespace GearMVC.Controllers.Admin
             var manuDTO = _mapper.Map<List<NhaCungCapDTO>>(manufactuers);
             ViewBag.Manu = manuDTO;
 
-            return View("~/Views/Admin/Product/Index.cshtml",pagination);
+            return View("~/Views/Admin/Product/Index.cshtml", pagination);
         }
 
         [HttpGet("Add")]
-        public async Task<IActionResult> Add ()
+        public async Task<IActionResult> Add()
         {
             ProductAddViewModel dto = new ProductAddViewModel();
 
@@ -89,9 +89,10 @@ namespace GearMVC.Controllers.Admin
         }
 
         [HttpPost("Add")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPost([FromForm] ProductAddViewModel dto)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 //Get All Category
                 var categorys = await _llkRepository.getAll();
@@ -156,7 +157,7 @@ namespace GearMVC.Controllers.Admin
             lk.SLTonKho = dto.SLTonKho;
 
             DonGia donGia = new DonGia();
-            donGia.DonGiaBan= (decimal)dto.Gia;
+            donGia.DonGiaBan = (decimal)dto.Gia;
             donGia.GiamGia = dto.GiamGia;
             donGia.ApDung = true;
             donGia.Ngay = DateTime.Now.Date;
@@ -181,8 +182,8 @@ namespace GearMVC.Controllers.Admin
         {
             var linhkien = await _linhKienRepository.getById(id);
 
-            
-            if(linhkien == null)
+
+            if (linhkien == null)
             {
                 return View("~/Views/Admin/Error.cshtml");
             }
@@ -206,9 +207,10 @@ namespace GearMVC.Controllers.Admin
         }
 
         [HttpPost("{id?}/Edit")]
-        public async Task<IActionResult> EditPost(int id, [FromForm] List<IFormFile> files,[FromForm] LinhKienDTO dto, [FromForm] List<string> oldFiles)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPost(int id, [FromForm] List<IFormFile> files, [FromForm] LinhKienDTO dto, [FromForm] List<string> oldFiles)
         {
-            if(oldFiles.Count == 0 && (files == null || files.Count == 0) )
+            if (oldFiles.Count == 0 && (files == null || files.Count == 0))
             {
                 //Get All Category
                 var categorys = await _llkRepository.getAll();
@@ -255,13 +257,13 @@ namespace GearMVC.Controllers.Admin
                 var flg = false;
                 foreach (var oldFile in oldFiles)
                 {
-                    if(oldFile == image)
+                    if (oldFile == image)
                     {
                         flg = true;
                         Hinh += oldFile + ",";
                     }
                 }
-                if(flg == false)
+                if (flg == false)
                 {
                     var fullPath = webRootPath + "/images/products/" + image;
                     if (System.IO.File.Exists(fullPath))
@@ -277,7 +279,7 @@ namespace GearMVC.Controllers.Admin
             Random rnd = new Random();
             pathS = Path.Combine(contentRootPath, "images");
             pathS = Path.Combine(pathS, "products");
-            
+
             foreach (var formFile in files)
             {
                 if (formFile.Length > 0)
@@ -320,6 +322,20 @@ namespace GearMVC.Controllers.Admin
             return Redirect("/admin/product");
         }
 
+        [HttpPost("{id?}/Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var linhkien = await _linhKienRepository.getById(id);
+
+            if (linhkien == null)
+            {
+                return View("~/Views/Admin/Error.cshtml");
+            }
+
+            await _linhKienRepository.Delete(linhkien);
+            return Redirect("/admin/product");
+        }
 
     }
 }

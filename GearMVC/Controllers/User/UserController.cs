@@ -10,25 +10,28 @@ using Application.ViewModels;
 
 namespace GearMVC.Controllers.User
 {
-    [Route("dang-ky")]
+    [Route("")]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public UserController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public UserController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
+        [HttpGet("dang-ky")]
         public IActionResult Index()
         {
             RegisterViewModel viewModel = new RegisterViewModel();
             return View("Register", viewModel);
         }
 
-        [HttpPost]
+        [HttpPost("dang-ky")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Post(RegisterViewModel viewModel)
+        public async Task<IActionResult> DKPost(RegisterViewModel viewModel)
         {
             if(!ModelState.IsValid)
             {
@@ -85,6 +88,43 @@ namespace GearMVC.Controllers.User
 
             ViewBag.Email = user.Email;
             return View("RegisterComplete");
+        }
+
+        [HttpGet("dang-nhap")]
+        public IActionResult Login()
+        {
+            LoginViewModel viewModel = new LoginViewModel();
+
+            return View("Login", viewModel);
+        }
+
+        [HttpPost("dang-nhap")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LoginPost(LoginViewModel viewModel)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View("Login", viewModel);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(viewModel.Email, viewModel.Password, true,false);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("Email", "Email hoặc mật khẩu không chính xác");
+                return View("Login", viewModel);
+            }
+
+            return Redirect("/");
+        }
+
+        [HttpPost("dang-xuat")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogoutPost()
+        {
+            await _signInManager.SignOutAsync();
+
+            return Redirect("/");
         }
     }
 }

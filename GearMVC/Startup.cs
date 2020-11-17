@@ -8,8 +8,10 @@ using Domain.Entity;
 using Domain.IRepository;
 using Insfrastucture.Context;
 using Insfrastucture.Repository;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +60,13 @@ namespace GearMVC
 
             });
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = "LoginGearMVC";
+                options.AccessDeniedPath = "/access-denied";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+            });
+
             services.AddRazorPages()
                             .AddMvcOptions(options =>
                             {
@@ -80,11 +89,14 @@ namespace GearMVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseStatusCodePagesWithReExecute("/error", "?statusCode={0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

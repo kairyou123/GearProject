@@ -12,10 +12,12 @@ using Application.Mapping;
 using Application.ViewModels;
 using GearMVC.Services;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GearMVC.Controllers
 {
     [Route("admin/[controller]")]
+    [Authorize(Roles = "Admin")]
     public class ManufactuerController : Controller
     {
         private readonly INhaCungCapRepository _nccRepo;

@@ -12,10 +12,12 @@ using GearMVC.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GearMVC.Controllers.Admin
 {
     [Route("admin/[controller]")]
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly IMapper _mapper;
@@ -42,6 +44,8 @@ namespace GearMVC.Controllers.Admin
          */
         public async Task<IActionResult> Index(string searchString = "", int searchCategory = 0, int searchManu = 0, int page = 1)
         {
+            if (searchString == null) searchString = "";
+
             //Get All LinhKien with search
             var linhkiens = await _linhKienRepository.Filter(searchString, searchCategory, searchManu);
             double count = linhkiens.Count();

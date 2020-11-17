@@ -1,0 +1,41 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Ttitle"] = "Đăng nhập";
+}
+
+<!-- Content -->
+<div class="container">
+    <!-- Products -->
+    <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-6 m-auto py-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Đăng nhập</h3>
+                </div>
+                <hr class="mb-4">
+                <div class="panel-body">
+                    <form role="form" method="post">
+                        <div class="form-group">
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="Email" id="email" class="form-control input-sm" placeholder="Email" value="@Model.Email" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="Password" id="password" class="form-control input-sm"
+                                   placeholder="Mật khẩu" />
+                        </div>
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Đăng nhập" class="btn btn-info btn-block" />
+                    </form>
+                    <br />
+                    <hr class="mb-4">
+                    <div>
+                        <i>Chưa có tài khoản?</i><b class="float-right"><a href="/dang-ky">Đăng ký</a></b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

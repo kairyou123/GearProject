@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<Domain.Entity.ApplicationUser> userManager;
+@inject SignInManager<Domain.Entity.ApplicationUser> signInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -27,7 +31,7 @@
     <!-- Menu -->
     <div id="menu" class="menu">
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
-            <a class="navbar-brand padding-gear-40" href="index.html">GEAR SHOP</a>
+            <a class="navbar-brand padding-gear-40" href="/">GEAR SHOP</a>
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
                     aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -61,10 +65,25 @@
                     </li>
                     <li class="nav-item dropdown mr-auto dropleft">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><i class="fas fa-user"></i></a>
-                        <div class="dropdown-menu dropleft">
-                            <a class="dropdown-item" href="#">Đăng nhập</a>
-                            <a class="dropdown-item" href="#">Đăng ký</a>
-                        </div>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <div class="dropdown-menu dropleft">
+                                <a class="dropdown-item" href="#">Thông tin tài khoản</a>
+                                <a class="dropdown-item" href="#">Đơn hàng</a>
+                                <form method="post" action="/dang-xuat">
+                                    <input type="submit" style="display:none" id="logout" />
+                                    @Html.AntiForgeryToken()
+                                    <label for="logout" class="dropdown-item">Đăng xuất</label>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="dropdown-menu dropleft">
+                                <a class="dropdown-item" href="/dang-nhap">Đăng nhập</a>
+                                <a class="dropdown-item" href="/dang-ky">Đăng ký</a>
+                            </div>
+                        }
                     </li>
                     <!-- <li class="nav-item dropdown mr-auto dropleft">
                       <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><i class="fas fa-user"></i></a>

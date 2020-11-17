@@ -12,10 +12,12 @@ using Application.Mapping;
 using GearMVC.Services;
 using Application.ViewModels;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GearMVC.Controllers
 {
     [Route("admin/[controller]")]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly ILoaiLinhKienRepository _loaiLinhKienRepo;

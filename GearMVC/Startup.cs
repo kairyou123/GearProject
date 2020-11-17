@@ -65,6 +65,7 @@ namespace GearMVC
                 options.Cookie.Name = "LoginGearMVC";
                 options.AccessDeniedPath = "/access-denied";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.LoginPath = "/dang-nhap";
             });
 
             services.AddRazorPages()

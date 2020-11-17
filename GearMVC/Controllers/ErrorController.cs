@@ -22,7 +22,15 @@ namespace GearMVC.Controllers
         [HttpGet("/access-denied")]
         public async Task<IActionResult> AccessDenied()
         {
-            return RedirectToAction("Error", new { statusCode = 401 });
+            if (_signInManager.IsSignedIn(HttpContext.User))
+            {
+                if (!HttpContext.User.IsInRole("Khách hàng"))
+                {
+                    return RedirectToAction("Error", new { statusCode = 401 });
+                }
+            }
+
+            return RedirectToAction("Error", new { statusCode = 404 });
         }
 
         [HttpGet("/error")]
@@ -40,7 +48,7 @@ namespace GearMVC.Controllers
                         }
                         else
                         {
-                            return Redirect("/admin/error");
+                            return  Redirect("/admin/error");
                         }
                     }
 

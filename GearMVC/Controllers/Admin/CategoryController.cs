@@ -81,7 +81,7 @@ namespace GearMVC.Controllers
             LoaiLinhKien loaiLinhKien = await _loaiLinhKienRepo.getById(id);
             if(loaiLinhKien == null)
             {
-                return View("~/Views/Admin/Error.cshtml");
+                return View("~/Views/Error/404.cshtml");
             }
 
             LoaiLinhKienDTO dto = _mapper.Map<LoaiLinhKienDTO>(loaiLinhKien);

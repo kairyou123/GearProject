@@ -189,7 +189,7 @@ namespace GearMVC.Controllers.Admin
 
             if (linhkien == null)
             {
-                return View("~/Views/Admin/Error.cshtml");
+                return View("~/Views/Error/404.cshtml");
             }
 
             LinhKienDTO dto = _mapper.Map<LinhKienDTO>(linhkien);
@@ -334,7 +334,7 @@ namespace GearMVC.Controllers.Admin
 
             if (linhkien == null)
             {
-                return View("~/Views/Admin/Error.cshtml");
+                return View("~/Views/Error/404.cshtml");
             }
 
             await _linhKienRepository.Delete(linhkien);

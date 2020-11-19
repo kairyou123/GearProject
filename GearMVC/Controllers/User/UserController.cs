@@ -14,9 +14,9 @@ namespace GearMVC.Controllers.User
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public UserController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager)
+        public UserController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -72,7 +72,7 @@ namespace GearMVC.Controllers.User
                 var roleExisted = await _roleManager.RoleExistsAsync("Khách hàng");
                 if(!roleExisted)
                 {
-                    var role = new IdentityRole
+                    var role = new ApplicationRole
                     {
                         Name = "Khách hàng"
                     };

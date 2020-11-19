@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<Domain.Entity.ApplicationUser> userManager;
+@inject SignInManager<Domain.Entity.ApplicationUser> signInManager;
+
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -30,8 +35,7 @@
         <div class="admin-right">
             <div class="admin-user">
                 <div class="admin-user-text">
-                    <span class="admin-user-name">Alice</span><img src="~/images/admin.png"
-                                                                   height="40px">
+                    <span class="admin-user-name">@userManager.GetUserName(User)</span> <img src="~/images/admin.png" height="40px">
                 </div>
             </div>
             @RenderBody()
@@ -49,6 +53,18 @@
                                 <div class="col-3 text-center"><i class="fas fa-user"></i></div><span class="menu-text">
                                     Người
                                     dùng
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-2"><span class="padding-right-5"><i class="fas fa-arrow-circle-right"></i></span></div>
+                    </div>
+                </a>
+                <a class="loaitaikhoan" href="@Url.Action("Index","Role")">
+                    <div class="menu-section row" id="admin-user">
+                        <div class="col-9">
+                            <div class="row">
+                                <div class="col-3 text-center"><i class="fas fa-user-tag"></i></div><span class="menu-text">
+                                    Loại tài khoản
                                 </span>
                             </div>
                         </div>
@@ -72,7 +88,7 @@
                         </div>
                         <div class="col-2"><span class="padding-right-5"><i class="fas fa-arrow-circle-right"></i></span></div>
                     </div>
-                </a><a  class="nhacungcap" href="@Url.Action("Index","Manufactuer")">
+                </a><a class="nhacungcap" href="@Url.Action("Index","Manufactuer")">
                     <div class="menu-section row">
                         <div class="col-9">
                             <div class="row">

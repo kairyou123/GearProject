@@ -7,10 +7,13 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Domain.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Insfrastucture.Context
 {
-    public class GearContext : IdentityDbContext<ApplicationUser> 
+    public class GearContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserClaim<string>,
+    ApplicationUserRole, IdentityUserLogin<string>,
+    IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public DbSet<HoaDon> HoaDons { get; set; }
         public DbSet<ChiTietHD> ChiTietHDs { get; set; }
@@ -26,6 +29,7 @@ namespace Insfrastucture.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<IdentityUserRole<Guid>>().HasKey(x => new { x.UserId, x.RoleId });
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
         

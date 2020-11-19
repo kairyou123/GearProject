@@ -13,5 +13,6 @@ namespace Application.DTO
         public string DiaChi { get; set; }
         public string GioiTinh { get; set; }
         public string CMND { get; set; }
+        public string ChucVu { get; set; }
     }
 }

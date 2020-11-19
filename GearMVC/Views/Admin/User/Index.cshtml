@@ -1,0 +1,89 @@
+@model IndexViewModel<UserDTO>
+
+@{
+    ViewData["Title"] = "Quản lý loại tài khoản";
+    var count = 0;
+}
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".loaitaikhoan").addClass("admin-active");
+        });
+
+    </script>
+}
+
+@section Content {
+    <div>
+        <div class="admin-content-title"><b>QUẢN LÝ NGƯỜI DÙNG</b></div>
+        <div class="admin-content">
+            <div class="admin-filter">
+                <div class="row">
+                    <div class="col-2"><span>TÌM KIẾM</span></div>
+                    <div class="col-10">
+                        <form id="search-form" name="searchForm">
+                            <input type="text" class="admin-input" name="searchString"
+                                   value=""><select class="admin-select" name="role" id="role">
+                                <option value="">Chức vụ</option>
+                                @foreach(var role in ViewBag.Roles)
+                                {
+                                    <option value="@role.Name">@role.Name</option>
+                                }
+                                
+                            </select><button class="admin-button-submit" type="submit" form="search-form" value="Submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div><a href="userAdd.html">
+                        <div class="admin-plus"><span><i class="fas fa-plus-circle"></i></span></div>
+                    </a>
+                </div>
+            </div>
+            <div class="admin-content-title-1"><span class="admin-border-title-1">THÔNG TIN NGƯỜI DÙNG</span></div>
+            <div class="margin-top-20">
+                <table class="table table-striped table-condensed" width="100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Chức vụ</th>
+                            <th scope="col">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model.Entities)
+                        {
+                            count++;
+                            <tr>
+                                <th>@count</th>
+                                <td>@user.HoTen</td>
+                                <td>@user.Email</td>
+                                <td>@user.PhoneNumber</td>
+                                <td>@user.ChucVu</td>
+                                <td>
+                                    <a href="userEdit.html">
+                                        <button class="admin-button edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                  </a>
+                                        <button class="admin-button delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @{ 
+                await Html.RenderPartialAsync(
+                "PaginationUser",
+                new ViewDataDictionary(this.Vi‌​ewData) { { "nameController", "UserAdmin" } });
+            }
+            </div>
+       </div>
+}

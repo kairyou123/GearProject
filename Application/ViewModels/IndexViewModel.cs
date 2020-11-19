@@ -11,6 +11,7 @@ namespace Application.ViewModels
         public int PageCount { get; set; }
         public int CurrentPage { get; set; }
         public string searchString { get; set; }
+        public string role { get; set; }
 
     }
 }

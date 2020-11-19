@@ -14,6 +14,7 @@ namespace Domain.Entity
         public string CMND {get;set;}
         public ICollection<HoaDon> HoaDons{ get; set; }
         public ICollection<GioHang> GioHang { get; set; }
+        public ICollection<ApplicationUserRole> UserRoles { get; set; }
         public int isDelete { get; set; }
     }
 }

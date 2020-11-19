@@ -1,8 +1,10 @@
 ﻿using Application.DTO;
 using AutoMapper;
 using Domain.Entity;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -20,6 +22,8 @@ namespace Application.Mapping
             CreateMap<LinhKien, DonGiaDTO>() 
                             .ReverseMap(); 
             CreateMap<DonGia, DonGiaDTO>()
+                             .ReverseMap();
+            CreateMap<ApplicationRole, LoaiTKDTO>()
                              .ReverseMap();
             CreateMap<LoaiLinhKienDTO, LoaiLinhKien>()
                             .ForMember(x => x.Id, opt => opt.Condition(id => id !=null ))

@@ -39,7 +39,7 @@ namespace GearMVC
                             optionns.UseSqlServer(Configuration.GetConnectionString("DevConnection"), b => b.MigrationsAssembly("GearMVC")));
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
                            .AddEntityFrameworkStores<GearContext>()
                            .AddDefaultTokenProviders();
 
@@ -77,11 +77,10 @@ namespace GearMVC
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, GearContext context)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, GearContext context, UserManager<ApplicationUser> userManager)
         {
             if (env.IsDevelopment())
             {
-                context.Database.EnsureCreated();
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -109,10 +108,13 @@ namespace GearMVC
         }
         private  void ConfigureScoped(IServiceCollection services)
         {
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IHoaDonRepository, HoaDonRepository>();
             services.AddScoped<ILinhKienRepository, LinhKienRepository>();
             services.AddScoped<ILoaiLinhKienRepository, LoaiLinhKienRepository>();
             services.AddScoped<INhaCungCapRepository, NhaCungCapRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            
         }
     }
 }

@@ -82,7 +82,7 @@ namespace GearMVC.Controllers
             NhaCungCap ncc= await _nccRepo.getById(id);
             if(ncc == null)
             {
-                return View("~/Views/Admin/Error.cshtml");
+                return View("~/Views/Error/404.cshtml");
             }
 
             NhaCungCapDTO dto = _mapper.Map<NhaCungCapDTO>(ncc);

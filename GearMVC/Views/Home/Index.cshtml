@@ -1,49 +1,648 @@
-﻿@model List<Application.DTO.LinhKienDTO>
-@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-
+﻿@section Content{
     <div>
-        <table class="table">
+        <!-- Header banner -->
+        <div id="header" class="carousel slide header" data-ride="carousel">
+            <ul class="carousel-indicators">
+                <li data-target="#header" data-slide-to="0" class="active"></li>
+                <li data-target="#header" data-slide-to="1"></li>
+                <li data-target="#header" data-slide-to="2"></li>
+            </ul>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="images/banner.png" alt="Los Angeles" width="1100" height="500">
+                    <div class="carousel-caption">
+                        <h3>Los Angeles</h3>
+                        <p>We had such a great time in LA!</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/banner.png" alt="Chicago" width="1100" height="500">
+                    <div class="carousel-caption">
+                        <h3>Chicago</h3>
+                        <p>Thank you, Chicago!</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/banner.png" alt="New York" width="1100" height="500">
+                    <div class="carousel-caption">
+                        <h3>New York</h3>
+                        <p>We love the Big Apple!</p>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#header" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#header" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
 
-            <tbody>
-               
-            
-            @foreach (var item in Model)
-            {
-                <tr>
-                    
-                    <td>
-                        @Html.DisplayFor(asas => item.MaLK)
-                    </td>
-                    <td>
-                        @Html.Raw( item.MoTa)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(asas => item.TenLK)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(asas => item.NCC.TenNCC)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(asas => item.Loai.Ten)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
-        <h4>Movie</h4>
-        <hr />
-        
-        
+        <!-- Products -->
+        <div class="title-content-index">
+            <p class="title-content-index-name">MỚI NHẤT</p>
+            <p class="title-content-index-more"><a href="#">Xem thêm</a></p>
+        </div>
+        <div id="content" class="swiper-container content-index">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Laptop xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/tainghe-1.jpg" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                                <div class="products-tags">
+                                    <p>NEW</p>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Loa xịn xịn xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>&nbsp;</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.400 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/loa-1.jpg" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Tai nghe xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Laptop xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/tainghe.jpg" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Loa xịn xịn xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Tai nghe xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Laptop xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Loa xịn xịn xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Tai nghe xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Loa xịn xịn xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/loa-1.jpg" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Tai nghe xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Arrows -->
+            <!-- <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div> -->
+        </div>
+
+        <div class="title-content-index">
+            <p class="title-content-index-name">BÁN CHẠY NHẤT</p>
+            <p class="title-content-index-more"><a href="#">Xem thêm</a></p>
+        </div>
+        <div id="content" class="swiper-container content-index">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                                <div class="products-tags">
+                                    <p>HOT</p>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Laptop xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/tainghe-1.jpg" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Loa xịn xịn xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/loa-1.jpg" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Tai nghe xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Laptop xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/tainghe.jpg" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Loa xịn xịn xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Tai nghe xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Laptop xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Loa xịn xịn xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Tai nghe xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/banphim.png" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Loa xịn xịn xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#product-detail">
+                        <div class="products">
+                            <div class="products-img">
+                                <img src="images/loa-1.jpg" alt="img">
+                                <div class="products-hover">
+                                    <p class="products-hover-see-more">
+                                        <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                    </p>
+                                    <div class="products-hover-btn">
+                                        <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products-name">
+                                <h2>Tai nghe xịn xịn xịn xịn xịn xịn xịn xịn</h2>
+                            </div>
+                            <div class="products-price">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                            <div class="products-price-sale">
+                                <p>4.400.000 VNĐ</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Arrows -->
+            <!-- <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div> -->
+        </div>
     </div>
-</div>
+}

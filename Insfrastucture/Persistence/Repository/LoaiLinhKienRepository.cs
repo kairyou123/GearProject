@@ -46,7 +46,7 @@ namespace Insfrastucture.Repository
 
         public async Task<IEnumerable<LoaiLinhKien>> Filter(string searchName)
         {
-            var result = await _context.LoaiLinhKiens.Where(i => i.Ten.Contains(searchName) && i.isDelete == 0).ToListAsync();
+            var result = await _context.LoaiLinhKiens.Where(i => i.Ten.Contains(searchName) && i.isDelete == 0).OrderBy(i => i.MaLoai).ToListAsync();
             return result;
         }
     }

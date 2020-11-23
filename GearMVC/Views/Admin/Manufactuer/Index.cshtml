@@ -11,23 +11,13 @@
 
         $(document).ready(function () {
             $(".nhacungcap").addClass("admin-active");
-        });
 
-        $(document).ready(function () {
-            $('.delete').click(function() {
+            $(".delete").click(function (e) {
+                e.preventDefault();
                 if (confirm("Bạn chắc chắn muốn xóa?")) {
-                    var id = $(this).data("ncc");
-                    $.ajax({
-                        url: '/admin/manufactuer/' + id + '/delete',
-                        type: 'DELETE'
-                    }).done((result, textStatus, xhr) => {
-                            window.location.href = "/admin/manufactuer";
-                    }).fail(() => {
-                        alert("Xóa dữ liệu thất bại");
-                    });
+                    $(this).parents('form').submit();
                 }
             });
-            
         });
     </script>
 }
@@ -78,9 +68,13 @@
                                         <i class="fas fa-edit"
                                            data-catalog="1"></i>
                                     </button>
-                                </a><button class="admin-button delete" data-ncc="@item.Id">
-                                    <i class="fas fa-trash-alt" data-ncc="@item.Id"></i>
-                                </button>
+                                </a>
+                                <form method="post" id="delete" action="/admin/manufactuer/@item.Id/delete" style="display:inline;">
+                                    @Html.AntiForgeryToken()
+                                    <button class="admin-button delete" data-ncc="@item.Id">
+                                        <i class="fas fa-trash-alt" data-ncc="@item.Id"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         }

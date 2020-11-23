@@ -33,12 +33,12 @@ namespace GearMVC.Controllers.User
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DKPost(RegisterViewModel viewModel)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View("Register", viewModel);
             }
 
-            if(viewModel.Password != viewModel.PasswordConfirm)
+            if (viewModel.Password != viewModel.PasswordConfirm)
             {
                 ModelState.AddModelError("Password", "Mật mã không trùng khớp");
                 return View("Register", viewModel);
@@ -46,7 +46,7 @@ namespace GearMVC.Controllers.User
 
             var emailUsed = await _userManager.FindByEmailAsync(viewModel.Email);
 
-            if(emailUsed != null)
+            if (emailUsed != null)
             {
                 ModelState.AddModelError("Email", "Email đã có người sử dụng");
                 return View("Register", viewModel);
@@ -54,7 +54,7 @@ namespace GearMVC.Controllers.User
 
             var user = new ApplicationUser
             {
-                UserName= viewModel.Email,
+                UserName = viewModel.Email,
                 Email = viewModel.Email,
                 HoTen = viewModel.HoTen,
                 PhoneNumber = viewModel.PhoneNumber,
@@ -64,13 +64,13 @@ namespace GearMVC.Controllers.User
                 isDelete = 0
             };
 
-            
-            var result =  await _userManager.CreateAsync(user, viewModel.Password);
 
-            if(result.Succeeded)
+            var result = await _userManager.CreateAsync(user, viewModel.Password);
+
+            if (result.Succeeded)
             {
                 var roleExisted = await _roleManager.RoleExistsAsync("Khách hàng");
-                if(!roleExisted)
+                if (!roleExisted)
                 {
                     var role = new ApplicationRole
                     {
@@ -82,7 +82,7 @@ namespace GearMVC.Controllers.User
             }
             else
             {
-                ModelState.AddModelError("Email","Đăng kí không thành công");
+                ModelState.AddModelError("Email", "Đăng kí không thành công");
                 return View("Register", viewModel);
             }
 
@@ -102,12 +102,20 @@ namespace GearMVC.Controllers.User
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginPost(LoginViewModel viewModel)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View("Login", viewModel);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(viewModel.Email, viewModel.Password, true,false);
+            var user = await _userManager.FindByEmailAsync(viewModel.Email);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("Email", "Email hoặc mật khẩu không chính xác");
+                return View("Login", viewModel);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, viewModel.Password, true, false);
 
             if (!result.Succeeded)
             {

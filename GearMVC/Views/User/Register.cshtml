@@ -18,7 +18,8 @@
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <input type="email" name="Email" id="email" class="form-control input-sm" placeholder="Email (*)" value="@Model.Email" />
+                        <input type="email" name="Email" id="email" class="form-control input-sm"
+                            placeholder="Email (*)" value="@Model.Email" />
                     </div>
                     <div class="form-group">
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
@@ -27,13 +28,13 @@
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
                                 <input type="password" name="Password" id="password" class="form-control input-sm"
-                                       placeholder="Mật khẩu" />
+                                    placeholder="Mật khẩu" />
                             </div>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
                                 <input type="password" name="PasswordConfirm" id="password_confirmation"
-                                       class="form-control input-sm" placeholder="Xác nhận mật khẩu" />
+                                    class="form-control input-sm" placeholder="Xác nhận mật khẩu" />
                             </div>
                         </div>
                     </div>
@@ -41,19 +42,21 @@
                         @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <input type="text" name="HoTen" id="name" class="form-control input-sm" placeholder="Tên (*)" value="@Model.HoTen"/>
+                        <input type="text" name="HoTen" id="name" class="form-control input-sm" placeholder="Tên (*)"
+                            value="@Model.HoTen" />
                     </div>
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6" style="padding-left:40px">
                             <div class="form-group">
-                                <input type="radio" name="GioiTinh" id="male" class="input-sm form-check-input" value="Nam" checked />
+                                <input type="radio" name="GioiTinh" id="male" class="input-sm form-check-input"
+                                    value="Nam" checked />
                                 <label for="male">Nam</label><br>
                             </div>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="radio" name="gioitinh" id="female"
-                                       class="input-sm form-check-input" value="Nữ" />
+                                <input type="radio" name="GioiTinh" id="female" class="input-sm form-check-input"
+                                    value="Nữ" />
                                 <label for="female">Nữ</label><br>
                             </div>
                         </div>
@@ -62,16 +65,19 @@
                         @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <input type="tel" name="PhoneNumber" id="tel" class="form-control input-sm" placeholder="Số điện thoại (*)"  value="@Model.PhoneNumber"/>
+                        <input type="tel" name="PhoneNumber" id="tel" class="form-control input-sm"
+                            placeholder="Số điện thoại (*)" value="@Model.PhoneNumber" />
                     </div>
                     <div class="form-group">
                         @Html.ValidationMessageFor(m => m.DiaChi, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <input type="text" name="DiaChI" id="text" class="form-control input-sm" placeholder="Địa chỉ (*)" value="@Model.DiaChi"/>
+                        <input type="text" name="DiaChI" id="text" class="form-control input-sm"
+                            placeholder="Địa chỉ (*)" value="@Model.DiaChi" />
                     </div>
                     <div class="form-group">
-                        <input type="text" name="CMND" id="text" class="form-control input-sm" placeholder="CMND/CCCD" />
+                        <input type="text" name="CMND" id="text" class="form-control input-sm"
+                            placeholder="CMND/CCCD" />
                     </div>
                     @Html.AntiForgeryToken()
 

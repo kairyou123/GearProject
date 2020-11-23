@@ -44,9 +44,9 @@ namespace Insfrastucture.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<NhaCungCap>> Filter(string searchString="")
+        public async Task<IEnumerable<NhaCungCap>> Filter(string searchString = "")
         {
-            var result = await _context.NhaCungCaps.Where(i => i.TenNCC.Contains(searchString) && i.isDelete == 0).ToListAsync();
+            var result = await _context.NhaCungCaps.Where(i => i.TenNCC.Contains(searchString) && i.isDelete == 0).OrderBy(i => i.MaNCC).ToListAsync();
             return result;
         }
     }

@@ -12,7 +12,7 @@ namespace Insfrastucture.Persistence
 {
     public class SeedData
     {
-        public static  async Task Initialize(GearContext context, UserManager<ApplicationUser> userManager)
+        public static async Task Initialize(GearContext context, UserManager<ApplicationUser> userManager)
         {
             context.Database.EnsureCreated();
 
@@ -44,7 +44,7 @@ namespace Insfrastucture.Persistence
                 PhoneNumber = "01234567",
                 DiaChi = "123 ABC",
                 CMND = "123456789",
-                Email = "alice1@gmail.com ",
+                Email = "alice1@gmail.com",
                 UserName = "alice@gmail.com",
                 isDelete = 0
             };

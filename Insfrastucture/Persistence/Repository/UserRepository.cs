@@ -22,14 +22,14 @@ namespace Insfrastucture.Repository
 
         public async Task Add(ApplicationUser entity, string password, string role)
         {
-             await _userManager.CreateAsync(entity, password);
-             await _userManager.AddToRoleAsync(entity, role);
+            await _userManager.CreateAsync(entity, password);
+            await _userManager.AddToRoleAsync(entity, role);
         }
 
         public async Task Delete(ApplicationUser entity)
         {
             entity.isDelete = 1;
-           await _userManager.UpdateAsync(entity);
+            await _userManager.UpdateAsync(entity);
         }
 
         public async Task<IEnumerable<ApplicationUser>> getAll()
@@ -39,34 +39,34 @@ namespace Insfrastucture.Repository
 
         public async Task<ApplicationUser> getByName(string Name)
         {
-            var user =  await _userManager.Users.Where(x => x.HoTen == Name && x.isDelete == 0).Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstOrDefaultAsync();
+            var user = await _userManager.Users.Where(x => x.HoTen == Name && x.isDelete == 0).Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstOrDefaultAsync();
             return user;
         }
 
         public async Task<ApplicationUser> getById(string Id)
         {
-            return await _userManager.FindByIdAsync(Id);
+            return await _userManager.Users.Where(x => x.Id == Id && x.isDelete == 0).Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<ApplicationUser>> Filter(string searchString, string role)
         {
             var query = _userManager.Users.AsQueryable();
 
-            if(searchString != null && searchString != "")
+            if (searchString != null && searchString != "")
             {
                 query = query.Where(x => x.HoTen.Contains(searchString));
             }
-            if(role != null && role != "")
+            if (role != null && role != "")
             {
                 query = query.Where(u => u.UserRoles.FirstOrDefault().Role.Name == role);
             }
 
             query = query.Where(x => x.isDelete == 0).Include(u => u.UserRoles).ThenInclude(ur => ur.Role);
 
-            return  await query.ToListAsync();
+            return await query.ToListAsync();
         }
 
-        public async Task Update(ApplicationUser entity, string role)
+        public async Task Update(ApplicationUser entity, string role, string password)
         {
 
             if (role != null && role != "")
@@ -74,17 +74,25 @@ namespace Insfrastucture.Repository
                 var currentRoles = await _userManager.GetRolesAsync(entity);
 
                 var currentRole = currentRoles.FirstOrDefault();
-                if(currentRole != role )
+                if (currentRole != role)
                 {
-                    Task A = _userManager.RemoveFromRoleAsync(entity, currentRole);
-                    Task B = _userManager.AddToRoleAsync(entity, role);
-                    await Task.WhenAll(A, B);
-
+                    await _userManager.RemoveFromRoleAsync(entity, currentRole);
+                    await _userManager.AddToRoleAsync(entity, role);
                 }
             }
 
+            if (password != null && password != "")
+            {
+                await _userManager.RemovePasswordAsync(entity);
+                await _userManager.AddPasswordAsync(entity, password);
+            }
+
             await _userManager.UpdateAsync(entity);
-            
+
+        }
+        public async Task<ApplicationUser> getByEmail(string Email)
+        {
+            return await _userManager.FindByEmailAsync(Email);
         }
     }
 }

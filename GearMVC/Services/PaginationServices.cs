@@ -10,9 +10,9 @@ namespace GearMVC.Services
 {
     public static class PaginationServices<T> where T : class
     {
-        public static IndexViewModel<T> Pagination(List<T> list, int page, int itemPerPage, int pageCount,string searchString, string role="")
+        public static IndexViewModel<T> Pagination(List<T> list, int page, int itemPerPage, int pageCount, string searchString, string role = "")
         {
-            return  new IndexViewModel<T>
+            return new IndexViewModel<T>
             {
                 Entities = new List<T>(list),
                 CurrentPage = page,
@@ -32,6 +32,19 @@ namespace GearMVC.Services
                 searchString = searchString,
                 searchCategory = searchCategory,
                 searchManu = searchManu
+            };
+        }
+
+        public static IndexViewModel<DonGiaDTO> PaginationGia(List<DonGiaDTO> list, int page, int itemPerPage, int pageCount, DateTime FromDate, DateTime ToDate, string ApDung)
+        {
+            return new IndexViewModel<DonGiaDTO>
+            {
+                Entities = new List<DonGiaDTO>(list),
+                CurrentPage = page,
+                PageCount = pageCount,
+                FromDate = FromDate,
+                ToDate = ToDate,
+                ApDung = ApDung
             };
         }
 

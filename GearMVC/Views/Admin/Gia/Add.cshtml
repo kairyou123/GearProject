@@ -1,0 +1,72 @@
+﻿@model Application.DTO.DonGiaDTO
+
+@{
+    ViewData["Title"] = "Quản lý giá";
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".sanpham").addClass("admin-active");
+            var today = new Date();
+
+            var stringToDay = today.getFullYear() + "-" + (today.getMonth() +1) + "-" + today.getDate();
+            
+            $("#Ngay").val(stringToDay);
+        });
+    </script>
+}
+
+@section Content{
+    <div>
+        <div class="admin-content-title"><b>Thêm giá sản phẩm: @ViewBag.TenLK</b></div>
+        <div class="admin-content">
+            <div class="admin-form">
+            <form id="GiaAdd" method="post" name="GiaAdd">
+                <div class="form-group row">  
+                    @if(@Model.Ngay != default(DateTime))
+                    {
+                        <label for="Ngay1" class="col-sm-3 col-form-label">Ngày áp dụng</label>
+                        <div class="col-sm-8"><input type="date" class="form-control" id="Ngay1" name="Ngay" value="@Model.Ngay.ToString("yyyy-MM-dd")"></div>
+                    }
+                    else
+                    {   
+                        <label for="Ngay" class="col-sm-3 col-form-label">Ngày áp dụng</label>
+                        <div class="col-sm-8"><input type="date" class="form-control" id="Ngay" name="Ngay" value=""></div>
+                    }
+                    
+                </div>
+                <div class="admin-error row">
+                    <div class="col-sm-3"></div>
+                    <div>
+                        @Html.ValidationMessageFor(m => m.DonGiaBan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="Gia" class="col-sm-3 col-form-label">Giá</label>
+                    <div class="col-sm-8"><input type="text" class="form-control" id="Gia" name="DonGiaBan" value="@Model.DonGiaBan"></div>
+                </div>
+                <div class="admin-error row">
+                    <div class="col-sm-3"></div>
+                    <div>
+                        @Html.ValidationMessageFor(m => m.GiamGia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="GiamGia" class="col-sm-3 col-form-label">Giảm giá</label>
+                    <div class="col-sm-8"><input type="text" class="form-control" id="GiamGia" name="GiamGia" value="@Model.GiamGia"></div>
+                </div>
+                @Html.AntiForgeryToken()
+                <div class="form-group row">
+                    <div class="admin-form-edit-button">
+                        <button class="btn btn-warning admin-form-edit-button" type="submit"
+                                form="GiaAdd" value="Submit">
+                            Tạo
+                        </button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+}

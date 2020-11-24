@@ -18,15 +18,16 @@ namespace Application.Mapping
                             .ForMember(x => x.Loai, y => y.MapFrom(z => z.Loai))
                             .ForMember(x => x.NCC, y => y.MapFrom(z => z.NCC))
                             .ForMember(x => x.DonGias, y => y.MapFrom(z => z.DonGias))
-                            .ReverseMap(); 
-            CreateMap<LinhKien, DonGiaDTO>() 
-                            .ReverseMap(); 
+                            .ReverseMap();
+            CreateMap<LinhKien, DonGiaDTO>()
+                            .ReverseMap();
             CreateMap<DonGia, DonGiaDTO>()
-                             .ReverseMap();
+                            .ForMember(x => x.LinhKien, y => y.MapFrom(z => z.LinhKien))
+                            .ReverseMap();
             CreateMap<ApplicationRole, LoaiTKDTO>()
                              .ReverseMap();
             CreateMap<LoaiLinhKienDTO, LoaiLinhKien>()
-                            .ForMember(x => x.Id, opt => opt.Condition(id => id !=null ))
+                            .ForMember(x => x.Id, opt => opt.Condition(id => id != null))
                             .ReverseMap();
             CreateMap<NhaCungCapDTO, NhaCungCap>()
                             .ForMember(x => x.Id, opt => opt.Condition(id => id != null))

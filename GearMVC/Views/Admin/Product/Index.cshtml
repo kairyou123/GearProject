@@ -1,4 +1,4 @@
-﻿@using Application.DTO;
+﻿
 @model ProductIndexViewModel;
 
 @{
@@ -69,7 +69,7 @@
                             <th scope="col">Tồn kho</th>
                             <th scope="col">Chủng loại</th>
                             <th scope="col">HSX</th>
-                            <th scope="col">Chức năng</th>
+                            <th scope="col-1">Chức năng</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,12 +81,24 @@
                                          width="60px" height="60px">
                                 </th>
                                 <td>@product.TenLK</td>
-                                <td>@product.DonGias.LastOrDefault().DonGiaBan ₫</td>
-                                <td>@product.DonGias.LastOrDefault().GiamGia %</td>
+                                @foreach(var gia in @product.DonGias)
+                                {
+                                    if(gia.ApDung == true)
+                                    {
+                                        <td>@string.Format("{0:C}", @gia.DonGiaBan).Remove(0,1) ₫</td>
+                                        <td>@gia.GiamGia %</td>
+                                    }
+                                }
+                                
                                 <td>@product.SLTonKho</td>
                                 <td>@product.Loai.Ten</td>
                                 <td>@product.NCC.TenNCC</td>
                                 <td>
+                                    <a href="/admin/product/@product.Id/price">
+                                        <button class="admin-button money">
+                                            <i class="fas fa-money-bill"></i>
+                                        </button>
+                                    </a>
                                     <a href="/admin/product/@product.Id/edit">
                                         <button class="admin-button edit">
                                             <i class="fas fa-edit" data-product="3"></i>
@@ -108,7 +120,7 @@
             @{
                 await Html.RenderPartialAsync(
                   "PaginationLk",
-                   new ViewDataDictionary(this.Vi‌​ewData) { { "nameController", "Product" } });
+                   new ViewDataDictionary(this.Vi‌​ewData) { {"nameFunction", "Index"},{ "nameController", "Product" } });
             }
             </div>
        </div>

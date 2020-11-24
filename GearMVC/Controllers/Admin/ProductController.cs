@@ -71,6 +71,7 @@ namespace GearMVC.Controllers.Admin
             var manuDTO = _mapper.Map<List<NhaCungCapDTO>>(manufactuers);
             ViewBag.Manu = manuDTO;
 
+
             return View("~/Views/Admin/Product/Index.cshtml", pagination);
         }
 

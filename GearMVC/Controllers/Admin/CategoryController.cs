@@ -29,21 +29,21 @@ namespace GearMVC.Controllers
             _mapper = mapper;
         }
         [HttpGet("")]
-        public async Task<IActionResult> Index(string searchString="", int page = 1)
+        public async Task<IActionResult> Index(string searchString = "", int page = 1)
         {
             if (searchString == null) searchString = "";
 
             IEnumerable<LoaiLinhKien> list = await _loaiLinhKienRepo.Filter(searchString);
             double count = list.Count();
             double i = (double)(count / ItemPerPage);
-            var pageCount= (int)Math.Ceiling(i);
+            var pageCount = (int)Math.Ceiling(i);
 
-            
+
             list = list.Skip((page - 1) * ItemPerPage).Take(ItemPerPage).ToList();
             List<LoaiLinhKienDTO> loaiLinhKiens = _mapper.Map<List<LoaiLinhKienDTO>>(list);
 
-            
-            IndexViewModel<LoaiLinhKienDTO> returnList = PaginationServices<LoaiLinhKienDTO>.Pagination(loaiLinhKiens, page, ItemPerPage, pageCount,searchString);
+
+            IndexViewModel<LoaiLinhKienDTO> returnList = PaginationServices<LoaiLinhKienDTO>.Pagination(loaiLinhKiens, page, ItemPerPage, pageCount, searchString);
 
             return View("~/Views/Admin/Category/Index.cshtml", returnList);
         }
@@ -66,7 +66,7 @@ namespace GearMVC.Controllers
             }
 
 
-           message = "Tạo thành công";
+            message = "Tạo thành công";
             ViewBag.Message = message;
             ViewBag.Title = "Thêm Chủng Loại";
             LoaiLinhKien loaiLinhKien = _mapper.Map<LoaiLinhKien>(loaiLinhKienDTO);
@@ -79,13 +79,13 @@ namespace GearMVC.Controllers
         {
             ViewBag.Title = "Sửa Chủng Loại";
             LoaiLinhKien loaiLinhKien = await _loaiLinhKienRepo.getById(id);
-            if(loaiLinhKien == null)
+            if (loaiLinhKien == null)
             {
                 return View("~/Views/Error/404.cshtml");
             }
 
             LoaiLinhKienDTO dto = _mapper.Map<LoaiLinhKienDTO>(loaiLinhKien);
-            return View("~/Views/Admin/Category/Edit.cshtml", dto);  
+            return View("~/Views/Admin/Category/Edit.cshtml", dto);
         }
 
         [HttpPost("{id?}/Edit")]
@@ -104,24 +104,23 @@ namespace GearMVC.Controllers
             //Update Du Lieu
             loaiLinhKien = dto.LoaiLinhKienMap(loaiLinhKien);
             await _loaiLinhKienRepo.Update(loaiLinhKien);
-            message = "Sửa thành công"; 
-           ViewBag.Message = message;
+            message = "Sửa thành công";
+            ViewBag.Message = message;
             return View("~/Views/Admin/Category/Edit.cshtml", dto);
         }
 
-        [HttpDelete("{id?}/Delete")]
+        [HttpPost("{id?}/Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             var loaiLinhKien = await _loaiLinhKienRepo.getById(id);
-            if(loaiLinhKien == null)
+            if (loaiLinhKien == null)
             {
-                Response.StatusCode = 400;
-                return Content("Không tìm thấy dữ liệu");
+                return View("~/Views/Error/404.cshtml");
             }
 
             await _loaiLinhKienRepo.Delete(loaiLinhKien);
-            Response.StatusCode = 200;
-            return Content("Xóa thành công");
+            return Redirect("/admin/category");
         }
     }
 }

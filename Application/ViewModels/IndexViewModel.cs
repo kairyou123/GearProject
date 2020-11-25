@@ -11,7 +11,16 @@ namespace Application.ViewModels
         public int PageCount { get; set; }
         public int CurrentPage { get; set; }
         public string searchString { get; set; }
+
+        /* Search Of User */
         public string role { get; set; }
+        /* -----------------------  */
+
+        /* Search Of Gia */
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public string ApDung { get; set; }
+        /* -----------------------  */
 
     }
 }

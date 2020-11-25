@@ -1,12 +1,10 @@
-﻿using Domain.Entity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using Application.DTO;
 
-namespace Application.DTO
+namespace Application.ViewModels
 {
-    public class DonGiaDTO
+    public class GiaEditViewModel
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Giá không được để trống")]
@@ -18,7 +16,7 @@ namespace Application.DTO
         [Required(ErrorMessage = "Giảm giá không được để trống")]
         [RegularExpression("^[0-9]+$", ErrorMessage = "Xin nhập số và không bỏ trống")]
         public int GiamGia { get; set; }
-        public bool ApDung { get; set; }
-        public LinhKienDTO LinhKien { get; set; }
+        public string ApDung { get; set; }
+        public int LinhKienId { get; set; }
     }
 }

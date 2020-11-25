@@ -20,7 +20,7 @@ namespace GearMVC.Controllers
             _userManager = userManager;
         }
         [HttpGet("/access-denied")]
-        public async Task<IActionResult> AccessDenied()
+        public IActionResult AccessDenied()
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
@@ -34,36 +34,36 @@ namespace GearMVC.Controllers
         }
 
         [HttpGet("/error")]
-        public async Task<IActionResult> Error(int? statusCode = null)
+        public IActionResult Error(int? statusCode = null)
         {
             if (statusCode.HasValue)
             {
                 if (statusCode.Value == 401)
                 {
-                    if(_signInManager.IsSignedIn(HttpContext.User))
+                    if (_signInManager.IsSignedIn(HttpContext.User))
                     {
-                        if(HttpContext.User.IsInRole("Khách hàng"))
+                        if (HttpContext.User.IsInRole("Khách hàng"))
                         {
                             return View("~/Views/Error/404.cshtml");
                         }
                         else
                         {
-                            return  Redirect("/admin/error");
+                            return Redirect("/admin/error");
                         }
                     }
 
-                    if(statusCode.Value == 404)
+                    if (statusCode.Value == 404)
                     {
                         return View("~/Views/Error/404.cshtml");
                     }
-                    
+
                 }
             }
             return View("~/Views/Error/404.cshtml");
         }
 
         [HttpGet("/admin/error")]
-        [Authorize(Roles ="Admin,Quản lý, Nhân viên")]
+        [Authorize(Roles = "Admin,Quản lý, Nhân viên")]
         public IActionResult AdminError()
         {
             return View("~/Views/Admin/Error.cshtml");

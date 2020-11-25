@@ -11,24 +11,15 @@
 
         $(document).ready(function () {
             $(".chungloai").addClass("admin-active");
-        });
 
-        $(document).ready(function () {
-            $('.delete').click(function() {
+            $(".delete").click(function (e) {
+                e.preventDefault();
                 if (confirm("Bạn chắc chắn muốn xóa?")) {
-                    var idCatalog = $(this).data("catalog");
-                    $.ajax({
-                        url: '/admin/category/' + idCatalog + '/delete',
-                        type: 'DELETE'
-                    }).done((result, textStatus, xhr) => {
-                            window.location.href = "/admin/category";
-                    }).fail(() => {
-                        alert("Xóa dữ liệu thất bại");
-                    });
+                    $(this).parents('form').submit();
                 }
             });
-            
         });
+
     </script>
 }
 
@@ -78,9 +69,13 @@
                                             <i class="fas fa-edit"
                                                data-catalog="1"></i>
                                         </button>
-                                    </a><button class="admin-button delete" data-catalog="@item.Id">
-                                        <i class="fas fa-trash-alt" data-catalog="@item.Id"></i>
-                                    </button>
+                                    </a>
+                                    <form method="post" id="delete" action="/admin/category/@item.Id/delete" style="display:inline;">
+                                        @Html.AntiForgeryToken()
+                                        <button class="admin-button delete" data-catalog="@item.Id">
+                                            <i class="fas fa-trash-alt" data-catalog="@item.Id"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         }
@@ -90,7 +85,7 @@
             @{
                 await Html.RenderPartialAsync(
                   "Pagination",
-                   new ViewDataDictionary(this.Vi‌​ewData) {{ "nameAction", "Category" }});
+                   new ViewDataDictionary(this.Vi‌​ewData) {{"nameFunction", "Index"},{ "nameAction", "Category" }});
             }
         </div>
     </div>

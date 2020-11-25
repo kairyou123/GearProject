@@ -43,7 +43,8 @@ namespace GearMVC
                            .AddEntityFrameworkStores<GearContext>()
                            .AddDefaultTokenProviders();
 
-            services.Configure<IdentityOptions>(options => {
+            services.Configure<IdentityOptions>(options =>
+            {
                 // Thiết lập về Password
                 options.Password.RequireDigit = false; // Không bắt phải có số
                 options.Password.RequireLowercase = false; // Không bắt phải có chữ thường
@@ -106,7 +107,7 @@ namespace GearMVC
                     pattern: "{controller}/{action}/{id?}");
             });
         }
-        private  void ConfigureScoped(IServiceCollection services)
+        private void ConfigureScoped(IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IHoaDonRepository, HoaDonRepository>();
@@ -114,7 +115,8 @@ namespace GearMVC
             services.AddScoped<ILoaiLinhKienRepository, LoaiLinhKienRepository>();
             services.AddScoped<INhaCungCapRepository, NhaCungCapRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
-            
+            services.AddScoped<IGiaRepository, GiaRepository>();
+
         }
     }
 }

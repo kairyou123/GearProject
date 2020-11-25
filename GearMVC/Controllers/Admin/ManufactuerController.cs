@@ -30,21 +30,21 @@ namespace GearMVC.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> Index(string searchString="", int page = 1)
+        public async Task<IActionResult> Index(string searchString = "", int page = 1)
         {
             if (searchString == null) searchString = "";
 
             IEnumerable<NhaCungCap> list = await _nccRepo.Filter(searchString);
             double count = list.Count();
             double i = (double)(count / ItemPerPage);
-            var pageCount= (int)Math.Ceiling(i);
+            var pageCount = (int)Math.Ceiling(i);
 
-            
+
             list = list.Skip((page - 1) * ItemPerPage).Take(ItemPerPage).ToList();
             List<NhaCungCapDTO> nccs = _mapper.Map<List<NhaCungCapDTO>>(list);
 
 
-            IndexViewModel<NhaCungCapDTO> returnList = PaginationServices<NhaCungCapDTO>.Pagination(nccs, page, ItemPerPage, pageCount,searchString);
+            IndexViewModel<NhaCungCapDTO> returnList = PaginationServices<NhaCungCapDTO>.Pagination(nccs, page, ItemPerPage, pageCount, searchString);
 
             return View("~/Views/Admin/Manufactuer/Index.cshtml", returnList);
         }
@@ -67,10 +67,10 @@ namespace GearMVC.Controllers
             }
 
 
-           message = "Tạo thành công";
+            message = "Tạo thành công";
             ViewBag.Message = message;
             ViewBag.Title = "Thêm Chủng Loại";
-            NhaCungCap ncc= _mapper.Map<NhaCungCap>(dto);
+            NhaCungCap ncc = _mapper.Map<NhaCungCap>(dto);
             await _nccRepo.Add(ncc);
             return View("~/Views/Admin/Manufactuer/Add.cshtml", dto);
 
@@ -79,14 +79,14 @@ namespace GearMVC.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             ViewBag.Title = "Sửa Nhà Sản Xuất";
-            NhaCungCap ncc= await _nccRepo.getById(id);
-            if(ncc == null)
+            NhaCungCap ncc = await _nccRepo.getById(id);
+            if (ncc == null)
             {
                 return View("~/Views/Error/404.cshtml");
             }
 
             NhaCungCapDTO dto = _mapper.Map<NhaCungCapDTO>(ncc);
-            return View("~/Views/Admin/Manufactuer/Edit.cshtml", dto);  
+            return View("~/Views/Admin/Manufactuer/Edit.cshtml", dto);
         }
 
         [HttpPost("{id?}/Edit")]
@@ -105,24 +105,23 @@ namespace GearMVC.Controllers
             //Update Du Lieu
             ncc = dto.NhaCungCapEditMap(ncc);
             await _nccRepo.Update(ncc);
-            message = "Sửa thành công"; 
-           ViewBag.Message = message;
+            message = "Sửa thành công";
+            ViewBag.Message = message;
             return View("~/Views/Admin/Manufactuer/Edit.cshtml", dto);
         }
 
-        [HttpDelete("{id?}/Delete")]
+        [HttpPost("{id?}/Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var ncc= await _nccRepo.getById(id);
-            if(ncc == null)
+            var ncc = await _nccRepo.getById(id);
+            if (ncc == null)
             {
-                Response.StatusCode = 400;
-                return Content("Không tìm thấy dữ liệu");
+                return View("~/Views/Error/404.cshtml");
             }
 
             await _nccRepo.Delete(ncc);
-            Response.StatusCode = 200;
-            return Content("Xóa thành công");
+            return Redirect("/admin/manufactuer");
         }
     }
 }

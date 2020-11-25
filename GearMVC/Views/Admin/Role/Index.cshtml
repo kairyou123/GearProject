@@ -44,7 +44,7 @@
                     </a>
                 </div>
             </div>
-            <div class="admin-content-title-1"><span class="admin-border-title-1">THÔNG TIN CHỦNG LOẠI</span></div>
+            <div class="admin-content-title-1"><span class="admin-border-title-1">THÔNG TIN LOẠI TÀI KHOẢN</span></div>
             <div class="margin-top-20">
                 <table class="table table-striped table-condensed" width="100%">
                     <thead>
@@ -99,7 +99,7 @@
             @{
                 await Html.RenderPartialAsync(
                   "Pagination",
-                   new ViewDataDictionary(this.Vi‌​ewData) {{ "nameAction", "Role" }});
+                   new ViewDataDictionary(this.Vi‌​ewData) {{"nameFunction", "Index"},{ "nameAction", "Role" }});
             }
         </div>
     </div>

@@ -55,11 +55,11 @@ namespace Insfrastucture.Repository
             return await _roleManager.FindByIdAsync(Id);
         }
 
-        public async Task<IEnumerable<ApplicationRole>> Filter(string searchString="")
+        public async Task<IEnumerable<ApplicationRole>> Filter(string searchString = "")
         {
             var query = _roleManager.Roles.AsQueryable();
 
-            if(searchString != null && searchString != "")
+            if (searchString != null && searchString != "")
             {
                 query = query.Where(x => x.Name.Contains(searchString));
             }

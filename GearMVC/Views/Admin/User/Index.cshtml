@@ -9,8 +9,16 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $(".loaitaikhoan").addClass("admin-active");
+            $(".taikhoan").addClass("admin-active");
+
+            $(".delete").click(function (e) {
+                e.preventDefault();
+                if (confirm("Bạn chắc chắn muốn xóa?")) {
+                    $(this).parents('form').submit();
+                }
+            });
         });
+        
 
     </script>
 }
@@ -36,7 +44,7 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
-                    </div><a href="userAdd.html">
+                    </div><a href="/admin/user/add">
                         <div class="admin-plus"><span><i class="fas fa-plus-circle"></i></span></div>
                     </a>
                 </div>
@@ -65,14 +73,17 @@
                                 <td>@user.PhoneNumber</td>
                                 <td>@user.ChucVu</td>
                                 <td>
-                                    <a href="userEdit.html">
-                                        <button class="admin-button edit">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
+                                  <a href="/admin/user/@user.Id/edit">
+                                    <button class="admin-button edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
                                   </a>
-                                        <button class="admin-button delete">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
+                                  <form method="post" id="deleteRole" action="/admin/user/@user.Id/delete" style="display:inline;">
+                                    @Html.AntiForgeryToken()
+                                    <button class="admin-button delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                    </form>
                                 </td>
                             </tr>
                         }
@@ -82,7 +93,7 @@
             @{ 
                 await Html.RenderPartialAsync(
                 "PaginationUser",
-                new ViewDataDictionary(this.Vi‌​ewData) { { "nameController", "UserAdmin" } });
+                new ViewDataDictionary(this.Vi‌​ewData) { {"nameFunction", "Index"},{ "nameController", "UserAdmin" } });
             }
             </div>
        </div>

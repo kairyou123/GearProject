@@ -1,0 +1,125 @@
+@model EditUserViewModel
+
+@{
+    ViewData["Title"] = "Sửa tài khoản";
+}
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".taikhoan").addClass("admin-active");
+        });
+        
+    </script>
+}
+
+@section Content {
+    <div>
+        <div class="admin-content-title"><b>SỬA NGƯỜI DÙNG</b></div>
+        <div class="admin-content">
+          <div class="admin-form">
+            <form id="userAdd" name="userAdd" method="post">
+                <div class="form-group text-center">
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+              <div class="form-group row"><label for="staticEmail" class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-8"><input type="text" class="form-control" id="staticEmail"
+                    placeholder="example@gmail.com" name="Email" value="@Model.Email" readonly></div>
+              </div>
+              <div class="form-group text-center">
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+              </div>
+              <div class="form-group row"><label for="inputPassword" class="col-sm-3 col-form-label">Mật khẩu</label>
+                <div class="col-sm-8"><input type="password" class="form-control" id="inputPassword"
+                    placeholder="Mật khẩu" name="Password"></div>
+              </div>
+              <div class="form-group row"><label for="confirmPassword" class="col-sm-3 col-form-label">Nhập lại mật
+                  khẩu</label>
+                <div class="col-sm-8"><input type="password" class="form-control" id="confirmPassword"
+                    placeholder="Nhập lại mật khẩu" name="PasswordConfirm"></div>
+              </div>
+              <div class="form-group text-center">
+                        @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger" })
+                </div>
+              <div class="form-group row"><label for="Name" class="col-sm-3 col-form-label">Họ Tên</label>
+                <div class="col-sm-8"><input type="text" class="form-control" id="Name" placeholder="Nhập họ tên"
+                    name="HoTen" value="@Model.HoTen"></div>
+              </div>
+              <div class="form-group row"><label for="GioiTinh" class="col-sm-3 col-form-label">Giới Tính</label>
+              <div class="col-sm-8">
+                <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-form-label">
+                            <div class="form-group" style="margin-left: 50px">
+                              @if(Model.GioiTinh == "Nam")
+                              {
+                                <input type="radio" name="GioiTinh" id="male" class="input-sm form-check-input" value="Nam" checked/>
+                              }
+                              else
+                              {
+                                <input type="radio" name="GioiTinh" id="male" class="input-sm form-check-input" value="Nam"/>
+                              }
+                                
+                                <label for="male">Nam</label><br>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-form-label">
+                            <div class="form-group">
+                              @if(Model.GioiTinh == "Nữ")
+                              {
+                                <input type="radio" name="GioiTinh" id="female" class="input-sm form-check-input" value="Nữ" checked/>
+                              }
+                              else
+                              {
+                                <input type="radio" name="GioiTinh" id="female" class="input-sm form-check-input" value="Nữ"/>
+                              }
+                                
+                                <label for="female">Nữ</label><br>
+                            </div>
+                        </div>
+                </div>
+                </div>
+              </div>
+              
+              <div class="form-group text-center">
+                        @Html.ValidationMessageFor(m => m.DiaChi, "", new { @class = "text-danger" })
+                </div>
+              <div class="form-group row"><label for="Address" class="col-sm-3 col-form-label">Địa chỉ</label>
+                <div class="col-sm-8"><input type="text" class="form-control" id="Address" placeholder="Địa chỉ"
+                    name="DiaChi" value="@Model.DiaChi"></div>
+              </div>
+              <div class="form-group text-center">
+                        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+              <div class="form-group row"><label for="Phone" class="col-sm-3 col-form-label">Số điện thoại</label>
+                <div class="col-sm-8"><input type="number" class="form-control" id="Phone" placeholder="Số điện thoại"
+                    name="PhoneNumber" value="@Model.PhoneNumber"></div>
+              </div>
+              <div class="form-group row"><label for="Role" class="col-sm-3 col-form-label">Chức vụ</label>
+                <div class="col-sm-8" id="Role">
+                    <select class="form-control" name="Role">
+                        @foreach(var role in ViewBag.Roles)
+                        {
+                          if(role.Name == ViewBag.CurrentRole)
+                          {
+                            <option value="@role.Name" selected>@role.Name</option>
+                          }
+                          else
+                          {
+                            <option value="@role.Name">@role.Name</option>
+                          }
+                           
+                        }
+                    </select>
+                </div>
+              </div>
+              @Html.AntiForgeryToken()
+              <div class="form-group row">
+                <div class="admin-form-edit-button"><button class="btn btn-warning admin-form-edit-button" type="submit"
+                    form="userAdd" value="Submit">Tạo</button></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+}

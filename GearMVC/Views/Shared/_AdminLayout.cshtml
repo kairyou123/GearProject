@@ -2,7 +2,10 @@
 @inject UserManager<Domain.Entity.ApplicationUser> userManager;
 @inject SignInManager<Domain.Entity.ApplicationUser> signInManager;
 
-
+@{
+    var user = await userManager.GetUserAsync(User);
+    var displayName = user.HoTen;
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +38,7 @@
         <div class="admin-right">
             <div class="admin-user">
                 <div class="admin-user-text">
-                    <span class="admin-user-name">@userManager.GetUserName(User)</span> <img src="~/images/admin.png" height="40px">
+                    <span class="admin-user-name">@displayName</span> <img src="~/images/admin.png" height="40px">
                 </div>
             </div>
             @RenderBody()
@@ -46,7 +49,7 @@
                 <a href="/"><img src="~/images/gearvn.png" class="admin-logo-img" height="70px"></a>
             </div>
             <div class="admin-left-menu">
-                <a href="adminIndex.html">
+                <a class="taikhoan" href="/admin/user">
                     <div class="menu-section row" id="admin-user">
                         <div class="col-9">
                             <div class="row">
@@ -56,55 +59,66 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-2"><span class="padding-right-5"><i class="fas fa-arrow-circle-right"></i></span></div>
+                        <div class="col-2"><span class="padding-right-5"><i
+                                    class="fas fa-arrow-circle-right"></i></span></div>
                     </div>
                 </a>
                 <a class="loaitaikhoan" href="@Url.Action("Index","Role")">
                     <div class="menu-section row" id="admin-user">
                         <div class="col-9">
                             <div class="row">
-                                <div class="col-3 text-center"><i class="fas fa-user-tag"></i></div><span class="menu-text">
+                                <div class="col-3 text-center"><i class="fas fa-user-tag"></i></div><span
+                                    class="menu-text">
                                     Loại tài khoản
                                 </span>
                             </div>
                         </div>
-                        <div class="col-2"><span class="padding-right-5"><i class="fas fa-arrow-circle-right"></i></span></div>
+                        <div class="col-2"><span class="padding-right-5"><i
+                                    class="fas fa-arrow-circle-right"></i></span></div>
                     </div>
                 </a><a class="sanpham" href="@Url.Action("Index","Product")">
                     <div class="menu-section row">
                         <div class="col-9">
                             <div class="row">
-                                <div class="col-3 text-center"><i class="fab fa-product-hunt font-size-20"></i></div><span class="menu-text">Sản phẩm</span>
+                                <div class="col-3 text-center"><i class="fab fa-product-hunt font-size-20"></i></div>
+                                <span class="menu-text">Sản phẩm</span>
                             </div>
                         </div>
-                        <div class="col-2"><span class="padding-right-5"><i class="fas fa-arrow-circle-right"></i></span></div>
+                        <div class="col-2"><span class="padding-right-5"><i
+                                    class="fas fa-arrow-circle-right"></i></span></div>
                     </div>
                 </a><a class="chungloai" href="@Url.Action("Index","Category")">
                     <div class="menu-section row">
                         <div class="col-9">
                             <div class="row">
-                                <div class="col-3 text-center"><i class="fas fa-box font-size-20"></i></div><span class="menu-text">Chủng loại</span>
+                                <div class="col-3 text-center"><i class="fas fa-box font-size-20"></i></div><span
+                                    class="menu-text">Chủng loại</span>
                             </div>
                         </div>
-                        <div class="col-2"><span class="padding-right-5"><i class="fas fa-arrow-circle-right"></i></span></div>
+                        <div class="col-2"><span class="padding-right-5"><i
+                                    class="fas fa-arrow-circle-right"></i></span></div>
                     </div>
                 </a><a class="nhacungcap" href="@Url.Action("Index","Manufactuer")">
                     <div class="menu-section row">
                         <div class="col-9">
                             <div class="row">
-                                <div class="col-3 text-center"><i class="fas fa-industry font-size-20"></i></div><span class="menu-text">Nhà sản xuất</span>
+                                <div class="col-3 text-center"><i class="fas fa-industry font-size-20"></i></div><span
+                                    class="menu-text">Nhà sản xuất</span>
                             </div>
                         </div>
-                        <div class="col-2"><span class="padding-right-5"><i class="fas fa-arrow-circle-right"></i></span></div>
+                        <div class="col-2"><span class="padding-right-5"><i
+                                    class="fas fa-arrow-circle-right"></i></span></div>
                     </div>
                 </a><a href="/admin/order">
                     <div class="menu-section row">
                         <div class="col-9">
                             <div class="row">
-                                <div class="col-3 text-center"><i class="fas fa-clipboard-list font-size-20"></i></div><span class="menu-text">Đơn hàng</span>
+                                <div class="col-3 text-center"><i class="fas fa-clipboard-list font-size-20"></i></div>
+                                <span class="menu-text">Đơn hàng</span>
                             </div>
                         </div>
-                        <div class="col-2"><span class="padding-right-5"><i class="fas fa-arrow-circle-right"></i></span></div>
+                        <div class="col-2"><span class="padding-right-5"><i
+                                    class="fas fa-arrow-circle-right"></i></span></div>
                     </div>
                 </a>
             </div>

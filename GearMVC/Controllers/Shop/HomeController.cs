@@ -14,6 +14,7 @@ using Domain.Entity;
 
 namespace GearMVC.Controllers
 {
+    [Route("")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -29,28 +30,19 @@ namespace GearMVC.Controllers
             _linhkienRepo = linhkienRepo;
             this.mapper = mapper;
         }
-
+        [HttpGet("")]
         public async Task<IActionResult> Index()
         {
             var list = await _linhkienRepo.getAll();
             List<LinhKienDTO> result = new List<LinhKienDTO>();
             foreach(LinhKien item in list)
             {
+                item.DonGias = item.DonGias.Where(i => i.ApDung).ToList();
                 var dto = mapper.Map<LinhKienDTO>(item);
                 result.Add(dto);
             }
             return View(result);
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        
     }
 }

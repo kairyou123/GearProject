@@ -21,6 +21,28 @@ namespace Insfrastucture.Repository
             var result = await _context.LinhKiens.Where(i => i.isDelete == 0).Include(i => i.Loai).Include(i => i.NCC).Include(i => i.DonGias).ToListAsync();
             return result;
         }
+        public async Task<IEnumerable<LinhKien>> getTopSelling()
+        {
+            var result = await _context.LinhKiens.Where(i => i.isDelete == 0)
+                                                .Include(i => i.Loai)
+                                                .Include(i => i.NCC)
+                                                .Include(i => i.DonGias)
+                                                .OrderByDescending(i => i.DaBan)
+                                                .ToListAsync();
+            result.ForEach(i => i.DonGias = i.DonGias.Where(dongia => dongia.ApDung).ToList());
+            return result;
+        }
+        public async Task<IEnumerable<LinhKien>> getNewItems()
+        {
+            var result = await _context.LinhKiens.Where(i => i.isDelete == 0)
+                                                .Include(i => i.Loai)
+                                                .Include(i => i.NCC)
+                                                .Include(i => i.DonGias)
+                                                .OrderByDescending(i => i.NgayCapNhat)
+                                                .ToListAsync();
+            result.ForEach(i => i.DonGias = i.DonGias.Where(dongia => dongia.ApDung).ToList());
+            return result;
+        }
         public async Task<LinhKien> getById(int id)
         {
             var result = await _context.LinhKiens.Where(i => i.Id == id && i.isDelete == 0).Include(i => i.Loai).Include(i => i.NCC).Include(i => i.DonGias).FirstOrDefaultAsync();

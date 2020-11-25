@@ -42,6 +42,7 @@ namespace Domain.Entity
         public ICollection<CTGiao> CTGiaos { get; set; }
         public ICollection<GioHang> GioHang { get; set; }
         public int SLTonKho { get; set; }
+        public int DaBan { get; set; }
         public int isDelete { get; set; }
     }
 }

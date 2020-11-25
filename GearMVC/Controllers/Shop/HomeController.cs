@@ -11,7 +11,7 @@ using AutoMapper;
 using Application.DTO;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Domain.Entity;
-
+using Application.Services;
 namespace GearMVC.Controllers
 {
     [Route("")]
@@ -33,14 +33,26 @@ namespace GearMVC.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
-            var list = await _linhkienRepo.getAll();
-            List<LinhKienDTO> result = new List<LinhKienDTO>();
+            var list = await _linhkienRepo.getNewItems();
+            var  result = new List<List<LinhKienDTO>>();
+            List<LinhKienDTO> result_item = new List<LinhKienDTO>();
             foreach(LinhKien item in list)
             {
-                item.DonGias = item.DonGias.Where(i => i.ApDung).ToList();
+                //item.DonGias = item.DonGias.Where(i => i.ApDung).ToList();
                 var dto = mapper.Map<LinhKienDTO>(item);
-                result.Add(dto);
+                result_item.Add(dto);
             }
+            result.Add(result_item);
+
+
+            list = await _linhkienRepo.getTopSelling();
+            result_item = new List<LinhKienDTO>();
+            foreach (LinhKien item in list)
+            {
+                var dto = mapper.Map<LinhKienDTO>(item);
+                result_item.Add(dto);
+            }
+            result.Add(result_item);
             return View(result);
         }
         

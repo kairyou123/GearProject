@@ -28,6 +28,7 @@ namespace Insfrastucture.Repository
                                                 .Include(i => i.NCC)
                                                 .Include(i => i.DonGias)
                                                 .OrderByDescending(i => i.DaBan)
+                                                .Take(12)
                                                 .ToListAsync();
             result.ForEach(i => i.DonGias = i.DonGias.Where(dongia => dongia.ApDung).ToList());
             return result;
@@ -39,6 +40,7 @@ namespace Insfrastucture.Repository
                                                 .Include(i => i.NCC)
                                                 .Include(i => i.DonGias)
                                                 .OrderByDescending(i => i.NgayCapNhat)
+                                                .Take(12)
                                                 .ToListAsync();
             result.ForEach(i => i.DonGias = i.DonGias.Where(dongia => dongia.ApDung).ToList());
             return result;

@@ -34,9 +34,9 @@ namespace GearMVC.Controllers
         public async Task<IActionResult> Index()
         {
             var list = await _linhkienRepo.getNewItems();
-            var  result = new List<List<LinhKienDTO>>();
+            var result = new List<List<LinhKienDTO>>();
             List<LinhKienDTO> result_item = new List<LinhKienDTO>();
-            foreach(LinhKien item in list)
+            foreach (LinhKien item in list)
             {
                 //item.DonGias = item.DonGias.Where(i => i.ApDung).ToList();
                 var dto = mapper.Map<LinhKienDTO>(item);
@@ -55,6 +55,15 @@ namespace GearMVC.Controllers
             result.Add(result_item);
             return View(result);
         }
-        
+
+        [HttpGet("product/detail/{id?}")]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var product = await _linhkienRepo.getById(id);
+            if(product == null) return View("~/Views/Error/404.cshtml");
+            product.DonGias = product.DonGias.Where(i => i.ApDung).ToList();
+            var result = mapper.Map<LinhKienDTO>(product);
+            return View(result);
+        }
     }
 }

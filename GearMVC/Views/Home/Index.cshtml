@@ -58,13 +58,13 @@
                         var sale = (decimal)item.DonGias.FirstOrDefault().GiamGia;
                         var price = item.DonGias.FirstOrDefault().DonGiaBan;
                         <div class="swiper-slide">
-                            <a href="#product-detail">
+                            <a href="~/product/detail/@item.Id">
                                 <div class="products">
                                     <div class="products-img">
                                         <img src="~/@item.Hinh" alt="img">
                                         <div class="products-hover">
                                             <p class="products-hover-see-more">
-                                                <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                                <a href="~/product/detail/@item.Id">Nhấn để xem chi tiết</a>
                                             </p>
                                             <div class="products-hover-btn">
                                                 <p><a href="#">Thêm vào giỏ hàng</a></p>
@@ -106,21 +106,19 @@
                         var sale = (decimal)item.DonGias.FirstOrDefault().GiamGia;
                         var price = item.DonGias.FirstOrDefault().DonGiaBan;
                         <div class="swiper-slide">
-                            <a href="#product-detail">
+                            <a href="~/product/detail/@item.Id">
                                 <div class="products">
                                     <div class="products-img">
                                         <img src="~/@item.Hinh" alt="img">
                                         <div class="products-hover">
                                             <p class="products-hover-see-more">
-                                                <a href="#product-detail">Nhấn để xem chi tiết</a>
+                                                <a href="~/product/detail/@item.Id">Nhấn để xem chi tiết</a>
                                             </p>
                                             <div class="products-hover-btn">
                                                 <p><a href="#">Thêm vào giỏ hàng</a></p>
                                             </div>
                                         </div>
-                                        <div class="products-tags">
-                                            <p>HOT</p>
-                                        </div>
+                                        
                                     </div>
                                     <div class="products-name">
                                         <h2>@item.TenLK</h2>

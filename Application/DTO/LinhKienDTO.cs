@@ -23,6 +23,7 @@ namespace Application.DTO
         [RegularExpression("^[0-9]+$", ErrorMessage = "Xin nhập số và không bỏ trống")]
         public int SLTonKho { get; set; }
         public int DaBan { get; set; }
+        public DateTime NgayCapNhat { get; set; }
         public int LoaiId { get; set; }
         public LoaiLinhKienDTO Loai { get; set; }
         public int NCCId { get; set; }

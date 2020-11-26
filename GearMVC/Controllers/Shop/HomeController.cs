@@ -65,5 +65,20 @@ namespace GearMVC.Controllers
             var result = mapper.Map<LinhKienDTO>(product);
             return View(result);
         }
+
+        [HttpGet("product/category/{id?}")]
+        public async Task<IActionResult> Category(int id)
+        {
+            var products = await _linhkienRepo.Filter(searchCategory: id);
+            if (products.Count() == 0) return View("~/Views/Error/404.cshtml");
+            var result = new List<LinhKienDTO>();
+            foreach(var item in products)
+            {
+                item.DonGias = item.DonGias.Where(i => i.ApDung).ToList();
+                var dto = mapper.Map<LinhKienDTO>(item);
+                result.Add(dto);
+            }
+            return View(result);
+        }
     }
 }

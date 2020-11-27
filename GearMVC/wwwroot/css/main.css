@@ -858,3 +858,12 @@ body a:hover {
   transition-delay: 4s;
   display: block;
 }
+.cart-empty p {
+    font: 20px bold;
+    text-align: center;
+    width: 75%;
+}
+.cart-empty img {
+    width: 75%;
+    height: 75%;
+}

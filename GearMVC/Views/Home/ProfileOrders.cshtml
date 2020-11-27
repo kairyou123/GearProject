@@ -1,0 +1,203 @@
+﻿
+@model GearMVC.Controllers.ProfileOrderData
+@using Application.Services
+@section Content{
+    <div>
+        <!-- Products -->
+        <div class="row m-y-2">
+            <div class="col-lg-4 pull-lg-8 text-xs-center mx-auto my-auto">
+                <h4>Xin chào,</h4>
+                <br />
+                <h2>@Model.User.HoTen</h2>
+            </div>
+            <div class="col-lg-8 push-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a href="" data-target="#profile" data-toggle="tab" class="nav-link @(Model.Page == 1 ? "active" : "")">Thông tin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" data-target="#orders" data-toggle="tab" class="nav-link @(Model.Page == 2 ? "active" : "")">Đơn hàng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Thay đổi thông tin</a>
+                    </li>
+                </ul>
+                <div class="tab-content p-b-3">
+                    <div class="tab-pane @(Model.Page == 1 ? "active" : "") profile" id="profile">
+                        <h4 class="m-y-2">User Profile</h4>
+                        <form role="form">
+                            <div class="form-group row">
+                                <label htmlFor="Name" class="col-lg-3 col-form-label form-control-label">Tên</label>
+                                <div class="col-lg-9">
+                                    <p class="p-d">@Model.User.HoTen</p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label htmlFor="Email" class="col-lg-3 col-form-label form-control-label">Email</label>
+                                <div class="col-lg-9">
+                                    <p class="p-d">@Model.User.Email</p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label htmlFor="Address" class="col-lg-3 col-form-label form-control-label">Địa chỉ</label>
+                                <div class="col-lg-9">
+                                    <p class="p-d">@Model.User.DiaChi</p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label htmlFor="Phone" class="col-lg-3 col-form-label form-control-label">Số điện thoại</label>
+                                <div class="col-lg-9">
+                                    <p class="p-d">@Model.User.PhoneNumber</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane orders @(Model.Page == 2 ? "active" : "")" id="orders">
+                        <div class="accordion" id="accordionExample">
+                            @if (Model.HoaDons.Count > 0)
+                            {
+                                foreach (var hoadon in Model.HoaDons)
+                                {
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link w-100" type="button" data-toggle="collapse" data-target="#collapseOne"
+                                                        aria-expanded="true" aria-controls="collapseOne">
+                                                    <div>
+                                                        <p class="float-left">Ma don hang: <b class="code">@hoadon.MaHD</b></p>
+                                                        <p class="text-center status d-inline-block">@(hoadon.NgayGiao == null ? "Đã giao" : "Đang giao")</p>
+                                                        <p class="float-right date">@hoadon.NgayLapHD</p>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                        </div>
+
+                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                            <div class="card-body orders">
+                                                <div class="table-responsive">
+                                                    <table class="table table-orders">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="table-orders--img"></th>
+                                                                <th class="table-orders--name">Sản phẩm</th>
+                                                                <th class="table-orders--quantily">Số lượng</th>
+                                                                <th class="table-orders--price text-center">Giá tiền</th>
+                                                            </tr>
+                                                        </thead>
+                                                        @{ decimal total = 0; }
+                                                        @foreach (var cthd in hoadon.ChiTietHDs)
+                                                        {
+                                                            <tbody>
+                                                                <tr>
+                                                                    @{ var hinh = cthd.LinhKien.Hinh.Split(",")[0];}
+                                                                    <td class="table-orders--img"><a href="#"><img src="~/images/products/@hinh" alt="img"></a></td>
+                                                                    <td class="table-orders--name">
+                                                                        <a href="#">@cthd.LinhKien.TenLK</a>
+                                                                    </td>
+                                                                    <td class="table-orders--quantily">@cthd.SoLuongBan</td>
+                                                                    @{
+                                                                        var price = cthd.SoLuongBan * cthd.DonGia;
+                                                                        total += price;
+                                                                    }
+                                                                    <td class="table-orders--price text-center">@Format.Money(price)</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        }
+                                                        <tbody>
+                                                            <tr class="table-orders--total">
+                                                                <td colspan="2" class="text-right font-weight-bold">Tổng tiền:</td>
+                                                                <td colspan="2" class="text-right font-weight-bold">@Format.Money(total)</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="table-orders--total">
+                                                                <td colspan="4" class="text-center font-weight-bold">
+                                                                    <button type="button" class="btn btn-danger">Hủy Đơn</button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                            <div class="cart-empty">
+                                <div>
+                                    <p>
+                                        Hóa đơn đang trống!
+                                    </p>
+                                </div>
+                                <div>
+                                    <img src="~/images//cart_emty.png" />
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="edit">
+                        <h4 class="m-y-2">Edit Profile</h4>
+                        <form role="form">
+                            <div class="form-group row">
+                                <label htmlFor="Name" class="col-lg-3 col-form-label form-control-label">Tên</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="text" value="@Model.User.HoTen">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label htmlFor="Email" class="col-lg-3 col-form-label form-control-label">Email</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="email" value="@Model.User.Email" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label htmlFor="Address" class="col-lg-3 col-form-label form-control-label">Địa chỉ</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="text" value="@Model.User.DiaChi"
+                                           placeholder="Street">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label htmlFor="Phone" class="col-lg-3 col-form-label form-control-label">Số điện thoại</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="tel" value="@Model.User.PhoneNumber" maxlength="10">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label htmlFor="CurPw" class="col-lg-3 col-form-label form-control-label">Mật khẩu hiện tại</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="password" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label htmlFor="NewPw" class="col-lg-3 col-form-label form-control-label">Mật khẩu mới</label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="password" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label htmlFor="NewPwAgain" class="col-lg-3 col-form-label form-control-label">
+                                    Nhập lại mật
+                                    khẩu
+                                </label>
+                                <div class="col-lg-9">
+                                    <input class="form-control" type="password" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label form-control-label"></label>
+                                <div class="col-lg-9">
+                                    <input type="reset" class="btn btn-secondary" value="Cancel">
+                                    <input type="button" class="btn btn-primary" value="Save Changes">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

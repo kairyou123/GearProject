@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Domain.Entity;
 using Application.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace GearMVC.Controllers
 {
@@ -23,16 +24,18 @@ namespace GearMVC.Controllers
         private readonly IMapper mapper;
         private readonly ILinhKienRepository _linhkienRepo;
         private readonly IHoaDonRepository _hoadonRepository;
-
+        private readonly UserManager<ApplicationUser> _userManager;
         public HomeController(ILogger<HomeController> logger,
                               ILinhKienRepository linhkienRepo,
                               IHoaDonRepository hoadonRepository,
-                              IMapper mapper
+                              IMapper mapper,
+                              UserManager<ApplicationUser> userManager
                 )
         {
             _logger = logger;
             _linhkienRepo = linhkienRepo;
             _hoadonRepository = hoadonRepository;
+            _userManager = userManager;
             this.mapper = mapper;
         }
         [HttpGet("")]
@@ -86,18 +89,28 @@ namespace GearMVC.Controllers
             return View(result);
         }
 
-        [Authorize(Roles = "Admin,Khách hảng,Quản lý")]
-        [HttpGet("user/{id?}/order")]
-        public async Task<IActionResult> Orders(string id)
+        [Authorize(Roles = "Admin,Khách hàng,Quản lý")]
+        [HttpGet("user/profie-orders/{page?}")]
+        public async Task<IActionResult> ProfileOrders(int page)
         {
-            var orders = await _hoadonRepository.getByUser(id);
-            var result = new List<HoaDon>();
-            //foreach (var item in orders)
-            //{
-            //    var dto = mapper.Map<HoaDonDTO>(item);
-            //    result.Add(dto);
-            //}
-            return View(result);
+            var user = await _userManager.GetUserAsync(User);
+            
+            var userDTO = mapper.Map<UserDTO>(user);
+            var orders = await _hoadonRepository.getByUser(user.Id);
+            var hoadonsDTO = new List<HoaDonDTO>();
+            foreach (var item in orders)
+            {
+                var dto = mapper.Map<HoaDonDTO>(item);
+                hoadonsDTO.Add(dto);
+            }
+
+            return View(new ProfileOrderData() { User = userDTO, HoaDons = hoadonsDTO, Page = page});
         }
+    }
+    public class ProfileOrderData
+    {
+        public int Page { get; set; }
+        public UserDTO User { get;set; }
+        public List<HoaDonDTO> HoaDons { get; set; }
     }
 }

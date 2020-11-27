@@ -12,6 +12,8 @@ using Application.DTO;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Domain.Entity;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
+
 namespace GearMVC.Controllers
 {
     [Route("")]
@@ -20,14 +22,17 @@ namespace GearMVC.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IMapper mapper;
         private readonly ILinhKienRepository _linhkienRepo;
+        private readonly IHoaDonRepository _hoadonRepository;
 
         public HomeController(ILogger<HomeController> logger,
                               ILinhKienRepository linhkienRepo,
+                              IHoaDonRepository hoadonRepository,
                               IMapper mapper
                 )
         {
             _logger = logger;
             _linhkienRepo = linhkienRepo;
+            _hoadonRepository = hoadonRepository;
             this.mapper = mapper;
         }
         [HttpGet("")]
@@ -78,6 +83,20 @@ namespace GearMVC.Controllers
                 var dto = mapper.Map<LinhKienDTO>(item);
                 result.Add(dto);
             }
+            return View(result);
+        }
+
+        [Authorize(Roles = "Admin,Khách hảng,Quản lý")]
+        [HttpGet("user/{id?}/order")]
+        public async Task<IActionResult> Orders(string id)
+        {
+            var orders = await _hoadonRepository.getByUser(id);
+            var result = new List<HoaDon>();
+            //foreach (var item in orders)
+            //{
+            //    var dto = mapper.Map<HoaDonDTO>(item);
+            //    result.Add(dto);
+            //}
             return View(result);
         }
     }

@@ -2,9 +2,7 @@
 
 @model List<List<Application.DTO.LinhKienDTO>>
 @using Application.Services
-<head>
-    <link rel="stylesheet" href="~/css/main.css" type="text/css">
-</head>
+
 @section Content{
 
     <div>
@@ -61,7 +59,7 @@
                             <a href="~/product/detail/@item.Id">
                                 <div class="products">
                                     <div class="products-img">
-                                        <img src="~/@item.Hinh" alt="img">
+                                        <img src="~/images/products/@item.Hinh.Split(",")[0]" alt="img">
                                         <div class="products-hover">
                                             <p class="products-hover-see-more">
                                                 <a href="~/product/detail/@item.Id">Nhấn để xem chi tiết</a>
@@ -109,7 +107,7 @@
                             <a href="~/product/detail/@item.Id">
                                 <div class="products">
                                     <div class="products-img">
-                                        <img src="~/@item.Hinh" alt="img">
+                                        <img src="~/images/products/@item.Hinh.Split(",")[0]" alt="img">
                                         <div class="products-hover">
                                             <p class="products-hover-see-more">
                                                 <a href="~/product/detail/@item.Id">Nhấn để xem chi tiết</a>

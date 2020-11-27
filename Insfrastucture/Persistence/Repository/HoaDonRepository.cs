@@ -21,6 +21,11 @@ namespace Insfrastucture.Repository
             var result = await _context.HoaDons.ToListAsync();
             return result;
         }
+        public async Task<IEnumerable<HoaDon>> getByUser(string id)
+        {
+            var result = await _context.HoaDons.Where(i => i.UserId == id).ToListAsync();
+            return result;
+        }
         public async Task<HoaDon> getById(int id)
         {
             var result = await _context.HoaDons.Where(i => i.Id == id).FirstOrDefaultAsync();

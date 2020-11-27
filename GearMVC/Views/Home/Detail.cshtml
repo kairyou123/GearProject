@@ -14,8 +14,15 @@
                     <div id="custCarousel" class="carousel slide" data-ride="carousel" align="center">
                         <!-- slides -->
                         <div class="carousel-inner">
-                            <div class="carousel-item active"> <img src="~/@Model.Hinh" alt="Hills"> </div>
-                            <div class="carousel-item"> <img src="images/tainghe.jpg" alt="Hills"> </div>
+                            @{
+                                var hinhs = Model.Hinh.Split(",");
+                                bool first = true;
+                            }
+                            @foreach (var item in hinhs)
+                            {
+                                <div class="carousel-item @(first ? "active" : "")"> <img src="~/images/products/@item" alt="Hills"> </div>
+                                first = false;
+                            }
                         </div>
                         <!-- Left right -->
                         <a class="carousel-control-prev" href="#custCarousel" data-slide="prev">
@@ -26,17 +33,16 @@
                         </a>
                         <!-- Thumbnails -->
                         <ol class="carousel-indicators list-inline">
-                            <li class="list-inline-item active">
-                                <a id="carousel-selector-0" class="selected" data-slide-to="0"
-                                   data-target="#custCarousel"> <img src="~/@Model.Hinh" class="img-fluid"> </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a id="carousel-selector-1" data-slide-to="1" data-target="#custCarousel">
-                                    <img src="images/loa.jpg" class="img-fluid">
-                                </a>
-                            </li>
-
-                        </ol>
+                            @{first = true;}
+                                @foreach (var item in hinhs)
+                                {
+                                <li class="list-inline-item @(first ? "active" : "")">
+                                    <a id="carousel-selector-0" class="selected" data-slide-to="0"
+                                       data-target="#custCarousel"> <img src="~/images/products/@item" class="img-fluid"> </a>
+                                </li>
+                                 first = false;
+                                }
+                            </ol>
                     </div>
                 </div>
                 
@@ -71,72 +77,15 @@
             <div class="detail-tab">
                 <ul class="nav nav-tabs m-0" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#home">Bình luận</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#menu1">Mô tả sản phẩm </a>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div id="home" class="container tab-pane active">
+                    <div id="menu1" class="container tab-pane active">
                         <br>
-                        <div class="tab-pane-cmt">
-                            <div class="detailBox">
-                                <div class="actionBox">
-                                    <ul class="commentList">
-                                        <li>
-                                            <div class="commenterImage">
-                                                <img src="http://placekitten.com/50/50" />
-                                            </div>
-                                            <div class="commentText">
-                                                <p class="">Hello this is a test comment.</p> <span class="date sub-text">
-                                                    on March 5th,
-                                                    2014
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="commenterImage">
-                                                <img src="http://placekitten.com/45/45" />
-                                            </div>
-                                            <div class="commentText">
-                                                <p class="">
-                                                    Hello this is a test comment and this comment is particularly very long and it goes
-                                                    on
-                                                    and on and on.
-                                                </p> <span class="date sub-text">on March 5th, 2014</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="commenterImage">
-                                                <img src="http://placekitten.com/40/40" />
-                                            </div>
-                                            <div class="commentText">
-                                                <p class="">Hello this is a test comment.</p> <span class="date sub-text">
-                                                    on March 5th,
-                                                    2014
-                                                </span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <form class="form-inline" role="form">
-                                        <div class="form-group">
-                                            <input class="form-control" type="text" placeholder="Your comments" />
-                                        </div>
-                                        <div class="form-group">
-                                            <button class="btn btn-primary">Add</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="menu1" class="container tab-pane fade">
-                        <br>
-                        <h3>Menu 1</h3>
+                        <h3>@Model.TenLK</h3>
                         <p>
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                            consequat.
+                            @Html.Raw(Model.MoTa)
                         </p>
                     </div>
                 </div>

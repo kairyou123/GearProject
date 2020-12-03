@@ -1,6 +1,4 @@
-﻿using System.Net.Mime;
-using System.Net.Mail;
-using Domain.Entity;
+﻿using Domain.Entity;
 using Domain.IRepository;
 using Insfrastucture.Context;
 using Microsoft.EntityFrameworkCore;
@@ -21,12 +19,12 @@ namespace Insfrastucture.Repository
         }
         public async Task<IEnumerable<HoaDon>> getAll()
         {
-            var result = await _context.HoaDons.ToListAsync();
+            var result = await _context.HoaDons.Include(i => i.User).Include(i => i.ChiTietHDs).ThenInclude(i => i.LinhKien).ToListAsync();
             return result;
         }
         public async Task<IEnumerable<HoaDon>> getByUser(string id)
         {
-            var result = await _context.HoaDons.Where(i => i.UserId == id).ToListAsync();
+            var result = await _context.HoaDons.Where(i => i.UserId == id).Include(i => i.User).Include(i => i.ChiTietHDs).ThenInclude(i => i.LinhKien).ToListAsync();
             return result;
         }
         public async Task<HoaDon> getById(int id)
@@ -41,6 +39,14 @@ namespace Insfrastucture.Repository
         }
         public async Task Update(HoaDon item)
         {
+            if (item.TinhTrang == Status.DaGiao)
+            {
+                foreach (var linhkien in item.ChiTietHDs)
+                {
+                    linhkien.LinhKien.DaBan = linhkien.LinhKien.DaBan + (int)linhkien.SoLuongBan;
+                    linhkien.LinhKien.SLTonKho = linhkien.LinhKien.SLTonKho - (int)linhkien.SoLuongBan;
+                }
+            }
             _context.HoaDons.Update(item);
             await _context.SaveChangesAsync();
         }

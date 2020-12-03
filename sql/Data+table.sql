@@ -227,6 +227,7 @@ CREATE TABLE [dbo].[HoaDons](
 	[NgayLapHD] [datetime2](7) NOT NULL,
 	[NgayGiao] [datetime2](7) NOT NULL,
 	[TiGia] [decimal](18, 0) NOT NULL,
+	[TinhTrang] [nvarchar](max) NOT NULL,
 	[UserId] [nvarchar](450) NULL,
  CONSTRAINT [PK_HoaDons] PRIMARY KEY CLUSTERED 
 (

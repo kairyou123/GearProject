@@ -16,7 +16,6 @@ namespace Insfrastucture.Persistence
         {
             context.Database.EnsureCreated();
 
-
             if (context.Roles.Any()) return;
 
             context.Roles.AddRange(new List<ApplicationRole>{

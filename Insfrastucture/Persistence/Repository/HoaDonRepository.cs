@@ -1,7 +1,10 @@
-﻿using Domain.Entity;
+﻿using System.Net.Mime;
+using System.Net.Mail;
+using Domain.Entity;
 using Domain.IRepository;
 using Insfrastucture.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +31,7 @@ namespace Insfrastucture.Repository
         }
         public async Task<HoaDon> getById(int id)
         {
-            var result = await _context.HoaDons.Where(i => i.Id == id).FirstOrDefaultAsync();
+            var result = await _context.HoaDons.Where(i => i.Id == id).Include(i => i.User).Include(i => i.ChiTietHDs).ThenInclude(i => i.LinhKien).FirstOrDefaultAsync();
             return result;
         }
         public async Task Add(HoaDon item)
@@ -46,5 +49,67 @@ namespace Insfrastucture.Repository
             _context.HoaDons.Remove(item);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<HoaDon>> Filter(string searchString = "", string orderBy = "", string tinhTrang = "", DateTime fromDate = default, DateTime toDate = default)
+        {
+            var query = _context.HoaDons.AsQueryable();
+
+            if (searchString != "")
+            {
+                query = query.Where(i => i.MaHD.Contains(searchString));
+            }
+
+            if (tinhTrang != "")
+            {
+                if (tinhTrang == Status.ChoXacNhan)
+                {
+                    query = query.Where(i => i.TinhTrang == Status.ChoXacNhan);
+                }
+                else if (tinhTrang == Status.DaXacNhan)
+                {
+                    query = query.Where(i => i.TinhTrang == Status.DaXacNhan);
+                }
+                else if (tinhTrang == Status.DangDongGoi)
+                {
+                    query = query.Where(i => i.TinhTrang == Status.DangDongGoi);
+                }
+                else if (tinhTrang == Status.DangVanChuyen)
+                {
+                    query = query.Where(i => i.TinhTrang == Status.DangVanChuyen);
+                }
+                else if (tinhTrang == Status.DaGiao)
+                {
+                    query = query.Where(i => i.TinhTrang == Status.DaGiao);
+                }
+                else if (tinhTrang == Status.DaHuy)
+                {
+                    query = query.Where(i => i.TinhTrang == Status.DaHuy);
+                }
+            }
+
+            if (fromDate != default && toDate != default)
+            {
+                query = query.Where(i => i.NgayLapHD >= fromDate && i.NgayLapHD <= toDate);
+            }
+
+            if (orderBy == "")
+            {
+                query = query.OrderByDescending(i => i.NgayLapHD);
+            }
+
+            query = query.Include(i => i.User).Include(i => i.ChiTietHDs).ThenInclude(i => i.LinhKien);
+
+            return await query.ToListAsync();
+        }
+    }
+
+    public static class Status
+    {
+        public const string ChoXacNhan = "Chờ xác nhận";
+        public const string DaXacNhan = "Đã xác nhận";
+        public const string DangDongGoi = "Đang đóng gói";
+        public const string DangVanChuyen = "Đang vận chuyển";
+        public const string DaGiao = "Đã giao hàng";
+        public const string DaHuy = "Đã hủy";
     }
 }

@@ -48,5 +48,23 @@ namespace GearMVC.Services
             };
         }
 
+        public static IndexViewModel<HoaDonDTO> PaginationHoaDon(List<HoaDonDTO> list, int page, int itemPerPage,
+                                                                int pageCount, string searchString, string tinhTrang, string orderBy,
+                                                                DateTime FromDate, DateTime ToDate)
+        {
+            return new IndexViewModel<HoaDonDTO>
+            {
+                Entities = new List<HoaDonDTO>(list),
+                CurrentPage = page,
+                PageCount = pageCount,
+                FromDate = FromDate,
+                ToDate = ToDate,
+                TinhTrang = tinhTrang,
+                searchString = searchString,
+                orderBy = orderBy
+            };
+        }
+
+
     }
 }

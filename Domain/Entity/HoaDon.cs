@@ -19,7 +19,7 @@ namespace Domain.Entity
         public DateTime NgayLapHD { get; set; }
 
         [Column(TypeName = "DateTime2")]
-        public DateTime NgayGiao { get; set; }
+        public DateTime? NgayGiao { get; set; }
 
         [Column(TypeName = "decimal(18,0)")]
         public decimal TiGia { get; set; }

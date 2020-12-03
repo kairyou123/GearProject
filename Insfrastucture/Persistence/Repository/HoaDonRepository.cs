@@ -41,6 +41,7 @@ namespace Insfrastucture.Repository
         {
             if (item.TinhTrang == Status.DaGiao)
             {
+                item.NgayGiao = DateTime.Now;
                 foreach (var linhkien in item.ChiTietHDs)
                 {
                     linhkien.LinhKien.DaBan = linhkien.LinhKien.DaBan + (int)linhkien.SoLuongBan;

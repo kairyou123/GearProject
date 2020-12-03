@@ -225,7 +225,7 @@ CREATE TABLE [dbo].[HoaDons](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[MaHD] [nvarchar](100) NOT NULL,
 	[NgayLapHD] [datetime2](7) NOT NULL,
-	[NgayGiao] [datetime2](7) NOT NULL,
+	[NgayGiao] [datetime2](7) NULL,
 	[TiGia] [decimal](18, 0) NOT NULL,
 	[TinhTrang] [nvarchar](max) NOT NULL,
 	[UserId] [nvarchar](450) NULL,

@@ -90,7 +90,7 @@ namespace Insfrastucture.Repository
 
         public async Task<IEnumerable<LinhKien>> getTop10Product()
         {
-            var result = await _context.LinhKiens.OrderByDescending(i => i.DaBan).Take(10).ToListAsync();
+            var result = await _context.LinhKiens.Where(i => i.isDelete == 0).OrderByDescending(i => i.DaBan).Take(10).ToListAsync();
 
             return result;
         }

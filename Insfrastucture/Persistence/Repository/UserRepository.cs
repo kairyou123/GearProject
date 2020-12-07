@@ -94,5 +94,11 @@ namespace Insfrastucture.Repository
         {
             return await _userManager.FindByEmailAsync(Email);
         }
+
+        public async Task<IEnumerable<ApplicationUser>> getAllKhachHang()
+        {
+            var result = await _userManager.Users.Where(u => u.UserRoles.Any(r => r.Role.Name.ToLower() == "khách hàng") && u.isDelete == 0).ToListAsync();
+            return result;
+        }
     }
 }

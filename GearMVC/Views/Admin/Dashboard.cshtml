@@ -1,0 +1,213 @@
+@model IEnumerable<LinhKienDTO>
+
+@{
+    ViewData["Title"] = "Trang tổng quan";
+    var count = 0;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Chart.min.css" type="text/css">
+}
+@section Scripts {
+    <script src="~/js/Chart.bundle.min.js"></script>
+    <script src="~/js/Chart.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".dashboard").addClass("admin-active");
+            var hds = [];
+            var hdNow = {
+                'value': 0,
+                'monthString': '',
+                'gia': 0    
+            };
+            var hd1month = {
+                'value': 0,
+                'monthString': '',
+                'gia': 0    
+            };
+            var hd2month = {
+                'value': 0,
+                'monthString': '',
+                'gia': 0    
+            };
+            var hd3month = {
+                'value': 0,
+                'monthString': '',
+                'gia': 0    
+            };
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: "/admin/dashboard/getOrderThreeMonth",
+            }).done(function(result){
+                hds = JSON.parse(result);
+            });
+            var now = new Date().getMonth() + 1;
+            
+            hdNow.value = now <= 0 ? checkMonth(now) : now;
+            hd1month.value = (now - 1) <= 0 ? checkMonth(now - 1) : now - 1;
+            hd2month.value = (now - 2) <= 0 ? checkMonth(now - 2) : now - 2;
+            hd3month.value = (now - 3) <= 0 ? checkMonth(now - 3) : now - 3;
+
+            hdNow.monthString = setMonthString(hdNow.value);
+            hd1month.monthString = setMonthString(hd1month.value);
+            hd2month.monthString = setMonthString(hd2month.value);
+            hd3month.monthString = setMonthString(hd3month.value);
+            
+            hds.forEach(item => {
+                
+                var date = new Date(item.NgayLapHD);
+                
+                if(date.getMonth() + 1 == hdNow.value)
+                {
+                    hdNow.gia += item.TiGia;
+                }
+
+                if(date.getMonth() + 1 == hd1month.value)
+                {
+                    hd1month.gia += item.TiGia;
+                }
+
+                if(date.getMonth() + 1 == hd2month.value)
+                {
+                    hd2month.gia += item.TiGia;
+                }
+
+                if(date.getMonth() + 1 == hd3month.value)
+                {
+                    hd3month.gia += item.TiGia;
+                }
+            });
+            var maxValue = Math.max(hd3month.gia, hd2month.gia, hd1month.gia, hdNow.gia);
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [hd3month.monthString, hd2month.monthString, hd1month.monthString, hdNow.monthString],
+                    datasets: [{
+                        label: 'Tổng số doanh thu',
+                        data: [hd3month.gia, hd2month.gia, hd1month.gia, hdNow.gia],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                max: maxValue + 100000,
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+
+        function setMonthString(month)
+        {
+            if(month == 1) return 'Tháng 1';
+            if(month == 2) return 'Tháng 2';
+            if(month == 3) return 'Tháng 3';
+            if(month == 4) return 'Tháng 4';
+            if(month == 5) return 'Tháng 5';
+            if(month == 6) return 'Tháng 6';
+            if(month == 7) return 'Tháng 7';
+            if(month == 8) return 'Tháng 8';
+            if(month == 9) return 'Tháng 9';
+            if(month == 10) return 'Tháng 10';
+            if(month == 11) return 'Tháng 11';
+            if(month == 12) return 'Tháng 12';
+
+        }
+
+        function checkMonth(month)
+        {
+            if(month == 0) return 12;
+            if(month == -1) return 11;
+            if(month == -2) return 10;
+            if(month == -3) return 9;
+            if(month == -4) return 8;
+            if(month == -5) return 7;
+            if(month == -6) return 6;
+        }
+    </script>
+}
+
+<div class="admin-content-title">
+    <div class="bs-callout bs-callout-info">
+        <h4>TRANG TỔNG QUAN</h4>
+    </div>
+    <div class="row justify-content-around">
+        <div class="card col-xl-3 col-lg-3" style="padding-left:0; padding-right: 0; color:white">
+            <div class="card-body bg-info">
+                <div>
+                    <h5>Tổng số khách hàng</h5>
+                </div>
+                <span class="float-right">
+                    <h4>@ViewBag.TongKH</h4>
+                </span>
+            </div>
+        </div>
+        <div class="card col-xl-3 col-lg-3" style="padding-left:0; padding-right: 0; color:white">
+            <div class="card-body bg-warning">
+                <div>
+                    <h5>Tổng số sản phẩm</h5>
+                </div>
+                <span class="float-right">
+                    <h4>@ViewBag.TongLinhKien</h4>
+                </span>
+            </div>
+        </div>
+        <div class="card col-xl-3 col-lg-3" style="padding-left:0; padding-right: 0; color:white">
+            <div class="card-body bg-primary">
+                <div>
+                    <h5>Tổng số đơn hàng</h5>
+                </div>
+                <span class="float-right">
+                    <h4>@ViewBag.TongHD</h4>
+                </span>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div style="margin-bottom: 10px;margin-top: 10px;"><h5>TỔNG DOANH THU CỦA 4 THÁNG GẦN NHẤT</h5></div>
+    <canvas id="myChart" height="100px"></canvas>
+    <hr>
+    <div>
+        <div style="margin-bottom: 20px;margin-top: 10px;"><h5>TOP 10 SẢN PHẨM BÁN CHẠY NHẤT</h5></div>
+        <table class="table" style="font-size: 14px">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Mã sản phẩm</th>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Đã bán</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                count++;
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>@item.MaLK</td>
+                    <td>@item.TenLK</td>
+                    <td>@item.DaBan</td>
+                </tr>
+            }
+        </tbody>
+        </table>
+    </div>
+</div>

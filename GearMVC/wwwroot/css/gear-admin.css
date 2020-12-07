@@ -480,45 +480,123 @@ input:focus {
 }
 
 .card-horizontal {
-    display: flex;
-    flex: 1 1 auto;
-}
-.card-text .date{
-    font-size: 80%;
-    font-weight: 300;
+  display: flex;
+  flex: 1 1 auto;
 }
 
-.card-custom .card-text{
-    width: max-content;
+.card-text .date {
+  font-size: 80%;
+  font-weight: 300;
 }
 
-.btn-action-custom{
-    background-color: white;
-    color: black;
+.card-custom .card-text {
+  width: max-content;
 }
+
+.btn-action-custom {
+  background-color: white;
+  color: black;
+}
+
 .card-custom .dropdown-menu {
-    min-width: max-content !important;
-    background-color: #f4f2f2 !important;
+  min-width: max-content !important;
+  background-color: #f4f2f2 !important;
 }
 
 .card-custom img {
-    width: 120px;
-    height: 120px;
-    margin-top: 15%;
+  width: 120px;
+  height: 120px;
+  margin-top: 15%;
 }
 
 
 .card-custom {
-    padding: 5px;
-    box-shadow: 5px 10px 10px grey;
-   /*border: 2px solid blue;*/
+  padding: 5px;
+  box-shadow: 5px 10px 10px grey;
+  /*border: 2px solid blue;*/
 }
-.card-custom .card-body{
-    width:50%;
+
+.card-custom .card-body {
+  width: 50%;
 }
+
 .card-custom .ellipsis {
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.bs-callout {
+  padding: 10px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+}
+
+.bs-callout h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.bs-callout p:last-child {
+  margin-bottom: 0;
+}
+
+.bs-callout code {
+  border-radius: 3px;
+}
+
+.bs-callout+.bs-callout {
+  margin-top: -5px;
+}
+
+.bs-callout-default {
+  border-left-color: #777;
+}
+
+.bs-callout-default h4 {
+  color: #777;
+}
+
+.bs-callout-primary {
+  border-left-color: #428bca;
+}
+
+.bs-callout-primary h4 {
+  color: #428bca;
+}
+
+.bs-callout-success {
+  border-left-color: #5cb85c;
+}
+
+.bs-callout-success h4 {
+  color: #5cb85c;
+}
+
+.bs-callout-danger {
+  border-left-color: #d9534f;
+}
+
+.bs-callout-danger h4 {
+  color: #d9534f;
+}
+
+.bs-callout-warning {
+  border-left-color: #f0ad4e;
+}
+
+.bs-callout-warning h4 {
+  color: #f0ad4e;
+}
+
+.bs-callout-info {
+  border-left-color: #5bc0de;
+}
+
+.bs-callout-info h4 {
+  color: black;
 }

@@ -68,7 +68,7 @@ namespace GearMVC.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             var product = await _linhkienRepo.getById(id);
-            if(product == null) return View("~/Views/Error/404.cshtml");
+            if (product == null) return View("~/Views/Error/404.cshtml");
             product.DonGias = product.DonGias.Where(i => i.ApDung).ToList();
             var result = mapper.Map<LinhKienDTO>(product);
             return View(result);
@@ -80,7 +80,7 @@ namespace GearMVC.Controllers
             var products = await _linhkienRepo.Filter(searchCategory: id);
             if (products.Count() == 0) return View("~/Views/Error/404.cshtml");
             var result = new List<LinhKienDTO>();
-            foreach(var item in products)
+            foreach (var item in products)
             {
                 item.DonGias = item.DonGias.Where(i => i.ApDung).ToList();
                 var dto = mapper.Map<LinhKienDTO>(item);
@@ -89,12 +89,11 @@ namespace GearMVC.Controllers
             return View(result);
         }
 
-        [Authorize(Roles = "Admin,Khách hàng,Quản lý")]
         [HttpGet("user/profie-orders/{page?}")]
         public async Task<IActionResult> ProfileOrders(int page)
         {
             var user = await _userManager.GetUserAsync(User);
-            
+
             var userDTO = mapper.Map<UserDTO>(user);
             var orders = await _hoadonRepository.getByUser(user.Id);
             var hoadonsDTO = new List<HoaDonDTO>();
@@ -104,13 +103,13 @@ namespace GearMVC.Controllers
                 hoadonsDTO.Add(dto);
             }
 
-            return View(new ProfileOrderData() { User = userDTO, HoaDons = hoadonsDTO, Page = page});
+            return View(new ProfileOrderData() { User = userDTO, HoaDons = hoadonsDTO, Page = page });
         }
     }
     public class ProfileOrderData
     {
         public int Page { get; set; }
-        public UserDTO User { get;set; }
+        public UserDTO User { get; set; }
         public List<HoaDonDTO> HoaDons { get; set; }
     }
 }

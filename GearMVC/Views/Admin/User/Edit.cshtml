@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Sửa tài khoản";
+    var roleBool = User.IsInRole("Nhân viên");
 }
 
 @section Scripts {
@@ -95,7 +96,30 @@
                 <div class="col-sm-8"><input type="number" class="form-control" id="Phone" placeholder="Số điện thoại"
                     name="PhoneNumber" value="@Model.PhoneNumber"></div>
               </div>
-              <div class="form-group row"><label for="Role" class="col-sm-3 col-form-label">Chức vụ</label>
+              @if(User.IsInRole("Quản lý"))
+              {
+                <div class="form-group row"><label for="Role" class="col-sm-3 col-form-label">Chức vụ</label>
+                <div class="col-sm-8" id="Role">
+                    <select class="form-control" name="Role">
+                        @foreach(var role in ViewBag.Roles)
+                        {
+                          if(role.Name == ViewBag.CurrentRole)
+                          {
+                            <option value="@role.Name" selected>@role.Name</option>
+                          }
+                          else if(role.Name != "Admin" && role.Name != "Quản lý")
+                          {
+                            <option value="@role.Name">@role.Name</option>
+                          }
+                           
+                        }
+                    </select>
+                </div>
+              </div>
+              }
+              else if(!roleBool)
+              {
+                <div class="form-group row"><label for="Role" class="col-sm-3 col-form-label">Chức vụ</label>
                 <div class="col-sm-8" id="Role">
                     <select class="form-control" name="Role">
                         @foreach(var role in ViewBag.Roles)
@@ -112,11 +136,13 @@
                         }
                     </select>
                 </div>
-              </div>
+                </div>
+              }
+              
               @Html.AntiForgeryToken()
               <div class="form-group row">
                 <div class="admin-form-edit-button"><button class="btn btn-warning admin-form-edit-button" type="submit"
-                    form="userAdd" value="Submit">Tạo</button></div>
+                    form="userAdd" value="Submit">Sửa</button></div>
               </div>
             </form>
           </div>

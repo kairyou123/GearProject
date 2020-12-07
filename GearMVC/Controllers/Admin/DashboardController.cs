@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using Application.DTO;
 using AutoMapper;
 using Domain.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace GearMVC.Controllers.Admin
 {
     [Route("admin/[controller]")]
+    [Authorize(Roles = "Nhân viên, Admin, Quản lý")]
     public class DashboardController : Controller
     {
         public readonly IHoaDonRepository _hoadonRepo;

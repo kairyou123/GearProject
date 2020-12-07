@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace GearMVC.Controllers
 {
     [Route("admin/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Nhân viên, Admin, Quản lý")]
     public class CategoryController : Controller
     {
         private readonly ILoaiLinhKienRepository _loaiLinhKienRepo;
@@ -48,6 +48,7 @@ namespace GearMVC.Controllers
             return View("~/Views/Admin/Category/Index.cshtml", returnList);
         }
         [HttpGet("Add")]
+        [Authorize(Roles = "Admin, Quản lý")]
         public IActionResult Add()
         {
             LoaiLinhKienDTO dto = new LoaiLinhKienDTO();
@@ -75,6 +76,7 @@ namespace GearMVC.Controllers
 
         }
         [HttpGet("{id?}/Edit")]
+        [Authorize(Roles = "Admin, Quản lý")]
         public async Task<IActionResult> Edit(int id)
         {
             ViewBag.Title = "Sửa Chủng Loại";
@@ -110,6 +112,7 @@ namespace GearMVC.Controllers
         }
 
         [HttpPost("{id?}/Delete")]
+        [Authorize(Roles = "Admin, Quản lý")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {

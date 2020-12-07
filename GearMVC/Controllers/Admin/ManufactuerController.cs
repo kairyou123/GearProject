@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace GearMVC.Controllers
 {
     [Route("admin/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Nhân viên, Admin, Quản lý")]
     public class ManufactuerController : Controller
     {
         private readonly INhaCungCapRepository _nccRepo;
@@ -49,6 +49,7 @@ namespace GearMVC.Controllers
             return View("~/Views/Admin/Manufactuer/Index.cshtml", returnList);
         }
         [HttpGet("Add")]
+        [Authorize(Roles = "Admin, Quản lý")]
         public IActionResult Add()
         {
             NhaCungCapDTO dto = new NhaCungCapDTO();
@@ -76,6 +77,7 @@ namespace GearMVC.Controllers
 
         }
         [HttpGet("{id?}/Edit")]
+        [Authorize(Roles = "Admin, Quản lý")]
         public async Task<IActionResult> Edit(int id)
         {
             ViewBag.Title = "Sửa Nhà Sản Xuất";
@@ -112,6 +114,7 @@ namespace GearMVC.Controllers
 
         [HttpPost("{id?}/Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Quản lý")]
         public async Task<IActionResult> Delete(int id)
         {
             var ncc = await _nccRepo.getById(id);

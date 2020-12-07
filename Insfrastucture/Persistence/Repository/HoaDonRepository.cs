@@ -108,7 +108,25 @@ namespace Insfrastucture.Repository
 
             return await query.ToListAsync();
         }
+
+        public async Task<IEnumerable<HoaDon>> getOrderThreeMonthAgoAndNow()
+        {
+            var now = DateTime.Now;
+            var month = now.Month;
+            var oneMonthAgo = now.Month - 1;
+            var twoMonthsAgo = now.Month - 2;
+            var threeMonthAgo = now.Month - 3;
+
+            var result = await _context.HoaDons.Where(i => (i.NgayLapHD.Month == month
+                                                     || i.NgayLapHD.Month == oneMonthAgo || i.NgayLapHD.Month == twoMonthsAgo || i.NgayLapHD.Month == threeMonthAgo) && i.TinhTrang == Status.DaGiao)
+                                               .ToListAsync();
+
+            return result;
+        }
+
     }
+
+
 
     public static class Status
     {

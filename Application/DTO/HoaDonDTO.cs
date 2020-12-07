@@ -20,6 +20,6 @@ namespace Application.DTO
         public string UserId { get; set; }
         public string TinhTrang { get; set; }
         public UserDTO User { get; set; }
-        public ICollection<ChiTietHD> ChiTietHDs { get; set; }
+        public ICollection<CTHoaDonDTO> ChiTietHDs { get; set; }
     }
 }

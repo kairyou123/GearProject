@@ -1,4 +1,6 @@
 @model IndexViewModel<UserDTO>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<Domain.Entity.ApplicationUser> userManager;
 
 @{
     ViewData["Title"] = "Quản lý loại tài khoản";
@@ -73,7 +75,9 @@
                                 <td>@user.PhoneNumber</td>
                                 <td>@user.ChucVu</td>
                                 <td>
-                                  <a href="/admin/user/@user.Id/edit">
+                                  @if(User.IsInRole("Admin"))
+                                  {
+                                    <a href="/admin/user/@user.Id/edit">
                                     <button class="admin-button edit">
                                         <i class="fas fa-edit"></i>
                                     </button>
@@ -84,6 +88,29 @@
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                     </form>
+                                  }
+                                  else if(User.IsInRole("Quản lý") && user.ChucVu != "Admin" && user.ChucVu != "Quản lý")
+                                  {
+                                      <a href="/admin/user/@user.Id/edit">
+                                        <button class="admin-button edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </a>
+                                  <form method="post" id="deleteRole" action="/admin/user/@user.Id/delete" style="display:inline;">
+                                    @Html.AntiForgeryToken()
+                                    <button class="admin-button delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                    </form>
+                                  }
+                                  else if(User.IsInRole("Quản lý") && userManager.GetUserId(User) == user.Id)
+                                  {
+                                      <a href="/admin/user/@user.Id/edit">
+                                        <button class="admin-button edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                      </a>
+                                  }
                                 </td>
                             </tr>
                         }

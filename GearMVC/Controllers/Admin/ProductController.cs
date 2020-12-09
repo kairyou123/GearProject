@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace GearMVC.Controllers.Admin
 {
     [Route("admin/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Nhân viên, Admin, Quản lý")]
     public class ProductController : Controller
     {
         private readonly IMapper _mapper;
@@ -328,6 +328,7 @@ namespace GearMVC.Controllers.Admin
         }
 
         [HttpPost("{id?}/Delete")]
+        [Authorize(Roles = "Admin, Quản lý")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {

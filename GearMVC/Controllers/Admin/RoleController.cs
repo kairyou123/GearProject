@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GearMVC.Controllers.Admin
 {
     [Route("admin/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Nhân viên, Admin, Quản lý")]
     public class RoleController : Controller
     {
         private readonly IRoleRepository _roleRepository;
@@ -29,7 +29,7 @@ namespace GearMVC.Controllers.Admin
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> Index(string searchString="", int page=1)
+        public async Task<IActionResult> Index(string searchString = "", int page = 1)
         {
             var list = await _roleRepository.Filter(searchString);
             double count = list.Count();
@@ -39,11 +39,12 @@ namespace GearMVC.Controllers.Admin
             list = list.Skip((page - 1) * ItemPerPage).Take(ItemPerPage);
             var dto = _mapper.Map<List<LoaiTKDTO>>(list);
 
-            IndexViewModel< LoaiTKDTO> returnList = PaginationServices<LoaiTKDTO>.Pagination(dto, page, ItemPerPage, pageCount, searchString);
+            IndexViewModel<LoaiTKDTO> returnList = PaginationServices<LoaiTKDTO>.Pagination(dto, page, ItemPerPage, pageCount, searchString);
 
             return View("~/Views/Admin/Role/Index.cshtml", returnList);
         }
         [HttpGet("Add")]
+        [Authorize(Roles = "Admin, Quản lý")]
         public IActionResult Add()
         {
             LoaiTKDTO dto = new LoaiTKDTO();
@@ -70,6 +71,7 @@ namespace GearMVC.Controllers.Admin
         }
 
         [HttpGet("{id?}/Edit")]
+        [Authorize(Roles = "Admin, Quản lý")]
         public async Task<IActionResult> Edit(string id)
         {
             var loaiTK = await _roleRepository.getById(id);
@@ -104,6 +106,7 @@ namespace GearMVC.Controllers.Admin
         }
 
         [HttpPost("{id?}/Delete")]
+        [Authorize(Roles = "Admin, Quản lý")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string id)
         {

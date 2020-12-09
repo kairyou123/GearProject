@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Identity;
 namespace GearMVC.Controllers.Admin
 {
     [Route("admin/user")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Nhân viên, Admin, Quản lý")]
     public class UserAdminController : Controller
     {
         private readonly IUserRepository _userRepo;
@@ -35,7 +35,7 @@ namespace GearMVC.Controllers.Admin
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string searchString, string role,int page = 1)
+        public async Task<IActionResult> Index(string searchString, string role, int page = 1)
         {
             if (searchString == null) searchString = "";
 
@@ -46,7 +46,7 @@ namespace GearMVC.Controllers.Admin
 
             list = list.Skip((page - 1) * ItemPerPage).Take(ItemPerPage);
             List<UserDTO> dtos = new List<UserDTO>();
-            foreach(ApplicationUser user in list)
+            foreach (ApplicationUser user in list)
             {
                 var dto = user.MapDTO();
                 dtos.Add(dto);
@@ -55,11 +55,12 @@ namespace GearMVC.Controllers.Admin
             ViewBag.Roles = roles;
             IndexViewModel<UserDTO> returnList = PaginationServices<UserDTO>.Pagination(dtos, page, ItemPerPage, pageCount, searchString, role);
 
-            
-                return View("~/Views/Admin/User/Index.cshtml", returnList);
+
+            return View("~/Views/Admin/User/Index.cshtml", returnList);
         }
 
         [HttpGet("add")]
+        [Authorize(Roles = "Admin, Quản lý")]
         public async Task<IActionResult> Add()
         {
             var roles = await _roleRepo.getAll();
@@ -72,14 +73,14 @@ namespace GearMVC.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPost(RegisterViewModel model, string Role)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var roles = await _roleRepo.getAll();
                 ViewBag.Roles = roles;
                 return View("~/Views/Admin/User/Add.cshtml", model);
             }
 
-            if(model.Password != model.PasswordConfirm)
+            if (model.Password != model.PasswordConfirm)
             {
                 var roles = await _roleRepo.getAll();
                 ViewBag.Roles = roles;
@@ -89,7 +90,7 @@ namespace GearMVC.Controllers.Admin
 
             var userExisted = await _userRepo.getByEmail(model.Email);
 
-            if(userExisted != null)
+            if (userExisted != null)
             {
                 var roles = await _roleRepo.getAll();
                 ViewBag.Roles = roles;
@@ -105,10 +106,20 @@ namespace GearMVC.Controllers.Admin
         [HttpGet("{id?}/edit")]
         public async Task<IActionResult> Edit(string Id)
         {
+            if (User.IsInRole("Nhân viên"))
+            {
+                var idCurrent = _userManager.GetUserId(User);
+                if (idCurrent != Id)
+                {
+                    return View("~/Views/Admin/Error.cshtml");
+                }
+            }
+
             var roles = await _roleRepo.getAll();
             ViewBag.Roles = roles;
 
             ApplicationUser user = await _userRepo.getById(Id);
+
             if (user == null)
             {
                 return View("~/Views/Error/404.cshtml");
@@ -133,14 +144,14 @@ namespace GearMVC.Controllers.Admin
                 return View("~/Views/Admin/User/Edit.cshtml", model);
             }
 
-            if(model.Password != null && model.Password != "")
+            if (model.Password != null && model.Password != "")
             {
-                if(model.Password.Length < 5)
+                if (model.Password.Length < 5)
                 {
                     ModelState.AddModelError("Password", "Mật khẩu ít nhất 5 ký tự");
                     return View("~/Views/Admin/User/Edit.cshtml", model);
                 }
-                if(model.Password != model.PasswordConfirm)
+                if (model.Password != model.PasswordConfirm)
                 {
                     ModelState.AddModelError("Password", "Mật khẩu thay đổi không trùng khớp");
                     return View("~/Views/Admin/User/Edit.cshtml", model);
@@ -151,12 +162,13 @@ namespace GearMVC.Controllers.Admin
 
             user = model.EditMapToUser(user);
 
-            await _userRepo.Update(user,Role,model.Password);
+            await _userRepo.Update(user, Role, model.Password);
 
             return Redirect("/admin/user");
         }
 
         [HttpPost("{id?}/delete")]
+        [Authorize(Roles = "Admin, Quản lý")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string Id)
         {

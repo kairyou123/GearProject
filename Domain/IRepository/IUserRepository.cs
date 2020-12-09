@@ -16,5 +16,6 @@ namespace Domain.IRepository
         public Task<ApplicationUser> getByName(string Name);
         public Task<ApplicationUser> getById(string Id);
         public Task<ApplicationUser> getByEmail(string Email);
+        public Task<IEnumerable<ApplicationUser>> getAllKhachHang();
     }
 }

@@ -18,7 +18,8 @@ namespace Application.DTO
         public decimal TiGia { get; set; }
 
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
-        public ICollection<ChiTietHD> ChiTietHDs { get; set; }
+        public string TinhTrang { get; set; }
+        public UserDTO User { get; set; }
+        public ICollection<CTHoaDonDTO> ChiTietHDs { get; set; }
     }
 }

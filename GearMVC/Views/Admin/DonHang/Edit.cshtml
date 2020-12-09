@@ -1,0 +1,132 @@
+@model HoaDonDTO
+@using GearMVC.Const
+@using Application.Services
+
+@{
+    ViewData["Title"] = "Thay đổi trạng thái đơn hàng";
+}
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".hoadon").addClass("admin-active");
+        })
+    </script>
+}
+
+<div>
+    <div class="admin-content-title"><b>SỬA ĐỔI ĐƠN HÀNG</b></div>
+    <div class="admin-content">
+        <div class="admin-order ">
+            <div class="row">
+                <div class="col-6">Đơn hàng thứ #@Model.Id</div>
+                <div class="col-6">Ngày đặt: @Model.NgayLapHD.ToString("dd/MM/yyyy hh:mm")</div>
+            </div>
+            <div class="admin-order-id"><b>Mã số đơn hàng: @Model.MaHD</b></div>
+            <div class="admin-order-info">
+                <div class="admin-order-info-title"><b>THÔNG TIN ĐƠN HÀNG</b></div>
+                <form method="post" id="edit">
+                <div class="admin-order-info-content row">
+                    <div class="col-6">Tên người nhận: @Model.User.HoTen</div>
+                    <div class="col-6">Tổng tiền: <b>@Format.Money(@Model.TiGia)</b></div>
+                    <div class="col-6">Địa chỉ: @Model.User.DiaChi</div>
+                    <div class="col-6">Tình trạng:
+                        <select class="admin-order-select" name="tinhTrang">
+                            @if (@Model.TinhTrang == Const.ChoXacNhan)
+                            {
+                                <option value="@Const.ChoXacNhan" selected>@Const.ChoXacNhan</option>
+                                <option value="@Const.DaXacNhan">@Const.DaXacNhan</option>
+                                <option value="@Const.DangDongGoi">@Const.DangDongGoi</option>
+                                <option value="@Const.DangVanChuyen">@Const.DangVanChuyen</option>
+                                <option value="@Const.DaGiao">@Const.DaGiao</option>
+                                <option value="@Const.DaHuy">@Const.DaHuy</option>
+                            }
+                            else if(@Model.TinhTrang == Const.DaXacNhan)
+                            {
+                                <option value="@Const.ChoXacNhan">@Const.ChoXacNhan</option>
+                                <option value="@Const.DaXacNhan" selected>@Const.DaXacNhan</option>
+                                <option value="@Const.DangDongGoi">@Const.DangDongGoi</option>
+                                <option value="@Const.DangVanChuyen">@Const.DangVanChuyen</option>
+                                <option value="@Const.DaGiao">@Const.DaGiao</option>
+                                <option value="@Const.DaHuy">@Const.DaHuy</option>
+                            }
+                            else if(@Model.TinhTrang == Const.DangDongGoi)
+                            {
+                                <option value="@Const.ChoXacNhan">@Const.ChoXacNhan</option>
+                                <option value="@Const.DaXacNhan">@Const.DaXacNhan</option>
+                                <option value="@Const.DangDongGoi" selected>@Const.DangDongGoi</option>
+                                <option value="@Const.DangVanChuyen">@Const.DangVanChuyen</option>
+                                <option value="@Const.DaGiao">@Const.DaGiao</option>
+                                <option value="@Const.DaHuy">@Const.DaHuy</option>
+                            }
+                            else if(@Model.TinhTrang == Const.DangVanChuyen)
+                            {
+                                <option value="@Const.ChoXacNhan">@Const.ChoXacNhan</option>
+                                <option value="@Const.DaXacNhan">@Const.DaXacNhan</option>
+                                <option value="@Const.DangDongGoi">@Const.DangDongGoi</option>
+                                <option value="@Const.DangVanChuyen" selected>@Const.DangVanChuyen</option>
+                                <option value="@Const.DaGiao">@Const.DaGiao</option>
+                                <option value="@Const.DaHuy">@Const.DaHuy</option>
+                            }
+                            else if(@Model.TinhTrang == Const.DaGiao)
+                            {
+                                <option value="@Const.ChoXacNhan">@Const.ChoXacNhan</option>
+                                <option value="@Const.DaXacNhan">@Const.DaXacNhan</option>
+                                <option value="@Const.DangDongGoi">@Const.DangDongGoi</option>
+                                <option value="@Const.DangVanChuyen">@Const.DangVanChuyen</option>
+                                <option value="@Const.DaGiao" selected>@Const.DaGiao</option>
+                                <option value="@Const.DaHuy">@Const.DaHuy</option>
+                            }
+                            else
+                            {
+                                <option value="@Const.ChoXacNhan">@Const.ChoXacNhan</option>
+                                <option value="@Const.DaXacNhan">@Const.DaXacNhan</option>
+                                <option value="@Const.DangDongGoi">@Const.DangDongGoi</option>
+                                <option value="@Const.DangVanChuyen">@Const.DangVanChuyen</option>
+                                <option value="@Const.DaGiao">@Const.DaGiao</option>
+                                <option value="@Const.DaHuy" selected>@Const.DaHuy</option>
+                            }
+                            
+                        </select>
+                    </div>
+                    <div class="col-6">Số điện thoại: @Model.User.PhoneNumber</div>
+                    <div class="col-6"><button class="btn btn-warning admin-order-button" type="submit" form="edit">SỬA</button></div>
+                </div>
+                @Html.AntiForgeryToken()
+                </form>
+            </div>
+            <div class="admin-order-info">
+                <div class="admin-order-info-title"><b>THÔNG TIN SẢN PHẨM CỦA ĐƠN HÀNG</b></div>
+                <div class="admin-order-info-content">
+                    <table class="table table-striped table-condensed" width="100%">
+                        <thead>
+                            <tr>
+                                <th scope="col">Hình</th>
+                                <th scope="col">Tên</th>
+                                <th scope="col">Số lượng</th>
+                                <th scope="col">Giá</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var item in Model.ChiTietHDs)
+                            {
+                                <tr>
+                                    @{
+                                        var hinh = item.LinhKien.Hinh.Split(",")[0];
+                                    }
+                                    <th><img src="~/images/products/@hinh"
+                                            width="70px" height="70px"></th>
+                                    <td>@item.LinhKien.TenLK</td>
+                                    <td>@item.SoLuongBan</td>
+                                    <td>@Format.Money(@item.DonGia)</td>
+                                 </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

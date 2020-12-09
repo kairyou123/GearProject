@@ -18,6 +18,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace GearMVC
 {
@@ -33,7 +35,7 @@ namespace GearMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddMvc();
             ConfigureScoped(services);
             services.AddDbContext<GearContext>(optionns =>
                             optionns.UseSqlServer(Configuration.GetConnectionString("DevConnection"), b => b.MigrationsAssembly("GearMVC")));
@@ -75,6 +77,7 @@ namespace GearMVC
                                 options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
                                     _ => "Trường này không được để trống");
                             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GearMVC.Controllers.Admin
 {
     [Route("admin/product")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Nhân viên, Admin, Quản lý")]
     public class GiaController : Controller
     {
         public readonly IGiaRepository _giaRepo;
@@ -160,6 +160,7 @@ namespace GearMVC.Controllers.Admin
 
         [HttpPost("{id?}/price/{idPrice?}/delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Quản lý")]
         public async Task<IActionResult> Delete(int id, int idPrice)
         {
             var gia = await _giaRepo.getById(idPrice);

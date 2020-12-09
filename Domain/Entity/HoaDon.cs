@@ -19,13 +19,14 @@ namespace Domain.Entity
         public DateTime NgayLapHD { get; set; }
 
         [Column(TypeName = "DateTime2")]
-        public DateTime NgayGiao { get; set; }
+        public DateTime? NgayGiao { get; set; }
 
         [Column(TypeName = "decimal(18,0)")]
         public decimal TiGia { get; set; }
         [Column(TypeName = "nvarchar(450)")]
         public string UserId { get; set; }
-        public ApplicationUser User {get;set;}
+        public string TinhTrang { get; set; }
+        public ApplicationUser User { get; set; }
         public ICollection<ChiTietHD> ChiTietHDs { get; set; }
     }
 }

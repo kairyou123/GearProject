@@ -67,24 +67,31 @@ namespace Insfrastucture.Repository
             _context.LinhKiens.Update(item);
             await _context.SaveChangesAsync();
         }
-        
+
         public async Task<IEnumerable<LinhKien>> Filter(string searchString, int searchCategory, int searchManu)
         {
             var query = _context.LinhKiens.AsQueryable();
-            if(searchString != "")
+            if (searchString != "")
             {
                 query = query.Where(i => i.TenLK.Contains(searchString));
             }
-            if(searchCategory != 0)
+            if (searchCategory != 0)
             {
                 query = query.Where(i => i.Loai.Id == searchCategory);
             }
-            if(searchManu != 0)
+            if (searchManu != 0)
             {
                 query = query.Where(i => i.NCC.Id == searchManu);
             }
             query = query.Where(i => i.isDelete == 0).Include(i => i.Loai).Include(i => i.NCC).Include(i => i.DonGias);
             var result = await query.ToListAsync();
+            return result;
+        }
+
+        public async Task<IEnumerable<LinhKien>> getTop10Product()
+        {
+            var result = await _context.LinhKiens.Where(i => i.isDelete == 0).OrderByDescending(i => i.DaBan).Take(10).ToListAsync();
+
             return result;
         }
     }

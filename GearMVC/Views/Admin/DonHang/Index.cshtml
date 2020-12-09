@@ -1,0 +1,99 @@
+@model IndexViewModel<Application.DTO.HoaDonDTO>
+@using GearMVC.Const
+@using Application.Services
+
+@{
+    ViewData["Title"] = "Quản lý đơn hàng";
+    var sanpham = "";
+}
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".hoadon").addClass("admin-active");
+        })
+    </script>
+}
+
+<div>
+    <div class="admin-content-title"><b>QUẢN LÝ ĐƠN HÀNG</b></div>
+    <div class="admin-content">
+        <div class="admin-filter">
+            <form id="searchForm" name="searchForm">
+                <div class="row padding-top-30">
+                    <div class="col-2"><span>TÌM KIẾM</span></div>
+                    <div class="col-10">
+                        <input type="text" class="admin-input" name="searchString" placeholder="Tìm theo mã đơn hàng"
+                            value="">
+                        <select class="admin-select" name="tinhTrang" id="tinhtrang">
+                            <option value="">Tình trạng</option>
+                            <option value="@Const.ChoXacNhan">@Const.ChoXacNhan</option>
+                            <option value="@Const.DaXacNhan">@Const.DaXacNhan</option>
+                            <option value="@Const.DangDongGoi">@Const.DangDongGoi</option>
+                            <option value="@Const.DangVanChuyen">@Const.DangVanChuyen</option>
+                            <option value="@Const.DaGiao">@Const.DaGiao</option>
+                            <option value="@Const.DaHuy">@Const.DaHuy</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 10px">
+                    <div class="col-2"></div>
+                    <div class="col-10">
+                        <input type="text" class="admin-input" name="fromDate" onfocus="(this.type='date')"
+                            placeholder="Từ ngày">
+                        <input type="text" class="admin-input" name="toDate" onfocus="(this.type='date')"
+                            placeholder="Đến ngày" style="margin-left: 5px">
+                        <button class="admin-button-submit" type="submit" form="searchForm" value="Submit"><i
+                                class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="admin-content-title-1"><span class="admin-border-title-1">THÔNG TIN ĐƠN HÀNG</span></div>
+        <div class="margin-top-20">
+            <table class="table table-condensed" width="100%">
+                <thead>
+                    <tr style="min-height: 100px">
+                        <th scope="col">Mã đơn hàng</th>
+                        <th scope="col">Ngày mua</th>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">Trạng thái đơn hàng</th>
+                        <th scope="col">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Entities)
+                    {
+                        <tr style="min-height: 100px">
+                            <th>@item.MaHD</th>
+                            <td>@item.NgayLapHD.ToString("dd/MM/yyyy")</td>
+                            @{
+                                var last = item.ChiTietHDs.LastOrDefault();
+                                foreach (var itemSP in item.ChiTietHDs)
+                                {
+                                    if (itemSP.Equals(last))
+                                    {
+                                        sanpham = sanpham + itemSP.LinhKien.TenLK;
+                                    }
+                                    else
+                                    {
+                                        sanpham = sanpham + itemSP.LinhKien.TenLK + " + ";
+                                    }
+
+                                }
+                            }
+                            <td>@sanpham</td>
+                            <td>@Format.Money(item.TiGia)</td>
+                            <td>@item.TinhTrang</td>
+                            <td><a href="/admin/order/@item.Id/edit"><button class="admin-button edit"><i class="fas fa-edit"
+                                            data-order="7"></i></button></a></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

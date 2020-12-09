@@ -26,10 +26,12 @@ namespace GearMVC.Controllers
         private readonly IMapper mapper;
         private readonly ILinhKienRepository _linhkienRepo;
         private readonly IHoaDonRepository _hoadonRepository;
+        private readonly IGioHangRepository _giohangRepo;
         private readonly UserManager<ApplicationUser> _userManager;
         public HomeController(ILogger<HomeController> logger,
                               ILinhKienRepository linhkienRepo,
                               IHoaDonRepository hoadonRepository,
+                              IGioHangRepository giohangRepo,
                               IMapper mapper,
                               UserManager<ApplicationUser> userManager
                 )
@@ -38,6 +40,7 @@ namespace GearMVC.Controllers
             _linhkienRepo = linhkienRepo;
             _hoadonRepository = hoadonRepository;
             _userManager = userManager;
+            _giohangRepo = giohangRepo;
             this.mapper = mapper;
         }
         [HttpGet("")]
@@ -97,6 +100,7 @@ namespace GearMVC.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpGet("user/profie-orders/{page?}")]
         public async Task<IActionResult> ProfileOrders(int page)
         {
@@ -112,6 +116,51 @@ namespace GearMVC.Controllers
             }
 
             return View(new ProfileOrderData() { User = userDTO, HoaDons = hoadonsDTO, Page = page });
+        }
+
+        [Authorize]
+        [HttpGet("user/cart")]
+        public async Task<IActionResult> Cart()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var list = await _giohangRepo.getByUser(user.Id);
+            var result = new List<GioHangDTO>();
+            foreach(var item in list)
+            {
+                result.Add(mapper.Map<GioHangDTO>(item));
+            }
+            return View(result);
+        }
+        [Authorize]
+        [HttpGet("user/addtocart")]
+        public async Task<bool> AddToCart( int linhkienid,  int soluong)
+        {
+            if (linhkienid < 0 || soluong < 0) return false;
+            var userid = _userManager.GetUserId(User);
+
+            var giohang_item = await _giohangRepo.getById(userid, linhkienid);
+            if(giohang_item != null)
+            {
+                giohang_item.SoLuong += soluong;
+                await _giohangRepo.Update(giohang_item);
+                return true;
+            }
+            var item = new GioHang
+            {
+                LinhKienId = linhkienid,
+                SoLuong = soluong,
+                UserId = userid
+            };
+            await _giohangRepo.Add(item);
+            return true;
+        }
+        [Authorize]
+        [HttpGet("user/getcartnum")]
+        public async Task<int> GetCartNum()
+        {
+            var userId = _userManager.GetUserId(User);
+            var result = await _giohangRepo.getCartsNum(userId);
+            return result;
         }
     }
     public class ProfileOrderData

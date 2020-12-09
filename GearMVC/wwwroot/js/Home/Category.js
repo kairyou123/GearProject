@@ -65,7 +65,7 @@ function displayList(list) {
                             <a href="/product/detail/`+ item.Id + `">Nhấn để xem chi tiết</a>
                         </p>
                         <div class="products-hover-btn">
-                            <p><a href="#">Thêm vào giỏ hàng</a></p>
+                            <p><a onclick="addToCart(`+ item.Id + `,1)">Thêm vào giỏ hàng</a></p>
                         </div>
                     </div>`;
 
@@ -82,11 +82,17 @@ function displayList(list) {
                         </div>`;
                     }
 
-                html += `</div>
+        html += `</div>
                 <div class="product-category-content-products-name">
-                    <h2>`+item.TenLK+`</h2>
-                </div>
-                <div class="product-category-content-products-price">
+                    <h2>`+ item.TenLK + `</h2>
+                </div>`;
+        if (item.DaBan >= 100)
+        {
+        html += `<div class="products-sold">
+                    <span>Đã bán ` + item.DaBan + `</span>
+                    </div>`;
+        }
+                html += `<div class="product-category-content-products-price">
                     <p>`+ MoneyFormat(price) +` VNĐ</p>
                 </div>
                 <div class="product-category-content-products-price-sale">

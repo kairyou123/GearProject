@@ -5,6 +5,7 @@
 @inject UserManager<Domain.Entity.ApplicationUser> userManager;
 @inject SignInManager<Domain.Entity.ApplicationUser> signInManager;
 @inject ILoaiLinhKienRepository _loailinhkienRepo;
+@inject IGioHangRepository _giohangRepo;
 @inject IMapper mapper;
 @{
     var loailinhkiens = await _loailinhkienRepo.getAll();
@@ -47,8 +48,8 @@
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
             <a class="navbar-brand padding-gear-40" href="/">GEAR SHOP</a>
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
-                data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-                aria-label="Toggle navigation">
+                    data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                    aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
@@ -81,8 +82,10 @@
                 </div>
                 <ul class="navbar-nav mt-2 mt-lg-0">
                     <li class="nav-item cart">
-                        <div class="count">11</div>
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+                        <div id="cart_num">
+                            
+                        </div>
+                        <a class="nav-link" href="/user/cart"><i class="fas fa-shopping-cart"></i></a>
                     </li>
                     <li class="nav-item dropdown mr-auto dropleft">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
@@ -166,8 +169,8 @@
                 <div class="mapouter">
                     <div class="gmap_canvas">
                         <iframe width="600" height="500" id="gmap_canvas"
-                            src="https://maps.google.com/maps?q=%C4%91%E1%BA%A1i%20h%E1%BB%8Dc%20s%C3%A0i%20g%C3%B2n&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                                src="https://maps.google.com/maps?q=%C4%91%E1%BA%A1i%20h%E1%BB%8Dc%20s%C3%A0i%20g%C3%B2n&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
                     </div>
                     <style>
                         .mapouter {
@@ -188,6 +191,53 @@
     </div>
     <script src="~/js/swiper.min.js"></script>
     <script src="~/js/custom.js"></script>
+    <script>
+        var isLogin = @Html.Raw(signInManager.IsSignedIn(User) ? 1 : 0);
+        var cart_num = 0;
+        function addToCart(id, soluong) {
+            $.ajax({
+                url: '/user/addtocart',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: true,
+                data: { linhkienid: id, soluong: soluong },
+                success: function (result) {
+                    if (result) {
+                        getCartNum();
+                        alert("Thêm thành công!");
+                    }
+                    else {
+                        alert("Unexpected server error occurred.")
+                    }
+                },
+                error: function () {
+                    alert("Error while inserting data");
+                }
+            });
+        }
+        function getCartNum() {
+            if (!isLogin) return;
+            $.ajax({
+                url: '/user/getcartnum',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: true,
+                success: function (result) {
+                    cart_num = result;
+                    var html = `<div class="count" >` + result + `</div>`;
+                    $("#cart_num").html(html);
+                },
+                error: function () {
+                    alert("Error when counting cart items");
+                }
+            });
+        }
+        $(document).ready(function () {
+            getCartNum();
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 

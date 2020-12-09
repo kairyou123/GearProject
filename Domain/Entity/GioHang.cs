@@ -14,6 +14,5 @@ namespace Domain.Entity
         [Required]
         [Column(TypeName = "int")]
         public int  SoLuong { get; set; }
-
     }
 }

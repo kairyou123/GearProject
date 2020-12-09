@@ -42,6 +42,10 @@ namespace Application.Mapping
                             .ForMember(x => x.User, y => y.MapFrom(z => z.User))
                             .ForMember(x => x.ChiTietHDs, y => y.MapFrom(z => z.ChiTietHDs))
                             .ReverseMap();
+            CreateMap<GioHang, GioHangDTO>()
+                            .ForMember(x => x.LinhKien, y => y.MapFrom(z => z.LinhKien))
+                            .ForMember(x => x.User, y => y.MapFrom(z => z.User))
+                            .ReverseMap();
         }
     }
 }

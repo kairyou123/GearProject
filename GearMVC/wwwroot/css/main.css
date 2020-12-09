@@ -216,7 +216,15 @@ body a:hover {
   padding-left: 12px;
 }
 .content-index .swiper-container .swiper-wrapper .swiper-slide .products-name {
-  height: 100px;
+  height: 90px;
+}
+.content-index .swiper-container .swiper-wrapper .swiper-slide .products-sold {
+    font-size: 85%;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: 500;
+    font-style: italic;
+}
 }
 .content-index .swiper-container .swiper-wrapper .swiper-slide .products-price {
   display: block;
@@ -354,7 +362,14 @@ body a:hover {
   padding-left: 12px;
 }
 .product-category-content-products-name {
-  height: 100px;
+  height: 90px;
+}
+.product-category-content .products-sold {
+    font-size: 85%;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: 500;
+    font-style: italic;
 }
 .product-category-content-products-price {
   display: block;
@@ -397,6 +412,11 @@ body a:hover {
 .product-detail-content-products-name, .product-detail-content-products-price, .product-detail-content-products-producer, .product-detail-content-products-btn, .product-detail-content-products-price-sale {
   text-align: left;
   padding-left: 12px;
+}
+.product-detail-content .products-sold {
+    font-size: 110%;
+    text-align: right;
+    margin-right: 10px;
 }
 .product-detail-content-products-name {
   height: 100px;

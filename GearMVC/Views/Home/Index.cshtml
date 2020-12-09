@@ -65,13 +65,19 @@
                                                 <a href="~/product/detail/@item.Id">Nhấn để xem chi tiết</a>
                                             </p>
                                             <div class="products-hover-btn">
-                                                <p><a href="#">Thêm vào giỏ hàng</a></p>
+                                                <p><a  onclick="addToCart(@item.Id,1)">Thêm vào giỏ hàng</a></p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="products-name">
                                         <h2>@item.TenLK</h2>
                                     </div>
+                                    @if (item.DaBan >= 100)
+                                    {
+                                        <div class="products-sold">
+                                            <span>Đã bán @item.DaBan</span>
+                                        </div>
+                                    }
                                     <div class="products-price">
                                         <p>@Format.Money(price)</p>
                                     </div>
@@ -121,6 +127,12 @@
                                     <div class="products-name">
                                         <h2>@item.TenLK</h2>
                                     </div>
+                                    @if (item.DaBan >= 100)
+                                    {
+                                    <div class="products-sold">
+                                        <span>Đã bán @item.DaBan</span>
+                                    </div>
+                                    }
                                     <div class="products-price">
                                         <p>@Format.Money(price)</p>
                                     </div>

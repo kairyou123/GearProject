@@ -1,0 +1,87 @@
+﻿
+@using Application.Services
+@model List<Application.DTO.GioHangDTO>
+@section Content{
+    <div class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading text-uppercase">HHL SHOPPING CART</h1>
+        </div>
+    </div>
+    <div class="row cart">
+
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-cart">
+                    <thead>
+                        <tr>
+                            <th class="table-cart--img"></th>
+                            <th class="table-cart--name">Sản phẩm</th>
+                            <th class="table-cart--quantily">Số lượng</th>
+                            <th class="table-cart--price text-center">Giá tiền</th>
+                            <th class="table-cart--trash"></th>
+                        </tr>
+                    </thead>
+                    @{ decimal total = 0; }
+                    @if (Model.Count > 0)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            var sale = (decimal)item.LinhKien.DonGias.FirstOrDefault().GiamGia;
+                            var price_unit = item.LinhKien.DonGias.FirstOrDefault().DonGiaBan;
+                            var price = (price_unit - price_unit * sale / 100) * item.SoLuong;
+                            total += price;
+                            <tbody>
+                                <tr>
+                                    <td class="table-cart--img"><a href="~/product/detail/@item.LinhKienId"><img src="~/images/products/@item.LinhKien.Hinh.Split(",")[0]" alt="img"></a></td>
+                                    <td class="table-cart--name"><a href="~/product/detail/@item.LinhKienId">@item.LinhKien.TenLK</a></td>
+                                    <td class="table-cart--quantily">
+                                        <input type="number" name="sl" value="@item.SoLuong" size="5" class="quantily">
+                                    </td>
+                                    <td class="table-cart--price text-center">@Format.Money(price)</td>
+                                    <td class="table-cart--trash">
+                                        <button class="btn btn-sm btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                        <tbody>
+                            <tr class="table-cart--total">
+                                <td colspan="3" class="text-right font-weight-bold">Tổng tiền:</td>
+                                <td colspan="2" class="text-right font-weight-bold">@Format.Money(total)</td>
+                            </tr>
+                        </tbody>
+                    }
+                    else
+                    {
+                        <div class="cart-empty">
+                            <div>
+                                <p>
+                                    Giỏ hàng đang trống!
+                                </p>
+                            </div>
+                            <div>
+                                <img src="~/images//cart_emty.png" />
+                            </div>
+                        </div>
+                    }
+
+                </table>
+            </div>
+        </div>
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <button class="btn btn-lg btn-block btn-light">
+                        <i class="fas fa-arrow-left"></i>&nbsp;&nbsp;&nbsp;Tiếp tục mua
+                        hàng
+                    </button>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <button class="btn btn-lg btn-block btn-danger text-uppercase">Thanh toán</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

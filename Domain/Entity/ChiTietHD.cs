@@ -8,6 +8,8 @@ namespace Domain.Entity
 {
     public class ChiTietHD
     {
+        [Key]
+        public int Id { get; set; }
         public int LinhKienId {get;set;}
         public LinhKien LinhKien { get; set; }
         public int HoaDonId {get;set;}

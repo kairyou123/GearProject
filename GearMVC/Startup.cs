@@ -119,6 +119,7 @@ namespace GearMVC
             services.AddScoped<INhaCungCapRepository, NhaCungCapRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IGiaRepository, GiaRepository>();
+            services.AddScoped<IGioHangRepository, GioHangRepository>();
 
         }
     }

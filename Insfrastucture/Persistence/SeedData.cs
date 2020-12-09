@@ -43,7 +43,7 @@ namespace Insfrastucture.Persistence
                 PhoneNumber = "01234567",
                 DiaChi = "123 ABC",
                 CMND = "123456789",
-                Email = "alice1@gmail.com",
+                Email = "alice@gmail.com",
                 UserName = "alice@gmail.com",
                 isDelete = 0
             };

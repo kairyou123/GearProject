@@ -14,6 +14,8 @@ using Domain.Entity;
 using Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Html;
 
 namespace GearMVC.Controllers
 {
@@ -86,7 +88,13 @@ namespace GearMVC.Controllers
                 var dto = mapper.Map<LinhKienDTO>(item);
                 result.Add(dto);
             }
-            return View(result);
+            var list = new HtmlString(JsonConvert.SerializeObject(result, Formatting.None,
+           new JsonSerializerSettings
+           {
+               ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+           }));
+            ViewData["list"] = list;
+            return View();
         }
 
         [HttpGet("user/profie-orders/{page?}")]

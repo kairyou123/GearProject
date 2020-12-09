@@ -1,6 +1,12 @@
 ﻿@using Application.Services
-@model List<Application.DTO.LinhKienDTO>
+
 @section Content{ 
+    
+<script type="text/javascript" src="~/js/Home/Category.js"></script>
+<script>
+    products = @(ViewData["list"]);
+    maxPage = Math.ceil(products.length / recordsPerPage);
+</script>
     <div>
 
         <!-- Header banner -->
@@ -49,17 +55,17 @@
                     <div class="col-sm-12 wrap-sort-by">
                         <div class="product-category-title-sort-style">
                             <label for="products">Sắp xếp theo:</label>
-                            <select id="cars">
-                                <option value="volvo">Độ phổ biến</option>
-                                <option value="saab">Giá: Tăng dần </option>
-                                <option value="opel">Giá Giảm dần</option>
+                            <select id="OrderBy" onchange="searchProducts(currentPage)">
+                                <option value="popular" selected>Độ phổ biến</option>
+                                <option value="price-ascend">Giá: Tăng dần </option>
+                                <option value="price-descend">Giá: Giảm dần</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="product-category-content row">
-                @foreach (LinhKienDTO item in Model)
+            <div class="product-category-content row" id="category-content">
+                @*@foreach (LinhKienDTO item in Model)
                 {
                     var sale = (decimal)item.DonGias.FirstOrDefault().GiamGia;
                     var price = item.DonGias.FirstOrDefault().DonGiaBan;
@@ -103,8 +109,9 @@
                                 </div>
                             </div>
                 </div>
-                }
+                }*@
             </div>
+            <div id="paginator"></div>
         </div>
     </div>
 }

@@ -36,7 +36,6 @@ namespace Application.Mapping
                             .ForMember(x => x.PasswordHash, opt => opt.Ignore())
                             .ReverseMap();
             CreateMap<ChiTietHD, CTHoaDonDTO>()
-                            .ForMember(x => x.HoaDon, y => y.MapFrom(z => z.HoaDon))
                             .ForMember(x => x.LinhKien, y => y.MapFrom(z => z.LinhKien))
                             .ReverseMap();
             CreateMap<HoaDon, HoaDonDTO>()

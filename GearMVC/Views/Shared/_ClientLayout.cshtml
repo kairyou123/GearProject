@@ -196,7 +196,7 @@
         var cart_num = 0;
         function addToCart(id, soluong) {
             $.ajax({
-                url: '/user/addtocart',
+                url: '/cart/addtocart',
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -219,15 +219,17 @@
         function getCartNum() {
             if (!isLogin) return;
             $.ajax({
-                url: '/user/getcartnum',
+                url: '/cart/getcartnum',
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: true,
                 success: function (result) {
-                    cart_num = result;
-                    var html = `<div class="count" >` + result + `</div>`;
-                    $("#cart_num").html(html);
+                    if (result > 0) {
+                        cart_num = result;
+                        var html = `<div class="count" >` + result + `</div>`;
+                        $("#cart_num").html(html);
+                    }
                 },
                 error: function () {
                     alert("Error when counting cart items");

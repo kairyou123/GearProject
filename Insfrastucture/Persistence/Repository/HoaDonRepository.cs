@@ -48,6 +48,13 @@ namespace Insfrastucture.Repository
                     linhkien.LinhKien.SLTonKho = linhkien.LinhKien.SLTonKho - (int)linhkien.SoLuongBan;
                 }
             }
+            else if (item.TinhTrang == Status.DaHuy)
+            {
+                foreach (var linhkien in item.ChiTietHDs)
+                {
+                    linhkien.LinhKien.SLTonKho = linhkien.LinhKien.SLTonKho + (int)linhkien.SoLuongBan;
+                }
+            }
             _context.HoaDons.Update(item);
             await _context.SaveChangesAsync();
         }

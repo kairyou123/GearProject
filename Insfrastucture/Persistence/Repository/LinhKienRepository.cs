@@ -23,7 +23,7 @@ namespace Insfrastucture.Repository
         }
         public async Task<IEnumerable<LinhKien>> getTopSelling()
         {
-            var result = await _context.LinhKiens.Where(i => i.isDelete == 0)
+            var result = await _context.LinhKiens.Where(i => i.isDelete == 0 && i.SLTonKho > 0)
                                                 .Include(i => i.Loai)
                                                 .Include(i => i.NCC)
                                                 .Include(i => i.DonGias)
@@ -35,7 +35,7 @@ namespace Insfrastucture.Repository
         }
         public async Task<IEnumerable<LinhKien>> getNewItems()
         {
-            var result = await _context.LinhKiens.Where(i => i.isDelete == 0)
+            var result = await _context.LinhKiens.Where(i => i.isDelete == 0 && i.SLTonKho > 0)
                                                 .Include(i => i.Loai)
                                                 .Include(i => i.NCC)
                                                 .Include(i => i.DonGias)

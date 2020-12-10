@@ -50,7 +50,7 @@
         <!-- Products -->
         <div class="product-category" id="product-category">
             <div class="product-category-title">
-                <h1>Bàn phím chơi game - Gaming Keyboards</h1>
+                <h1>Danh sách @(ViewData["TenLoai"])</h1>
                 <div class="row product-category-title-sort">
                     <div class="col-sm-12 wrap-sort-by">
                         <div class="product-category-title-sort-style">
@@ -65,51 +65,6 @@
                 </div>
             </div>
             <div class="product-category-content row" id="category-content">
-                @*@foreach (LinhKienDTO item in Model)
-                {
-                    var sale = (decimal)item.DonGias.FirstOrDefault().GiamGia;
-                    var price = item.DonGias.FirstOrDefault().DonGiaBan;
-                <div class="product-category-content-products col-md-3">
-                    <div class="border">
-                        <div class="product-category-content-products-img">
-                            <a href="~/product/detail/@item.Id">
-                                <img src="~/images/products/@item.Hinh.Split(",")[0]" alt="img">
-                            </a>
-                            <div class="products-hover">
-                                <p class="products-hover-see-more">
-                                    <a href="~/product/detail/@item.Id">Nhấn để xem chi tiết</a>
-                                </p>
-                                <div class="products-hover-btn">
-                                    <p><a href="#">Thêm vào giỏ hàng</a></p>
-                                </div>
-                            </div>
-
-                            @if (item.DaBan >= 100)
-                            {
-                                <div class="products-tags">
-                                    <p>HOT</p>
-                                </div>
-                            }
-                            else if (DateTime.Compare(item.NgayCapNhat, DateTime.Now.AddDays(-10)) >= 0)
-                            {
-                                <div class="products-tags">
-                                    <p>NEW</p>
-                                </div>
-                            }
-
-                        </div>
-                                <div class="product-category-content-products-name">
-                                    <h2>@item.TenLK</h2>
-                                </div>
-                                <div class="product-category-content-products-price">
-                                    <p>@Format.Money(price)</p>
-                                </div>
-                                <div class="product-category-content-products-price-sale">
-                                    <p>@Format.Money(price - price * sale / 100)</p>
-                                </div>
-                            </div>
-                </div>
-                }*@
             </div>
             <div id="paginator"></div>
         </div>

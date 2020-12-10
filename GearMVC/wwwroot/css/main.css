@@ -391,9 +391,13 @@ body a:hover {
   transition-delay: 4s;
   display: block;
 }
+.out-of-stock{
+    color: red;
+    font-weight: 600;
+}
 
 .product-detail {
-  margin: 0 !important;
+    margin: 0 !important;
 }
 .product-detail-title {
   font-size: inherit;

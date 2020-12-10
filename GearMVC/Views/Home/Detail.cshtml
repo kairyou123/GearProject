@@ -1,7 +1,8 @@
 ﻿@using Application.Services
 @model Application.DTO.LinhKienDTO
 @section Content{
-    <!-- Content -->
+
+    <script type="text/javascript" src="~/js/Home/Detail.js"></script>
     <div>
         <!-- Products -->
         <div class="product-detail" id="product-detail">
@@ -34,18 +35,18 @@
                         <!-- Thumbnails -->
                         <ol class="carousel-indicators list-inline">
                             @{first = true;}
-                                @foreach (var item in hinhs)
-                                {
+                            @foreach (var item in hinhs)
+                            {
                                 <li class="list-inline-item @(first ? "active" : "")">
                                     <a id="carousel-selector-0" class="selected" data-slide-to="0"
                                        data-target="#custCarousel"> <img src="~/images/products/@item" class="img-fluid"> </a>
                                 </li>
-                                 first = false;
-                                }
-                            </ol>
+                                first = false;
+                            }
+                        </ol>
                     </div>
                 </div>
-                
+
                 <div class="product-detail-content-products col-md-6 m-0">
                     <div class="">
                         <div class="product-detail-content-products-name">
@@ -60,17 +61,27 @@
                         @{
                             var sale = (decimal)Model.DonGias.FirstOrDefault().GiamGia;
                             var price = Model.DonGias.FirstOrDefault().DonGiaBan;
+                            bool hethang = Model.SLTonKho < 1;
                         }
                         <div class="product-detail-content-products-price">
                             <p>Giá: <span class="price">@Format.Money(price)</span></p>
                         </div>
                         <div class="product-detail-content-products-price-sale">
-                            <b>Khuyến mãi: <span class="price-sale">@Format.Money(price - price*sale/100)</span></b>
+                            <b>Khuyến mãi: <span class="price-sale">@Format.Money(price - price * sale / 100)</span></b>
                         </div>
                         <div class="product-detail-content-products-btn">
-                            <p>Số lượng: </p><input type="number" id="product_num" value="1" min="0" max="1000" step="1" class="number" />
+                            <p>Số lượng: </p><input type="number" id="product_num" value="1" min="1" max="@Model.SLTonKho" onblur="updateCartItem()" step="1" class="number" disabled=@hethang />
+                            <span> | </span>
+                            @if (hethang)
+                            {
+                                <span class="out-of-stock">Hết hàng</span>
+                            }
+                            else
+                            {
+                                <span>@Model.SLTonKho đơn vị có sẵn</span>
+                            }
                             <br>
-                            <button type="button" class="btn btn-danger btn-lg buy-now"  onclick="addToCart(@Model.Id,$('#product_num').val())">Đặt hàng</button>
+                            <button type="button" disabled=@hethang class="btn btn-danger btn-lg buy-now" onclick="addToCart(@Model.Id,$('#product_num').val())">Đặt hàng</button>
                         </div>
 
                     </div>

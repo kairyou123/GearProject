@@ -64,10 +64,13 @@ function displayList(list) {
                         <p class="products-hover-see-more">
                             <a href="/product/detail/`+ item.Id + `">Nhấn để xem chi tiết</a>
                         </p>
-                        <div class="products-hover-btn">
-                            <p><a onclick="addToCart(`+ item.Id + `,1)">Thêm vào giỏ hàng</a></p>
-                        </div>
-                    </div>`;
+                        <div class="products-hover-btn">`;
+        if (item.SLTonKho > 0)
+            html += `<p><a onclick="addToCart(` + item.Id + `,1)">Thêm vào giỏ hàng</a></p>`;
+        else
+            html += `<p><span class="out-of-stock">Hết hàng</p></span>`;
+            html += `</div>
+        </div>`;
 
                     if (item.DaBan >= 100)
                     {

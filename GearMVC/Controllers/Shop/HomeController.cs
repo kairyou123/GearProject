@@ -27,11 +27,13 @@ namespace GearMVC.Controllers
         private readonly ILinhKienRepository _linhkienRepo;
         private readonly IHoaDonRepository _hoadonRepository;
         private readonly IGioHangRepository _giohangRepo;
+        private readonly ILoaiLinhKienRepository _loailinhkienRepo;
         private readonly UserManager<ApplicationUser> _userManager;
         public HomeController(ILogger<HomeController> logger,
                               ILinhKienRepository linhkienRepo,
                               IHoaDonRepository hoadonRepository,
                               IGioHangRepository giohangRepo,
+                              ILoaiLinhKienRepository loailinhkienRepo,
                               IMapper mapper,
                               UserManager<ApplicationUser> userManager
                 )
@@ -41,6 +43,7 @@ namespace GearMVC.Controllers
             _hoadonRepository = hoadonRepository;
             _userManager = userManager;
             _giohangRepo = giohangRepo;
+            _loailinhkienRepo = loailinhkienRepo;
             this.mapper = mapper;
         }
         [HttpGet("")]
@@ -96,7 +99,9 @@ namespace GearMVC.Controllers
            {
                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
            }));
+            var tenloai = (await _loailinhkienRepo.getById(id)).Ten;
             ViewData["list"] = list;
+            ViewData["TenLoai"] = tenloai;
             return View();
         }
 
@@ -120,29 +125,45 @@ namespace GearMVC.Controllers
 
         [Authorize]
         [HttpGet("user/cart")]
-        public async Task<IActionResult> Cart()
+        public  IActionResult Cart()
+        {
+            return View();
+        }
+        [Authorize]
+        [HttpGet("user/getcart")]
+        public async Task<string> GetCart()
         {
             var user = await _userManager.GetUserAsync(User);
             var list = await _giohangRepo.getByUser(user.Id);
             var result = new List<GioHangDTO>();
-            foreach(var item in list)
+            foreach (var item in list)
             {
                 result.Add(mapper.Map<GioHangDTO>(item));
             }
-            return View(result);
+            var str = JsonConvert.SerializeObject(result, Formatting.None,
+              new JsonSerializerSettings
+              {
+                  ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+              });
+            return str;
         }
         [Authorize]
-        [HttpGet("user/addtocart")]
+        [HttpGet("cart/addtocart")]
         public async Task<bool> AddToCart( int linhkienid,  int soluong)
         {
-            if (linhkienid < 0 || soluong < 0) return false;
+            if (linhkienid <= 0 || soluong <= 0) return false;
             var userid = _userManager.GetUserId(User);
-
+            //kiểm tra tồn kho
+            var linhkien = await _linhkienRepo.getById(linhkienid);
+            var tonkho = linhkien.SLTonKho;
+            if (tonkho < soluong) return false;
+            //tăng soluong của item nếu đã tồn tại 
             var giohang_item = await _giohangRepo.getById(userid, linhkienid);
             if(giohang_item != null)
             {
                 giohang_item.SoLuong += soluong;
-                await _giohangRepo.Update(giohang_item);
+                if (giohang_item.SoLuong > tonkho) giohang_item.SoLuong = tonkho;
+                 await _giohangRepo.Update(giohang_item);
                 return true;
             }
             var item = new GioHang
@@ -155,12 +176,38 @@ namespace GearMVC.Controllers
             return true;
         }
         [Authorize]
-        [HttpGet("user/getcartnum")]
+        [HttpGet("cart/getcartnum")]
         public async Task<int> GetCartNum()
         {
             var userId = _userManager.GetUserId(User);
             var result = await _giohangRepo.getCartsNum(userId);
             return result;
+        }
+
+        [Authorize]
+        [HttpGet("cart/deleteitem")] 
+        public async Task<bool> DeleteCartItem(int linhkienid)
+        {
+            if (linhkienid <= 0) return false;
+            var userid = _userManager.GetUserId(User);
+            var item = await _giohangRepo.getById(userid, linhkienid);
+            await _giohangRepo.Delete(item);
+            return true;
+        }
+        [Authorize]
+        [HttpGet("cart/updateitem")]
+        public async Task<bool> UpdateItem(int linhkienid, int soluong)
+        {
+            if (linhkienid <= 0 || soluong <= 0) return false;
+            //kiểm tra tồn kho
+            var linhkien = await _linhkienRepo.getById(linhkienid);
+            if (linhkien.SLTonKho < soluong) return false;
+            
+            var userid = _userManager.GetUserId(User);
+            var item = await _giohangRepo.getById(userid, linhkienid);
+            item.SoLuong = soluong;
+            await _giohangRepo.Update(item);
+            return true;
         }
     }
     public class ProfileOrderData

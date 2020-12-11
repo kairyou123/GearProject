@@ -1,0 +1,76 @@
+﻿@section Content{
+    @{
+        UserDTO user = ViewBag.User;
+    }
+
+    <script>
+        var currentPage = 1;
+        var maxPage = 0;
+        var recordsPerPage = 5;
+        var cart;
+        var cart = @Html.Raw(ViewBag.Cart);
+        maxPage = Math.ceil(cart.length / recordsPerPage);
+    </script>
+    <script type="text/javascript" src="~/js/Home/Checkout.js"></script>
+    <div class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading text-uppercase">HHL CHECK OUT</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Products -->
+        <div class="row checkout">
+            <div class="col-6">
+                <h4 class="mb-3">Đơn Hàng</h4>
+                <div class="table-responsive">
+                    <table class="table table-checkout" id="giohang-content">
+                        
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <h4 class="mb-3">Thông Tin Thanh Toán</h4>
+                <div class="needs-validation">
+                    <div class="mb-3">
+                        <label for="firstName">Họ Tên</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="@user.HoTen," readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" value="@user.Email" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" value="@user.DiaChi" readonly>
+                    </div>
+                    <hr class="mb-4">
+                    <h4 class="mb-3">Phương thức thanh toán</h4>
+                    <div class="d-block my-3">
+                        <div class="custom-control custom-radio">
+                            <input id="cod" name="paymentMethod" type="radio" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="cod">Thanh toán khi nhận hàng</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input id="momo" name="paymentMethod" type="radio" class="custom-control-input">
+                            <label class="custom-control-label" for="momo">Thanh toán qua Momo</label>
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+                    <div class="row">
+                        <div class="col-sm-12  col-md-6">
+                            <button class="btn btn-lg btn-block btn-light" onclick="window.location.href = '/user/cart'">
+                                <i class="fas fa-arrow-left"></i>&nbsp;&nbsp;&nbsp;Quay
+                                lại
+                            </button>
+                        </div>
+                        <div class="col-sm-12 col-md-6 text-right">
+                            <button class="btn btn-lg btn-block btn-danger text-uppercase" onclick="BuyProducts()">Mua hàng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

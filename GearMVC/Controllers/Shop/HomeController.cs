@@ -147,6 +147,34 @@ namespace GearMVC.Controllers
               });
             return str;
         }
+
+        [Authorize]
+        [HttpGet("user/checkout")]
+        public async Task<IActionResult> Checkout()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var cart = await _giohangRepo.getByUser(user.Id);
+            var cartDto = new List<GioHangDTO>();
+            foreach(var item in cart)
+            {
+                cartDto.Add(mapper.Map<GioHangDTO>(item));
+            }
+            var cart_json = JsonConvert.SerializeObject(cartDto, Formatting.None,
+                new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+            ViewBag.User = mapper.Map<UserDTO>(user);
+            ViewBag.Cart = cart_json;
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet("user/buyproducts")]
+        public async Task<bool> BuyProducts()
+        {
+            
+        }
         [Authorize]
         [HttpGet("cart/addtocart")]
         public async Task<bool> AddToCart( int linhkienid,  int soluong)

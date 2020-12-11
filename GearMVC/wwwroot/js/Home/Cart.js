@@ -3,7 +3,7 @@
 });
 var currentPage = 1;
 var maxPage = 0;
-var recordsPerPage = 5;
+var recordsPerPage = 10;
 var cart;
 
 function getCart() {
@@ -86,7 +86,7 @@ function displayList(list,paginator_html) {
             </tr>
         </tbody>`;
     });
-    html += paginator_html;
+    if (maxPage > 1) html += paginator_html;
     html += `<tbody>
         <tr class="table-cart--total">
             <td colspan="3" class="text-right font-weight-bold">Tổng tiền:</td>

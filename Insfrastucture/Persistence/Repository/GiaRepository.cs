@@ -40,11 +40,11 @@ namespace Insfrastucture.Repository
             }
         }
 
-        public async Task<IEnumerable<DonGia>> Filter(DateTime FromDate, DateTime ToDate, string ApDung = "")
+        public async Task<IEnumerable<DonGia>> Filter(int linhKienId, DateTime FromDate, DateTime ToDate, string ApDung = "")
         {
             var query = _context.DonGias.AsQueryable();
 
-            query = query.Where(u => u.Ngay >= FromDate && u.Ngay <= ToDate);
+            query = query.Where(u => u.Ngay >= FromDate && u.Ngay <= ToDate && u.LinhKienId == linhKienId);
 
             if (ApDung == "0")
             {

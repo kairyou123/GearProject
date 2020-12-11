@@ -34,6 +34,13 @@ namespace GearMVC.Controllers.Admin
         public async Task<IActionResult> Index(int id, DateTime FromDate, DateTime ToDate, string ApDung = "0", int page = 1)
         {
             var linhkien = await _lkRepo.getById(id);
+
+            if (linhkien == null)
+            {
+                return View("~/Views/Error/404.cshtml");
+            }
+
+            ViewBag.IdProduct = linhkien.Id;
             ViewBag.NameProduct = linhkien.TenLK;
 
             IEnumerable<DonGia> gias = new List<DonGia>();
@@ -44,7 +51,7 @@ namespace GearMVC.Controllers.Admin
             }
             else
             {
-                gias = await _giaRepo.Filter(FromDate, ToDate, ApDung);
+                gias = await _giaRepo.Filter(linhkien.Id, FromDate, ToDate, ApDung);
             }
 
             double count = gias.Count();

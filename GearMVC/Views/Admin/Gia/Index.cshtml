@@ -4,6 +4,7 @@
     ViewData["Title"] = "Quản lý giá";
     var count = 0;
     var searchString = (Model.searchString == null) ? "" : Model.searchString;
+    var linhKienId = ViewBag.IdProduct;
 }
 
 @section Scripts {
@@ -103,7 +104,7 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
-                    </div><a href="@Url.Action("Add","Gia", new { id = Model.Entities.FirstOrDefault().LinhKien.Id })">
+                    </div><a href="@Url.Action("Add","Gia", new { id = linhKienId })">
                         <div class="admin-plus"><span><i class="fas fa-plus-circle"></i></span></div>
                     </a>
                 </div>

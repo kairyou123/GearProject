@@ -1,4 +1,5 @@
-﻿
+﻿@if(Model.PageCount > 0)
+{
 <div class="admin-pagination">
     <ul class="pagination pagination-centered">
         @{ 
@@ -63,3 +64,4 @@
         }
     </ul>
 </div>
+}

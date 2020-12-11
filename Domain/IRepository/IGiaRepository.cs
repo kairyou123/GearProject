@@ -13,6 +13,6 @@ namespace Domain.IRepository
         Task Add(DonGia entity);
         Task Update(DonGia entity);
         Task Delete(DonGia entity);
-        Task<IEnumerable<DonGia>> Filter(DateTime FromDate, DateTime ToDate, string ApDung = "0");
+        Task<IEnumerable<DonGia>> Filter(int linhKienId, DateTime FromDate, DateTime ToDate, string ApDung = "0");
     }
 }

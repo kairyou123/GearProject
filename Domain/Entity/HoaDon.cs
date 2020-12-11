@@ -25,6 +25,7 @@ namespace Domain.Entity
         public decimal TiGia { get; set; }
         [Column(TypeName = "nvarchar(450)")]
         public string UserId { get; set; }
+        public string PhuongThucThanhToan { get; set; }
         public string TinhTrang { get; set; }
         public ApplicationUser User { get; set; }
         public ICollection<ChiTietHD> ChiTietHDs { get; set; }

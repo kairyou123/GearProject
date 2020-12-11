@@ -171,9 +171,41 @@ namespace GearMVC.Controllers
 
         [Authorize]
         [HttpGet("user/buyproducts")]
-        public async Task<bool> BuyProducts()
+        public async Task<bool> BuyProducts(string pttt)
         {
-            
+            var userid =  _userManager.GetUserId(User);
+            var list = await _giohangRepo.getByUser(userid);
+            if (list.Count() < 1) return false;
+            decimal total = 0;
+            var cthds = new List<ChiTietHD>();
+            foreach (var item in list)
+            {
+                var sale = (decimal) item.LinhKien.DonGias.FirstOrDefault().GiamGia;
+                var price_unit = item.LinhKien.DonGias.FirstOrDefault().DonGiaBan;
+                var price = (price_unit - price_unit * sale / 100) * item.SoLuong;
+                total += price;
+                var cthd = new ChiTietHD
+                {
+                    LinhKien = item.LinhKien,
+                    SoLuongBan = item.SoLuong,
+                    DonGia = price
+
+                };
+                cthds.Add(cthd);
+
+            }
+            var hoadon = new HoaDon
+            {
+                NgayLapHD = DateTime.Now,
+                UserId = userid,
+                TinhTrang = Const.Const.ChoXacNhan,
+                ChiTietHDs = cthds,
+                PhuongThucThanhToan = pttt,
+                TiGia = total,
+            };
+            await _hoadonRepository.Add(hoadon);
+            await _giohangRepo.DeleteRange(list);
+            return true;
         }
         [Authorize]
         [HttpGet("cart/addtocart")]
@@ -237,6 +269,7 @@ namespace GearMVC.Controllers
             await _giohangRepo.Update(item);
             return true;
         }
+        
     }
     public class ProfileOrderData
     {

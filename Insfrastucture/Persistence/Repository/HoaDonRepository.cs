@@ -34,6 +34,7 @@ namespace Insfrastucture.Repository
         }
         public async Task Add(HoaDon item)
         {
+            item.MaHD = await GenerateCode();
             _context.HoaDons.Add(item);
             await _context.SaveChangesAsync();
         }
@@ -131,6 +132,20 @@ namespace Insfrastucture.Repository
             return result;
         }
 
+        public async Task<string> GenerateCode()
+        {
+            var item = await _context.HoaDons.OrderByDescending(i => i.MaHD).FirstOrDefaultAsync();
+            var range = 11;
+            var num = decimal.Parse(item.MaHD.Split("HD")[1]) + 1;
+            var str = "HD";
+            var loop = range - num.ToString().Length;
+            for(var i=0;i < loop; i++)
+            {
+                str += "0";
+            }
+            str += num;
+            return str;
+        }
     }
 
 

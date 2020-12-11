@@ -15,5 +15,6 @@ namespace Domain.IRepository
         public Task Add(GioHang item);
         public Task Update(GioHang item);
         public Task Delete(GioHang item);
+        public Task DeleteRange(IEnumerable<GioHang> items);
     }
 }

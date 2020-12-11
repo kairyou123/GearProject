@@ -57,6 +57,10 @@ namespace Insfrastucture.Repository
             await _context.SaveChangesAsync();
         }
 
-
+        public async Task DeleteRange(IEnumerable<GioHang> items)
+        {
+            _context.RemoveRange(items);
+            await _context.SaveChangesAsync();
+        }
     }
 }

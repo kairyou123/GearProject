@@ -101,5 +101,24 @@ function changePage(page) {
 }
 
 function BuyProducts() {
-
+    var pttt = $('input[name="paymentMethod"]:checked').val();
+    $.ajax({
+        url: '/user/buyproducts',
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: { pttt: pttt},
+        async: true,
+        success: function (result) {
+            if (result) {
+                alert("Thanh toán thành công");
+                window.location.href = "/";
+            }
+            else
+                alert("Unexpected server error occurred.")
+        },
+        error: function () {
+            alert("Error while retreiving data");
+        }
+    });
 }

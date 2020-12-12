@@ -1,6 +1,9 @@
 ﻿
 @model GearMVC.Controllers.ProfileOrderData
 @using Application.Services
+@{
+    var count = 0;
+}
 @section Content{
     <div>
         <!-- Products -->
@@ -58,13 +61,14 @@
                             {
                                 foreach (var hoadon in Model.HoaDons)
                                 {
+                                    count++;
                                     <div class="card">
                                         <div class="card-header" id="headingOne">
                                             <h2 class="mb-0">
-                                                <button class="btn btn-link w-100" type="button" data-toggle="collapse" data-target="#collapseOne"
-                                                        aria-expanded="true" aria-controls="collapseOne">
+                                                <button class="btn btn-link w-100" type="button" data-toggle="collapse" data-target="#collapseOne@(count)"
+                                                        aria-expanded="true" aria-controls="collapseOne@(count)">
                                                     <div>
-                                                        <p class="float-left">Ma don hang: <b class="code">@hoadon.MaHD</b></p>
+                                                        <p class="float-left">Mã đơn hàng: <b class="code">@hoadon.MaHD</b></p>
                                                         <p class="text-center status d-inline-block">@(hoadon.NgayGiao == null ? "Đã giao" : "Đang giao")</p>
                                                         <p class="float-right date">@hoadon.NgayLapHD</p>
                                                     </div>
@@ -72,7 +76,7 @@
                                             </h2>
                                         </div>
 
-                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div id="collapseOne@(count)" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                             <div class="card-body orders">
                                                 <div class="table-responsive">
                                                     <table class="table table-orders">

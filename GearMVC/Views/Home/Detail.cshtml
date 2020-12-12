@@ -34,14 +34,15 @@
                         </a>
                         <!-- Thumbnails -->
                         <ol class="carousel-indicators list-inline">
-                            @{first = true;}
+                            @{first = true;var count = 0;}
                             @foreach (var item in hinhs)
                             {
                                 <li class="list-inline-item @(first ? "active" : "")">
-                                    <a id="carousel-selector-0" class="selected" data-slide-to="0"
+                                    <a id="carousel-selector-@(count)" data-slide-to="@(count)"
                                        data-target="#custCarousel"> <img src="~/images/products/@item" class="img-fluid"> </a>
                                 </li>
                                 first = false;
+                                count++;
                             }
                         </ol>
                     </div>

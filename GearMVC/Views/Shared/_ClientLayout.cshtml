@@ -94,8 +94,8 @@
                         @if (signInManager.IsSignedIn(User) && User.IsInRole("Khách hàng"))
                         {
                             <div class="dropdown-menu dropleft">
-                                <a class="dropdown-item" href="~/user/profie-orders/1">Thông tin tài khoản</a>
-                                <a class="dropdown-item" href="~/user/profie-orders/2">Đơn hàng</a>
+                                <a class="dropdown-item" href="~/user/profile-orders/1">Thông tin tài khoản</a>
+                                <a class="dropdown-item" href="~/user/profile-orders/2">Đơn hàng</a>
                                 <form method="post" action="/dang-xuat">
                                     <input type="submit" style="display:none" id="logout" />
                                     @Html.AntiForgeryToken()
@@ -106,8 +106,8 @@
                         else if (signInManager.IsSignedIn(User))
                         {
                             <div class="dropdown-menu dropleft">
-                                <a class="dropdown-item" href="~/user/profie-orders/1">Thông tin tài khoản</a>
-                                <a class="dropdown-item" href="~/user/profie-orders/2">Đơn hàng</a>
+                                <a class="dropdown-item" href="~/user/profile-orders/1">Thông tin tài khoản</a>
+                                <a class="dropdown-item" href="~/user/profile-orders/2">Đơn hàng</a>
                                 <a class="dropdown-item" href="~/admin/dashboard">Trang quản lý</a>
                                 <form method="post" action="/dang-xuat">
                                     <input type="submit" style="display:none" id="logout" />

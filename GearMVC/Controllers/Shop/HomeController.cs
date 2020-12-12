@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Html;
 using Insfrastucture.Repository;
+using System.Text.RegularExpressions;
+
 namespace GearMVC.Controllers
 {
     [Route("")]
@@ -106,11 +108,10 @@ namespace GearMVC.Controllers
         }
 
         [Authorize]
-        [HttpGet("user/profie-orders/{page?}")]
+        [HttpGet("user/profile-orders/{page?}")]
         public async Task<IActionResult> ProfileOrders(int page)
         {
             var user = await _userManager.GetUserAsync(User);
-
             var userDTO = mapper.Map<UserDTO>(user);
             var orders = await _hoadonRepository.getByUser(user.Id);
             var hoadonsDTO = new List<HoaDonDTO>();
@@ -119,9 +120,65 @@ namespace GearMVC.Controllers
                 var dto = mapper.Map<HoaDonDTO>(item);
                 hoadonsDTO.Add(dto);
             }
-
-            return View(new ProfileOrderData() { User = userDTO, HoaDons = hoadonsDTO, Page = page });
+            return View("ProfileOrders", new ProfileOrderData() {User = userDTO, HoaDons = hoadonsDTO, Page = page });
         }
+
+        [Authorize]
+        [HttpPost("user/profile-orders/updateprofile")]
+        public async Task<ActionResultDTO> UpdateProfile([FromBody] EditUserDTO dto)
+        {
+            if(!InputIsValid(dto)) return new ActionResultDTO { Code = 400, Message = "Bad request" };
+            var user = await _userManager.GetUserAsync(User);
+            var changepass_result = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+            if (!changepass_result.Succeeded)
+            {
+                if(changepass_result.Errors.First().Code == "PasswordMismatch")
+                    return new ActionResultDTO { Code = 400, Message = "Mật khẩu hiện tại không chính xác" };
+                return new ActionResultDTO { Code = 400, Message = "Bad request" };
+            }
+            
+            user.HoTen = dto.HoTen;
+            user.PhoneNumber = dto.PhoneNumber;
+            user.DiaChi = dto.DiaChi;
+            user.GioiTinh = dto.GioiTinh;
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+                return new ActionResultDTO { Code = 200 };
+            else
+                return new ActionResultDTO { Code = 500 , Message = "Internal server error"};
+        }
+
+        private bool InputIsValid(EditUserDTO user)
+        {
+
+            if (string.IsNullOrEmpty(user.PhoneNumber) || 
+                string.IsNullOrEmpty(user.HoTen) || 
+                string.IsNullOrEmpty(user.DiaChi) ||
+                string.IsNullOrEmpty(user.CurrentPassword) ||
+                string.IsNullOrEmpty(user.NewPassword) ||
+                string.IsNullOrEmpty(user.NewPasswordConfirm))
+            {
+                return false;
+            }
+            var phoneregex = new Regex(@"^[0-9]+$");
+            var passregex = new Regex(@".{5,}");
+            if (!phoneregex.IsMatch(user.PhoneNumber))
+            {
+                return false;
+            }
+            if (!passregex.IsMatch(user.CurrentPassword) || !passregex.IsMatch(user.NewPassword) || !passregex.IsMatch(user.NewPasswordConfirm))
+            {
+                
+                return false;
+            }
+            if (user.NewPassword != user.NewPasswordConfirm)
+            {
+                return false;
+            }
+            return true;
+        }
+    
 
         [Authorize]
         [HttpGet("user/cart")]

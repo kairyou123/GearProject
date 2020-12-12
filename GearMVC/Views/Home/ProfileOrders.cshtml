@@ -2,7 +2,9 @@
 @model GearMVC.Controllers.ProfileOrderData
 @using Application.Services
 @using Insfrastucture.Repository
+
 @section Content{
+    
     <script type="text/javascript" src="~/js/Home/ProfileOrders.js"></script>
     <div>
         <!-- Products -->
@@ -21,7 +23,7 @@
                         <a href="" data-target="#orders" data-toggle="tab" class="nav-link @(Model.Page == 2 ? "active" : "")">Đơn hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Thay đổi thông tin</a>
+                        <a href="" data-target="#edit" data-toggle="tab" class="nav-link @(Model.Page == 3 ? "active" : "")">Thay đổi thông tin</a>
                     </li>
                 </ul>
                 <div class="tab-content p-b-3">
@@ -113,15 +115,15 @@
                                                                 <td colspan="2" class="text-right font-weight-bold">@Format.Money(total)</td>
                                                             </tr>
                                                         </tbody>
-                                                        @if(hoadon.TinhTrang == Status.ChoXacNhan) 
+                                                        @if (hoadon.TinhTrang == Status.ChoXacNhan)
                                                         {
-                                                        <tbody>
-                                                            <tr class="table-orders--total">
-                                                                <td colspan="4" class="text-center font-weight-bold">
-                                                                    <button type="button" class="btn btn-danger" onclick="CancelOrder(@hoadon.Id)">Hủy Đơn</button>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
+                                                            <tbody>
+                                                                <tr class="table-orders--total">
+                                                                    <td colspan="4" class="text-center font-weight-bold">
+                                                                        <button type="button" class="btn btn-danger" onclick="CancelOrder(@hoadon.Id)">Hủy Đơn</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
                                                         }
                                                     </table>
                                                 </div>
@@ -132,76 +134,97 @@
                             }
                             else
                             {
-                            <div class="cart-empty">
-                                <div>
-                                    <p>
-                                        Hóa đơn đang trống!
-                                    </p>
+                                <div class="cart-empty">
+                                    <div>
+                                        <p>
+                                            Hóa đơn đang trống!
+                                        </p>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <br />
                                 </div>
-                                <br />
-                                <br />
-                                <br />
-                            </div>
                             }
                         </div>
                     </div>
-                    <div class="tab-pane" id="edit">
+                    <div class="tab-pane @(Model.Page == 3 ? "active" : "")" id="edit">
                         <h4 class="m-y-2">Edit Profile</h4>
-                        <form role="form">
-                            <div class="form-group row">
-                                <label htmlFor="Name" class="col-lg-3 col-form-label form-control-label">Tên</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="@Model.User.HoTen">
+
+                    <div role="form" action="">
+                        <div class="form-group">
+                           <span class="text-danger" id="error-message"></span>
+                        </div>
+                        <div class="form-group row">
+                            <label htmlFor="Name" class="col-lg-3 col-form-label form-control-label">Tên</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" type="text" id="HoTenInput" value="@Model.User.HoTen">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6" style="padding-left:40px">
+                                <div class="form-group">
+                                    <input type="radio" name="GioiTinhInput" class="input-sm form-check-input"
+                                           value="Nam" @(Model.User.GioiTinh == "Nam" ? "checked" : "") />
+                                    <label for="male">Nam</label><br>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label htmlFor="Email" class="col-lg-3 col-form-label form-control-label">Email</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="email" value="@Model.User.Email" readonly>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="radio" name="GioiTinhInput" class="input-sm form-check-input"
+                                           value="Nữ" @(Model.User.GioiTinh == "Nữ" ? "checked" : "") />
+                                    <label for="female">Nữ</label><br>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label htmlFor="Address" class="col-lg-3 col-form-label form-control-label">Địa chỉ</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="@Model.User.DiaChi"
-                                           placeholder="Street">
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label htmlFor="Email" class="col-lg-3 col-form-label form-control-label">Email</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" name="Email" type="email" value="@Model.User.Email" readonly>
                             </div>
-                            <div class="form-group row">
-                                <label htmlFor="Phone" class="col-lg-3 col-form-label form-control-label">Số điện thoại</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="tel" value="@Model.User.PhoneNumber" maxlength="10">
-                                </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label htmlFor="Address" class="col-lg-3 col-form-label form-control-label">Địa chỉ</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" id="DiaChiInput" type="text" value="@Model.User.DiaChi"
+                                       placeholder="Street">
                             </div>
-                            <div class="form-group row">
-                                <label htmlFor="CurPw" class="col-lg-3 col-form-label form-control-label">Mật khẩu hiện tại</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="password" value="">
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label htmlFor="Phone" class="col-lg-3 col-form-label form-control-label">Số điện thoại</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" id="PhoneNumberInput" type="tel" value="@Model.User.PhoneNumber" maxlength="10">
                             </div>
-                            <div class="form-group row">
-                                <label htmlFor="NewPw" class="col-lg-3 col-form-label form-control-label">Mật khẩu mới</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="password" value="">
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label htmlFor="CurPw" class="col-lg-3 col-form-label form-control-label">Mật khẩu hiện tại</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" id="CurrentPasswordInput" type="password" value="">
                             </div>
-                            <div class="form-group row">
-                                <label htmlFor="NewPwAgain" class="col-lg-3 col-form-label form-control-label">
-                                    Nhập lại mật
-                                    khẩu
-                                </label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="password" value="">
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label htmlFor="NewPw" class="col-lg-3 col-form-label form-control-label">Mật khẩu mới</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" id="NewPasswordInput" type="password" value="">
                             </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label"></label>
-                                <div class="col-lg-9">
-                                    <input type="reset" class="btn btn-secondary" value="Cancel">
-                                    <input type="button" class="btn btn-primary" value="Save Changes">
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label htmlFor="NewPwAgain" class="col-lg-3 col-form-label form-control-label">
+                                Nhập lại mật
+                                khẩu
+                            </label>
+                            <div class="col-lg-9">
+                                <input class="form-control" id="NewPasswordConfirmInput" type="password" value="">
                             </div>
-                        </form>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label"></label>
+                            <div class="col-lg-9">
+                                <button class="btn btn-secondary" onclick="Reset()">Reset</button>
+                                <button type="button" class="btn btn-primary" onclick="UpdateProfile()">Cập nhật</button>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>

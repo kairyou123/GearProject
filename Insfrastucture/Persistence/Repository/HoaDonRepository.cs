@@ -24,12 +24,19 @@ namespace Insfrastucture.Repository
         }
         public async Task<IEnumerable<HoaDon>> getByUser(string id)
         {
-            var result = await _context.HoaDons.Where(i => i.UserId == id).Include(i => i.User).Include(i => i.ChiTietHDs).ThenInclude(i => i.LinhKien).ToListAsync();
+            var result = await _context.HoaDons.Where(i => i.UserId == id)
+                                                .Include(i => i.User)
+                                                .Include(i => i.ChiTietHDs).ThenInclude(i => i.LinhKien)
+                                                .OrderByDescending(i => i.NgayLapHD)
+                                                .ToListAsync();
             return result;
         }
         public async Task<HoaDon> getById(int id)
         {
-            var result = await _context.HoaDons.Where(i => i.Id == id).Include(i => i.User).Include(i => i.ChiTietHDs).ThenInclude(i => i.LinhKien).FirstOrDefaultAsync();
+            var result = await _context.HoaDons.Where(i => i.Id == id)
+                                               .Include(i => i.User)
+                                               .Include(i => i.ChiTietHDs).ThenInclude(i => i.LinhKien)
+                                               .FirstOrDefaultAsync();
             return result;
         }
         public async Task Add(HoaDon item)

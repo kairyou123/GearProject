@@ -1,7 +1,9 @@
 ﻿
 @model GearMVC.Controllers.ProfileOrderData
 @using Application.Services
+@using Insfrastucture.Repository
 @section Content{
+    <script type="text/javascript" src="~/js/Home/ProfileOrders.js"></script>
     <div>
         <!-- Products -->
         <div class="row m-y-2">
@@ -56,23 +58,25 @@
                         <div class="accordion" id="accordionExample">
                             @if (Model.HoaDons.Count > 0)
                             {
+                                var count = 0;
                                 foreach (var hoadon in Model.HoaDons)
                                 {
+                                    count++;
                                     <div class="card">
-                                        <div class="card-header" id="headingOne">
+                                        <div class="card-header" id="heading@(count)">
                                             <h2 class="mb-0">
-                                                <button class="btn btn-link w-100" type="button" data-toggle="collapse" data-target="#collapseOne"
-                                                        aria-expanded="true" aria-controls="collapseOne">
+                                                <button class="btn btn-link w-100" type="button" data-toggle="collapse" data-target="#collapse@(count)"
+                                                        aria-expanded="true" aria-controls="collapse@(count)">
                                                     <div>
-                                                        <p class="float-left">Ma don hang: <b class="code">@hoadon.MaHD</b></p>
-                                                        <p class="text-center status d-inline-block">@(hoadon.NgayGiao == null ? "Đã giao" : "Đang giao")</p>
+                                                        <p class="float-left"><b class="code">#@hoadon.MaHD</b></p>
+                                                        <p class="text-center status d-inline-block">@hoadon.TinhTrang</p>
                                                         <p class="float-right date">@hoadon.NgayLapHD</p>
                                                     </div>
                                                 </button>
                                             </h2>
                                         </div>
 
-                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div id="collapse@(count)" class="collapse" aria-labelledby="heading@(count)" data-parent="#accordionExample">
                                             <div class="card-body orders">
                                                 <div class="table-responsive">
                                                     <table class="table table-orders">
@@ -109,13 +113,16 @@
                                                                 <td colspan="2" class="text-right font-weight-bold">@Format.Money(total)</td>
                                                             </tr>
                                                         </tbody>
+                                                        @if(hoadon.TinhTrang == Status.ChoXacNhan) 
+                                                        {
                                                         <tbody>
                                                             <tr class="table-orders--total">
                                                                 <td colspan="4" class="text-center font-weight-bold">
-                                                                    <button type="button" class="btn btn-danger">Hủy Đơn</button>
+                                                                    <button type="button" class="btn btn-danger" onclick="CancelOrder(@hoadon.Id)">Hủy Đơn</button>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
+                                                        }
                                                     </table>
                                                 </div>
                                             </div>

@@ -100,10 +100,10 @@ function changePage(page) {
 
 }
 
-function BuyProducts() {
+function CreateOrder() {
     var pttt = $('input[name="paymentMethod"]:checked').val();
     $.ajax({
-        url: '/user/buyproducts',
+        url: '/user/createorder',
         type: "GET",
         contentType: "application/json; charset=utf-8",
         dataType: "json",

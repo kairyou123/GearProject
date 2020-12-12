@@ -39,6 +39,7 @@ function DisplayEmptyCart() {
              </div>`;
 
     $("#giohang-content").html(html);
+    $("#thanhtoanbtn").html("");
 }
 function MoneyFormat(num) {
     if (num == 0) {

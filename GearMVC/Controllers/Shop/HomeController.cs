@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Html;
-
+using Insfrastucture.Repository;
 namespace GearMVC.Controllers
 {
     [Route("")]
@@ -170,8 +170,8 @@ namespace GearMVC.Controllers
         }
 
         [Authorize]
-        [HttpGet("user/buyproducts")]
-        public async Task<bool> BuyProducts(string pttt)
+        [HttpGet("user/createorder")]
+        public async Task<bool> CreateOrder(string pttt)
         {
             var userid =  _userManager.GetUserId(User);
             var list = await _giohangRepo.getByUser(userid);
@@ -198,13 +198,25 @@ namespace GearMVC.Controllers
             {
                 NgayLapHD = DateTime.Now,
                 UserId = userid,
-                TinhTrang = Const.Const.ChoXacNhan,
+                TinhTrang = Status.ChoXacNhan,
                 ChiTietHDs = cthds,
                 PhuongThucThanhToan = pttt,
                 TiGia = total,
             };
             await _hoadonRepository.Add(hoadon);
             await _giohangRepo.DeleteRange(list);
+            return true;
+        }
+        [Authorize]
+        [HttpGet("user/cancelorder")]
+        public async Task<bool> CancelOrder(int id)
+        {
+            var userid = _userManager.GetUserId(User);
+            var order = await _hoadonRepository.getById(id);
+            if (order.UserId != userid) return false;
+            if (order.TinhTrang != Status.ChoXacNhan) return false; ;
+            order.TinhTrang = Status.DaHuy;
+            await _hoadonRepository.Update(order);
             return true;
         }
         [Authorize]

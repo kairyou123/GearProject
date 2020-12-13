@@ -6,14 +6,6 @@ INSERT [dbo].[AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) 
 GO
 INSERT [dbo].[AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'6d5ca66d-f289-46b8-b4bc-cfa0af3deddb', N'Admin', N'ADMIN', N'7f3db712-94fa-442b-968d-784dbf31b7c5')
 GO
-INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount], [HoTen], [DiaChi], [GioiTinh], [CMND], [isDelete]) VALUES (N'94df5927-eca9-4fd9-88e2-09a9b5c93712', N'alice@gmail.com', N'ALICE@GMAIL.COM', N'alice@gmail.com', N'ALICE@GMAIL.COM', 0, N'AQAAAAEAACcQAAAAEHnb2azqzqVgbeQvI8vo8BEeAa0pn+YKyVzr3Qvt+VVQuM/oyWGxMDpwN0e5h4s1Iw==', N'FC2WHYATBLFYN3U6UIDWJTXEKO7AWQAL', N'0a2a11f0-230b-411f-bde4-ce20ed7b092f', N'01234567', 0, 0, NULL, 1, 0, N'Alice', N'123 ABC', N'Nữ', N'123456789', 0)
-GO
-INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount], [HoTen], [DiaChi], [GioiTinh], [CMND], [isDelete]) VALUES (N'a4e85172-5448-4c9a-b770-fd55a5ebed6e', N'alice1@gmail.com', N'ALICE1@GMAIL.COM', N'alice1@gmail.com', N'ALICE1@GMAIL.COM', 0, N'AQAAAAEAACcQAAAAEEUrSHz1uVmQWPeTEN1EZ5B2G0b1+cXsjU8GoYsZVrtmi/Fl88qzwLAqFoNZnihRoQ==', N'DBWHMDXNOCM5KJ6363M5YQEHXYFQYXIG', N'ef7ee16b-e7ad-4e0c-9abc-a12fa363a08c', N'01234567', 0, 0, NULL, 1, 0, N'Alice Xinh Đẹp', N'123 ABC', N'Nữ', NULL, 0)
-GO
-INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'94df5927-eca9-4fd9-88e2-09a9b5c93712', N'6d5ca66d-f289-46b8-b4bc-cfa0af3deddb')
-GO
-INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'a4e85172-5448-4c9a-b770-fd55a5ebed6e', N'6d5ca66d-f289-46b8-b4bc-cfa0af3deddb')
-GO
 SET IDENTITY_INSERT [dbo].[LoaiLinhKiens] ON 
 GO
 INSERT [dbo].[LoaiLinhKiens] ([Id], [MaLoai], [Ten], [isDelete]) VALUES (1, N'00004', N'Lót chuột', 0)

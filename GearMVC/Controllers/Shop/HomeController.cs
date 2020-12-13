@@ -107,6 +107,26 @@ namespace GearMVC.Controllers
             return View();
         }
 
+        [HttpGet("product/search")]
+        public async Task<IActionResult> Search(string str)
+        {
+            var products = await _linhkienRepo.Filter(searchString: str);
+            var result = new List<LinhKienDTO>();
+            foreach (var item in products)
+            {
+                item.DonGias = item.DonGias.Where(i => i.ApDung).ToList();
+                var dto = mapper.Map<LinhKienDTO>(item);
+                result.Add(dto);
+            }
+            var list = new HtmlString(JsonConvert.SerializeObject(result, Formatting.None,
+           new JsonSerializerSettings
+           {
+               ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+           }));
+            ViewData["list"] = list;
+            return View();
+        }
+
         [Authorize]
         [HttpGet("user/profile-orders/{page?}")]
         public async Task<IActionResult> ProfileOrders(int page)

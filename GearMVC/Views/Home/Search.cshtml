@@ -1,0 +1,34 @@
+﻿
+@section Content{
+
+    <script type="text/javascript" src="~/js/Home/Search.js"></script>
+    <script>
+    products = @(ViewData["list"]);
+    maxPage = Math.ceil(products.length / recordsPerPage);
+    </script>
+    <div>
+
+
+        <!-- Products -->
+        <div class="product-category" id="product-category">
+            <div class="product-category-title">
+                <h1>Kết quả tìm kiếm</h1>
+                <div class="row product-category-title-sort">
+                    <div class="col-sm-12 wrap-sort-by">
+                        <div class="product-category-title-sort-style">
+                            <label for="products">Sắp xếp theo:</label>
+                            <select id="OrderBy" onchange="searchProducts(currentPage)">
+                                <option value="popular" selected>Độ phổ biến</option>
+                                <option value="price-ascend">Giá: Tăng dần </option>
+                                <option value="price-descend">Giá: Giảm dần</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-category-content row" id="category-content">
+            </div>
+            <div id="paginator"></div>
+        </div>
+    </div>
+}

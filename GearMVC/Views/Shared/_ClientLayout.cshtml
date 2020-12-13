@@ -73,12 +73,12 @@
                     </li>
                 </ul>
                 <div class="col-sm-10">
-                    <form class="form-inline my-2 my-lg-0 padding-gear-30 justify-content-center">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">
+                    <div class="form-inline my-2 my-lg-0 padding-gear-30 justify-content-center">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" id="SearchInput" >
+                        <button class="btn btn-outline-dark my-2 my-sm-0" onclick="Search()">
                             <i class="fas fa-search"></i>
                         </button>
-                    </form>
+                    </div>
                 </div>
                 <ul class="navbar-nav mt-2 mt-lg-0">
                     <li class="nav-item cart">
@@ -194,6 +194,10 @@
     <script>
         var isLogin = @Html.Raw(signInManager.IsSignedIn(User) ? 1 : 0);
         var cart_num = 0;
+        function Search() {
+            var str = encodeURIComponent($("#SearchInput").val());
+            window.location.href = "/product/search?str=" + str;
+        }
         function addToCart(id, soluong) {
             $.ajax({
                 url: '/cart/addtocart',
@@ -238,6 +242,12 @@
         }
         $(document).ready(function () {
             getCartNum();
+
+            $("#SearchInput").on('keyup', function (e) {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    Search();
+                }
+            });
         });
     </script>
     @RenderSection("Scripts", required: false)

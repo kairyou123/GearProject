@@ -96,9 +96,9 @@
                                                             <tbody>
                                                                 <tr>
                                                                     @{ var hinh = cthd.LinhKien.Hinh.Split(",")[0];}
-                                                                    <td class="table-orders--img"><a href="#"><img src="~/images/products/@hinh" alt="img"></a></td>
+                                                                    <td class="table-orders--img"><a href="/product/detail/@(cthd.LinhKien.Id)"><img src="~/images/products/@hinh" alt="img"></a></td>
                                                                     <td class="table-orders--name">
-                                                                        <a href="#">@cthd.LinhKien.TenLK</a>
+                                                                        <a href="/product/detail/@(cthd.LinhKien.Id)">@cthd.LinhKien.TenLK</a>
                                                                     </td>
                                                                     <td class="table-orders--quantily">@cthd.SoLuongBan</td>
                                                                     @{

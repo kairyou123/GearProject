@@ -42,27 +42,31 @@ namespace Insfrastucture.Repository
         public async Task Add(HoaDon item)
         {
             item.MaHD = await GenerateCode();
+            foreach (var linhkien in item.ChiTietHDs)
+                linhkien.LinhKien.SLTonKho = linhkien.LinhKien.SLTonKho - (int)linhkien.SoLuongBan;
             _context.HoaDons.Add(item);
             await _context.SaveChangesAsync();
+            
         }
         public async Task Update(HoaDon item)
         {
-            if (item.TinhTrang == Status.DaGiao)
+           
+        if(item.TinhTrang == Status.DaHuy)
+            {      
+                foreach (var linhkien in item.ChiTietHDs)
+                {
+                    linhkien.LinhKien.SLTonKho = linhkien.LinhKien.SLTonKho + (int)linhkien.SoLuongBan;
+                }  
+            }
+        else if(item.TinhTrang == Status.DaGiao)
             {
                 item.NgayGiao = DateTime.Now;
                 foreach (var linhkien in item.ChiTietHDs)
                 {
                     linhkien.LinhKien.DaBan = linhkien.LinhKien.DaBan + (int)linhkien.SoLuongBan;
-                    linhkien.LinhKien.SLTonKho = linhkien.LinhKien.SLTonKho - (int)linhkien.SoLuongBan;
                 }
             }
-            else if (item.TinhTrang == Status.DaHuy)
-            {
-                foreach (var linhkien in item.ChiTietHDs)
-                {
-                    linhkien.LinhKien.SLTonKho = linhkien.LinhKien.SLTonKho + (int)linhkien.SoLuongBan;
-                }
-            }
+             
             _context.HoaDons.Update(item);
             await _context.SaveChangesAsync();
         }

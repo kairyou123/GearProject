@@ -48,8 +48,8 @@
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
             <a class="navbar-brand padding-gear-40" href="/">GEAR SHOP</a>
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
-                    data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
@@ -74,7 +74,7 @@
                 </ul>
                 <div class="col-sm-10">
                     <div class="form-inline my-2 my-lg-0 padding-gear-30 justify-content-center">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" id="SearchInput" >
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" id="SearchInput">
                         <button class="btn btn-outline-dark my-2 my-sm-0" onclick="Search()">
                             <i class="fas fa-search"></i>
                         </button>
@@ -83,7 +83,7 @@
                 <ul class="navbar-nav mt-2 mt-lg-0">
                     <li class="nav-item cart">
                         <div id="cart_num">
-                            
+
                         </div>
                         <a class="nav-link" href="/user/cart"><i class="fas fa-shopping-cart"></i></a>
                     </li>
@@ -161,7 +161,7 @@
                 <br /><b>THỜI GIAN LÀM VIỆC: 08:30 - 21:30 TỪ THỨ 2 ĐẾN CHỦ NHẬT</b>
                 <br /><br />
                 <a href="http://online.gov.vn/CustomWebsiteDisplay.aspx?DocId=52800">
-                    <img src="images/logobct.png" style="max-width: 400px;">
+                    <img src="~/images/logobct.png" style="max-width: 400px;">
                 </a>
             </div>
             <div class="col-6">
@@ -169,8 +169,8 @@
                 <div class="mapouter">
                     <div class="gmap_canvas">
                         <iframe width="600" height="500" id="gmap_canvas"
-                                src="https://maps.google.com/maps?q=%C4%91%E1%BA%A1i%20h%E1%BB%8Dc%20s%C3%A0i%20g%C3%B2n&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                            src="https://maps.google.com/maps?q=%C4%91%E1%BA%A1i%20h%E1%BB%8Dc%20s%C3%A0i%20g%C3%B2n&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
                     </div>
                     <style>
                         .mapouter {
@@ -199,6 +199,11 @@
             window.location.href = "/product/search?str=" + str;
         }
         function addToCart(id, soluong) {
+            if (!isLogin) {
+                window.location.href = "/dang-nhap";
+                return;
+            }
+
             $.ajax({
                 url: '/cart/addtocart',
                 type: "GET",
